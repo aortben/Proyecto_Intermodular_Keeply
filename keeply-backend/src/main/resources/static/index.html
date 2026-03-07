@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keeply - Gestión de Obras Audiovisuales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .btn-danger {
+            background: #e74c3c;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .result-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+        .result-item h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .result-item p {
+            color: #666;
+            font-size: 14px;
+        }
+        .error {
+            color: #e74c3c;
+            padding: 10px;
+            background: #ffe6e6;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .success {
+            color: #27ae60;
+            padding: 10px;
+            background: #e6f7ed;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Keeply</h1>
+        <p class="subtitle">Sistema de Gestión de Obras Audiovisuales - API Testing</p>
+
+        <!-- Sección Usuarios -->
+        <div class="section">
+            <h2>👤 Gestión de Usuarios</h2>
+            <div class="form-group">
+                <button onclick="listarUsuarios()">Listar Todos los Usuarios</button>
+            </div>
+            <div class="form-group">
+                <label>Crear Usuario:</label>
+                <input type="text" id="nombreUsuario" placeholder="Nombre de usuario">
+                <input type="email" id="emailUsuario" placeholder="Email">
+                <input type="password" id="passwordUsuario" placeholder="Contraseña (hash)">
+                <input type="text" id="avatarUsuario" placeholder="URL del Avatar (opcional)">
+                <button onclick="crearUsuario()">Crear Usuario</button>
+            </div>
+            <div id="resultadoUsuarios" class="results"></div>
+        </div>
+
+        <!-- Sección Obras -->
+        <div class="section">
+            <h2>🎥 Gestión de Obras</h2>
+            <div class="form-group">
+                <button onclick="listarObras()">Listar Todas las Obras</button>
+            </div>
+            <div class="form-group">
+                <label>Crear Obra:</label>
+                <input type="text" id="tituloObra" placeholder="Título">
+                <textarea id="descripcionObra" placeholder="Descripción"></textarea>
+                <select id="tipoObra">
+                    <option value="VIDEOJUEGO">Videojuego</option>
+                    <option value="PELICULA">Película</option>
+                    <option value="SERIE">Serie</option>
+                    <option value="ANIME">Anime</option>
+                    <option value="MANGA">Manga</option>
+                    <option value="LIBRO">Libro</option>
+                    <option value="COMIC">Cómic</option>
+                </select>
+                <input type="text" id="autorObra" placeholder="Autor/Creador">
+                <input type="date" id="fechaLanzamiento">
+                <input type="text" id="imagenObra" placeholder="URL Imagen">
+                <button onclick="crearObra()">Crear Obra</button>
+            </div>
+            <div id="resultadoObras" class="results"></div>
+        </div>
+
+        <!-- Sección Items Usuario -->
+        <div class="section">
+            <h2>📚 Biblioteca Personal</h2>
+            <div class="form-group">
+                <label>Agregar Obra a Biblioteca:</label>
+                <input type="number" id="usuarioId" placeholder="ID Usuario">
+                <input type="number" id="obraId" placeholder="ID Obra">
+                <select id="estadoItem">
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En_Progreso">En Progreso</option>
+                    <option value="Completado">Completado</option>
+                    <option value="Abandonado">Abandonado</option>
+                </select>
+                <input type="number" id="valoracion" step="0.1" min="0" max="10" placeholder="Valoración (0-10)">
+                <button onclick="agregarItem()">Agregar a Biblioteca</button>
+            </div>
+            <div id="resultadoItems" class="results"></div>
+        </div>
+
+        <!-- Sección Búsqueda en APIs Externas -->
+        <div class="section">
+            <h2>🔍 Búsqueda en APIs Externas</h2>
+            
+            <!-- Búsqueda Unificada -->
+            <div class="form-group">
+                <label>Búsqueda Unificada (por tipo):</label>
+                <input type="text" id="queryUnificada" placeholder="Buscar...">
+                <select id="tipoBusqueda">
+                    <option value="PELICULA">Película</option>
+                    <option value="SERIE">Serie</option>
+                    <option value="ANIME">Anime</option>
+                    <option value="MANGA">Manga</option>
+                    <option value="VIDEOJUEGO">Videojuego</option>
+                    <option value="LIBRO">Libro</option>
+                    <option value="COMIC">Cómic</option>
+                </select>
+                <button onclick="buscarUnificada()">Buscar</button>
+            </div>
+
+            <!-- Búsquedas específicas -->
+            <div class="form-group">
+                <label>Búsquedas Específicas:</label>
+                <input type="text" id="queryBusqueda" placeholder="Término de búsqueda">
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                    <button onclick="buscarPeliculas()">🎬 Películas (TMDB)</button>
+                    <button onclick="buscarSeries()">📺 Series (TMDB)</button>
+                    <button onclick="buscarAnimes()">🎌 Animes (Jikan)</button>
+                    <button onclick="buscarMangas()">📖 Mangas (Jikan)</button>
+                    <button onclick="buscarVideojuegos()">🎮 Videojuegos (RAWG)</button>
+                    <button onclick="buscarLibros()">📚 Libros (Google)</button>
+                    <button onclick="buscarComics()">🦸 Cómics (Google)</button>
+                </div>
+            </div>
+
+            <div id="resultadoBusqueda" class="results"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080/api';
+
+        // Funciones para Usuarios
+        async function listarUsuarios() {
+            try {
+                const response = await fetch(`${API_BASE}/usuarios`);
+                const data = await response.json();
+                mostrarResultado('resultadoUsuarios', data, 'usuarios');
+            } catch (error) {
+                mostrarError('resultadoUsuarios', error);
+            }
+        }
+
+        async function crearUsuario() {
+            const usuario = {
+                nombreUsuario: document.getElementById('nombreUsuario').value,
+                email: document.getElementById('emailUsuario').value,
+                contrasenaHash: document.getElementById('passwordUsuario').value,
+                avatarUrl: document.getElementById('avatarUsuario').value || null
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/usuarios`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(usuario)
+                });
+                const data = await response.json();
+                mostrarResultado('resultadoUsuarios', data, 'usuario creado');
+                // Limpiar formulario
+                document.getElementById('nombreUsuario').value = '';
+                document.getElementById('emailUsuario').value = '';
+                document.getElementById('passwordUsuario').value = '';
+                document.getElementById('avatarUsuario').value = '';
+            } catch (error) {
+                mostrarError('resultadoUsuarios', error);
+            }
+        }
+
+        // Funciones para Obras
+        async function listarObras() {
+            try {
+                const response = await fetch(`${API_BASE}/obras`);
+                const data = await response.json();
+                mostrarResultado('resultadoObras', data, 'obras');
+            } catch (error) {
+                mostrarError('resultadoObras', error);
+            }
+        }
+
+        async function crearObra() {
+            const obra = {
+                titulo: document.getElementById('tituloObra').value,
+                descripcion: document.getElementById('descripcionObra').value,
+                tipoObra: document.getElementById('tipoObra').value,
+                autorCreador: document.getElementById('autorObra').value,
+                fechaLanzamiento: document.getElementById('fechaLanzamiento').value || null,
+                urlImagenPrincipal: document.getElementById('imagenObra').value || null
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/obras`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(obra)
+                });
+                const data = await response.json();
+                mostrarResultado('resultadoObras', data, 'obra creada');
+                // Limpiar formulario
+                document.getElementById('tituloObra').value = '';
+                document.getElementById('descripcionObra').value = '';
+                document.getElementById('autorObra').value = '';
+                document.getElementById('fechaLanzamiento').value = '';
+                document.getElementById('imagenObra').value = '';
+            } catch (error) {
+                mostrarError('resultadoObras', error);
+            }
+        }
+
+        // Funciones para Items
+        async function agregarItem() {
+            const usuarioId = parseInt(document.getElementById('usuarioId').value);
+            const obraId = parseInt(document.getElementById('obraId').value);
+            const valoracion = parseFloat(document.getElementById('valoracion').value);
+
+            const item = {
+                usuario: { idUsuario: usuarioId },
+                obra: { idObra: obraId },
+                estado: document.getElementById('estadoItem').value,
+                valoracionPersonal: valoracion || null
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/items`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(item)
+                });
+                const data = await response.json();
+                mostrarResultado('resultadoItems', data, 'item agregado');
+            } catch (error) {
+                mostrarError('resultadoItems', error);
+            }
+        }
+
+        // Funciones de Búsqueda en APIs Externas
+        async function buscarUnificada() {
+            const query = document.getElementById('queryUnificada').value;
+            const tipo = document.getElementById('tipoBusqueda').value;
+            
+            if (!query) {
+                mostrarError('resultadoBusqueda', { message: 'Por favor ingresa un término de búsqueda' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/busqueda/unificada?query=${encodeURIComponent(query)}&tipo=${tipo}`);
+                const data = await response.json();
+                mostrarResultadoBusqueda('resultadoBusqueda', data, `Resultados para "${query}" (${tipo})`);
+            } catch (error) {
+                mostrarError('resultadoBusqueda', error);
+            }
+        }
+
+        async function buscarPeliculas() {
+            const query = document.getElementById('queryBusqueda').value || document.getElementById('queryUnificada').value;
+            if (!query) {
+                mostrarError('resultadoBusqueda', { message: 'Por favor ingresa un término de búsqueda' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/busqueda/tmdb/peliculas?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                mostrarResultadoBusqueda('resultadoBusqueda', data, `Películas encontradas: "${query}"`);
+            } catch (error) {
+                mostrarError('resultadoBusqueda', error);
+            }
+        }
+
+        async function buscarSeries() {
+            const query = document.getElementById('queryBusqueda').value || document.getElementById('queryUnificada').value;
+            if (!query) {
+                mostrarError('resultadoBusqueda', { message: 'Por favor ingresa un término de búsqueda' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/busqueda/tmdb/series?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                mostrarResultadoBusqueda('resultadoBusqueda', data, `Series encontradas: "${query}"`);
+            } catch (error) {
+                mostrarError('resultadoBusqueda', error);
+            }
+        }
+
+        async function buscarAnimes() {
+            const query = document.getElementById('queryBusqueda').value || document.getElementById('queryUnificada').value;
+            if (!query) {
+                mostrarError('resultadoBusqueda', { message: 'Por favor ingresa un término de búsqueda' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/busqueda/jikan/animes?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                mostrarResultadoBusqueda('resultadoBusqueda', data, `Animes encontrados: "${query}"`);
+            } catch (error) {
+                mostrarError('resultadoBusqueda', error);
+            }
+        }
+
+        async function buscarMangas() {
+            const query = document.getElementById('queryBusqueda').value || document.getElementById('queryUnificada').value;
+            if (!query) {
+                mostrarError('resultadoBusqueda', { message: 'Por favor ingresa un término de búsqueda' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/busqueda/jikan/mangas?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                mostrarResultadoBusqueda('resultadoBusqueda', data, `Mangas encontrados: "${query}"`);
+            } catch (error) {
+                mostrarError('resultadoBusqueda', error);
+            }
+        }
+
+        async function buscarVideojuegos() {
+            const query = document.getElementById('queryBusqueda').value || document.getElementById('queryUnificada').value;
+            if (!query) {
+                mostrarError('resultadoBusqueda', { message: 'Por favor ingresa un término de búsqueda' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/busqueda/rawg/videojuegos?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                mostrarResultadoBusqueda('resultadoBusqueda', data, `Videojuegos encontrados: "${query}"`);
+            } catch (error) {
+                mostrarError('resultadoBusqueda', error);
+            }
+        }
+
+        async function buscarLibros() {
+            const query = document.getElementById('queryBusqueda').value || document.getElementById('queryUnificada').value;
+            if (!query) {
+                mostrarError('resultadoBusqueda', { message: 'Por favor ingresa un término de búsqueda' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/busqueda/google/books?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                mostrarResultadoBusqueda('resultadoBusqueda', data, `Libros encontrados: "${query}"`);
+            } catch (error) {
+                mostrarError('resultadoBusqueda', error);
+            }
+        }
+
+        async function buscarComics() {
+            const query = document.getElementById('queryBusqueda').value || document.getElementById('queryUnificada').value;
+            if (!query) {
+                mostrarError('resultadoBusqueda', { message: 'Por favor ingresa un término de búsqueda' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/busqueda/google/comics?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                mostrarResultadoBusqueda('resultadoBusqueda', data, `Cómics encontrados: "${query}"`);
+            } catch (error) {
+                mostrarError('resultadoBusqueda', error);
+            }
+        }
+
+        // Función especial para mostrar resultados de búsqueda (con imágenes)
+        function mostrarResultadoBusqueda(elementId, data, titulo) {
+            const div = document.getElementById(elementId);
+            if (Array.isArray(data) && data.length > 0) {
+                div.innerHTML = `<div class="success">${titulo} - ${data.length} resultado(s)</div>` +
+                    data.map(item => `
+                        <div class="result-item" style="display: flex; gap: 15px; align-items: start;">
+                            ${item.imagenUrl ? `<img src="${item.imagenUrl}" alt="${item.titulo}" style="width: 100px; height: 150px; object-fit: cover; border-radius: 5px;">` : ''}
+                            <div style="flex: 1;">
+                                <h3>${item.titulo || 'Sin título'}</h3>
+                                <p><strong>Tipo:</strong> ${item.tipoObra || 'N/A'} | <strong>Origen:</strong> ${item.origenApi || 'N/A'}</p>
+                                ${item.autorCreador ? `<p><strong>Autor/Creador:</strong> ${item.autorCreador}</p>` : ''}
+                                ${item.fechaLanzamiento ? `<p><strong>Fecha:</strong> ${item.fechaLanzamiento}</p>` : ''}
+                                ${item.descripcion ? `<p style="margin-top: 10px;">${item.descripcion.substring(0, 200)}${item.descripcion.length > 200 ? '...' : ''}</p>` : ''}
+                                <p style="margin-top: 5px; font-size: 12px; color: #999;">ID Externo: ${item.idExterno || 'N/A'}</p>
+                            </div>
+                        </div>
+                    `).join('');
+            } else {
+                div.innerHTML = `<div class="error">No se encontraron resultados para "${titulo}"</div>`;
+            }
+        }
+
+        // Utilidades
+        function mostrarResultado(elementId, data, tipo) {
+            const div = document.getElementById(elementId);
+            if (Array.isArray(data)) {
+                div.innerHTML = `<div class="success">Encontrados ${data.length} ${tipo}</div>` +
+                    data.map(item => `
+                        <div class="result-item">
+                            <h3>${item.nombreUsuario || item.titulo || `Item #${item.idItemUsuario}`}</h3>
+                            <pre>${JSON.stringify(item, null, 2)}</pre>
+                        </div>
+                    `).join('');
+            } else {
+                div.innerHTML = `
+                    <div class="success">${tipo.charAt(0).toUpperCase() + tipo.slice(1)} creado/a exitosamente</div>
+                    <div class="result-item">
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        function mostrarError(elementId, error) {
+            document.getElementById(elementId).innerHTML = 
+                `<div class="error">Error: ${error.message}</div>`;
+        }
+    </script>
+</body>
+</html>
+
