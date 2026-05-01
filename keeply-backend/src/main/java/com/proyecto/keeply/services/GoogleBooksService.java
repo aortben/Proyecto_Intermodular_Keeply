@@ -10,91 +10,110 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class GoogleBooksService {
-    
+
     @Value("${api.google.books.key:}")
-    private String apiKey; // Google Books API puede funcionar sin key pero es mejor tenerla
-    
+    private String apiKey;
+
     private final RestTemplate restTemplate;
 
     /**
-     * Busca libros en Google Books API
-     * TODO: Implementar llamada real a la API cuando se tenga la clave
+     * Busca libros en Google Books API (funciona sin API key)
      */
     public List<ResultadoBusquedaDTO> buscarLibros(String query) {
-        List<ResultadoBusquedaDTO> resultados = new ArrayList<>();
-        
-        // PLACEHOLDER: Datos de ejemplo
-        resultados.add(ResultadoBusquedaDTO.builder()
-                .idExterno("ISBN9788498382543")
-                .titulo("Cien años de soledad")
-                .descripcion("La historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.")
-                .imagenUrl("https://books.google.com/books/content?id=example")
-                .tipoObra(TipoObra.LIBRO)
-                .autorCreador("Gabriel García Márquez")
-                .fechaLanzamiento(LocalDate.of(1967, 6, 1))
-                .origenApi("GOOGLE_BOOKS")
-                .build());
-        
-        resultados.add(ResultadoBusquedaDTO.builder()
-                .idExterno("ISBN9788490628784")
-                .titulo("1984")
-                .descripcion("Una distopía sobre un futuro totalitario donde el gobierno controla cada aspecto de la vida.")
-                .imagenUrl("https://books.google.com/books/content?id=example2")
-                .tipoObra(TipoObra.LIBRO)
-                .autorCreador("George Orwell")
-                .fechaLanzamiento(LocalDate.of(1949, 6, 8))
-                .origenApi("GOOGLE_BOOKS")
-                .build());
-        
-        resultados.add(ResultadoBusquedaDTO.builder()
-                .idExterno("ISBN9788420431834")
-                .titulo("El Quijote")
-                .descripcion("Las aventuras de un hidalgo que se vuelve loco por leer demasiados libros de caballería.")
-                .imagenUrl("https://books.google.com/books/content?id=example3")
-                .tipoObra(TipoObra.LIBRO)
-                .autorCreador("Miguel de Cervantes")
-                .fechaLanzamiento(LocalDate.of(1605, 1, 16))
-                .origenApi("GOOGLE_BOOKS")
-                .build());
-        
-        // TODO: Implementar llamada real
-        // String url = "https://www.googleapis.com/books/v1/volumes?q=" + query;
-        // if (apiKey != null && !apiKey.isEmpty()) {
-        //     url += "&key=" + apiKey;
-        // }
-        // ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
-        
-        return resultados;
+        return buscar(query, TipoObra.LIBRO, "");
     }
 
     /**
-     * Busca cómics en Google Books API
-     * TODO: Implementar llamada real a la API cuando se tenga la clave
+     * Busca cómics en Google Books API (funciona sin API key)
      */
     public List<ResultadoBusquedaDTO> buscarComics(String query) {
+        return buscar(query, TipoObra.COMIC, "+subject:comics");
+    }
+
+    private List<ResultadoBusquedaDTO> buscar(String query, TipoObra tipo, String extra) {
         List<ResultadoBusquedaDTO> resultados = new ArrayList<>();
-        
-        // PLACEHOLDER: Datos de ejemplo
-        resultados.add(ResultadoBusquedaDTO.builder()
-                .idExterno("ISBN9788416597157")
-                .titulo("Watchmen")
-                .descripcion("Una historia de superhéroes desilusionados en un mundo alternativo de la Guerra Fría.")
-                .imagenUrl("https://books.google.com/books/content?id=comic1")
-                .tipoObra(TipoObra.COMIC)
-                .autorCreador("Alan Moore")
-                .fechaLanzamiento(LocalDate.of(1986, 9, 1))
-                .origenApi("GOOGLE_BOOKS")
-                .build());
-        
-        // TODO: Implementar llamada real con filtro de cómics
-        // String url = "https://www.googleapis.com/books/v1/volumes?q=" + query + "+subject:comics";
-        
+
+        try {
+            String url = "https://www.googleapis.com/books/v1/volumes?q=" + query + extra
+                    + "&maxResults=15&langRestrict=es";
+            if (apiKey != null && !apiKey.isEmpty()) {
+                url += "&key=" + apiKey;
+            }
+
+            Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+
+            if (response != null && response.containsKey("items")) {
+                List<Map<String, Object>> items = (List<Map<String, Object>>) response.get("items");
+                for (Map<String, Object> item : items) {
+                    String idStr = item.get("id") != null ? item.get("id").toString() : "";
+
+                    Map<String, Object> volumeInfo = (Map<String, Object>) item.get("volumeInfo");
+                    if (volumeInfo == null)
+                        continue;
+
+                    String titulo = volumeInfo.get("title") != null ? volumeInfo.get("title").toString() : "";
+                    String descripcion = volumeInfo.get("description") != null
+                            ? volumeInfo.get("description").toString()
+                            : "";
+
+                    // Imagen
+                    String imagenUrl = null;
+                    if (volumeInfo.get("imageLinks") != null) {
+                        Map<String, Object> imageLinks = (Map<String, Object>) volumeInfo.get("imageLinks");
+                        if (imageLinks.get("thumbnail") != null) {
+                            // Reemplazar http por https para evitar mixed content
+                            imagenUrl = imageLinks.get("thumbnail").toString().replace("http://", "https://");
+                        }
+                    }
+
+                    // Autores
+                    String autor = "";
+                    if (volumeInfo.get("authors") != null) {
+                        List<String> authors = (List<String>) volumeInfo.get("authors");
+                        if (!authors.isEmpty()) {
+                            autor = String.join(", ", authors);
+                        }
+                    }
+
+                    // Fecha
+                    LocalDate fecha = null;
+                    String publishedDate = volumeInfo.get("publishedDate") != null
+                            ? volumeInfo.get("publishedDate").toString()
+                            : null;
+                    if (publishedDate != null) {
+                        try {
+                            if (publishedDate.length() == 4) {
+                                fecha = LocalDate.of(Integer.parseInt(publishedDate), 1, 1);
+                            } else if (publishedDate.length() == 7) {
+                                fecha = LocalDate.parse(publishedDate + "-01");
+                            } else {
+                                fecha = LocalDate.parse(publishedDate);
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
+
+                    resultados.add(ResultadoBusquedaDTO.builder()
+                            .idExterno(idStr)
+                            .titulo(titulo)
+                            .descripcion(descripcion)
+                            .imagenUrl(imagenUrl)
+                            .tipoObra(tipo)
+                            .autorCreador(autor)
+                            .fechaLanzamiento(fecha)
+                            .origenApi("GOOGLE_BOOKS")
+                            .build());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error al buscar en Google Books: " + e.getMessage());
+        }
+
         return resultados;
     }
 }
-
-

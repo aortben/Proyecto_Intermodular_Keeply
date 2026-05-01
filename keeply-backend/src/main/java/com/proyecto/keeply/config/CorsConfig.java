@@ -14,10 +14,11 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("*") // En producción, especifica el origen de Angular
+                .allowedOrigins("http://localhost:4200")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(false);
+                .exposedHeaders("Authorization")
+                .allowCredentials(true);
     }
 
     @Bean
@@ -26,4 +27,3 @@ public class CorsConfig implements WebMvcConfigurer {
         return new RestTemplate(factory);
     }
 }
-

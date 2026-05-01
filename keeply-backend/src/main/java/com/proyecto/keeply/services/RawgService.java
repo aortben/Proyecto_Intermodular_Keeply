@@ -10,63 +10,92 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class RawgService {
-    
-    @Value("${api.rawg.key:}")
-    private String apiKey;
-    
-    private final RestTemplate restTemplate;
 
-    /**
-     * Busca videojuegos en RAWG API
-     * TODO: Implementar llamada real a la API cuando se tenga la clave
-     */
-    public List<ResultadoBusquedaDTO> buscarVideojuegos(String query) {
-        List<ResultadoBusquedaDTO> resultados = new ArrayList<>();
-        
-        // PLACEHOLDER: Datos de ejemplo
-        resultados.add(ResultadoBusquedaDTO.builder()
-                .idExterno("3498")
-                .titulo("Grand Theft Auto V")
-                .descripcion("Un juego de mundo abierto ambientado en Los Santos, una versión satírica de Los Ángeles.")
-                .imagenUrl("https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg")
-                .tipoObra(TipoObra.VIDEOJUEGO)
-                .autorCreador("Rockstar Games")
-                .fechaLanzamiento(LocalDate.of(2013, 9, 17))
-                .origenApi("RAWG")
-                .build());
-        
-        resultados.add(ResultadoBusquedaDTO.builder()
-                .idExterno("3328")
-                .titulo("The Witcher 3: Wild Hunt")
-                .descripcion("Geralt de Rivia, un cazador de monstruos mutado, busca a su hija adoptiva en un mundo devastado por la guerra.")
-                .imagenUrl("https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg")
-                .tipoObra(TipoObra.VIDEOJUEGO)
-                .autorCreador("CD Projekt RED")
-                .fechaLanzamiento(LocalDate.of(2015, 5, 19))
-                .origenApi("RAWG")
-                .build());
-        
-        resultados.add(ResultadoBusquedaDTO.builder()
-                .idExterno("4200")
-                .titulo("Portal 2")
-                .descripcion("Chell debe escapar de Aperture Science Laboratories usando un dispositivo que crea portales.")
-                .imagenUrl("https://media.rawg.io/media/games/328/3283617cb7d75d67257fc58339188742.jpg")
-                .tipoObra(TipoObra.VIDEOJUEGO)
-                .autorCreador("Valve")
-                .fechaLanzamiento(LocalDate.of(2011, 4, 19))
-                .origenApi("RAWG")
-                .build());
-        
-        // TODO: Implementar llamada real
-        // String url = "https://api.rawg.io/api/games?key=" + apiKey + "&search=" + query;
-        // ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
-        
-        return resultados;
-    }
+        @Value("${api.rawg.key:}")
+        private String apiKey;
+
+        private final RestTemplate restTemplate;
+
+        /**
+         * Busca videojuegos en RAWG API
+         * RAWG requiere una API key gratuita: https://rawg.io/apidocs
+         * Si no hay key, devuelve datos de ejemplo
+         */
+        public List<ResultadoBusquedaDTO> buscarVideojuegos(String query) {
+                List<ResultadoBusquedaDTO> resultados = new ArrayList<>();
+
+                if (apiKey == null || apiKey.isEmpty()) {
+                        // Sin API key: intentar sin ella (RAWG puede funcionar sin key para pocas
+                        // peticiones)
+                        System.err.println(
+                                        "RAWG: No hay API key configurada. Consigue una gratis en https://rawg.io/apidocs");
+                }
+
+                try {
+                        String url = "https://api.rawg.io/api/games?search=" + query + "&page_size=15";
+                        if (apiKey != null && !apiKey.isEmpty()) {
+                                url += "&key=" + apiKey;
+                        }
+
+                        Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+
+                        if (response != null && response.containsKey("results")) {
+                                List<Map<String, Object>> items = (List<Map<String, Object>>) response.get("results");
+                                for (Map<String, Object> item : items) {
+                                        String idStr = item.get("id") != null ? item.get("id").toString() : "";
+                                        String titulo = item.get("name") != null ? item.get("name").toString() : "";
+
+                                        // Imagen
+                                        String imagenUrl = item.get("background_image") != null
+                                                        ? item.get("background_image").toString()
+                                                        : null;
+
+                                        // Fecha
+                                        LocalDate fecha = null;
+                                        String releasedStr = item.get("released") != null
+                                                        ? item.get("released").toString()
+                                                        : null;
+                                        if (releasedStr != null && !releasedStr.isEmpty()) {
+                                                try {
+                                                        fecha = LocalDate.parse(releasedStr);
+                                                } catch (Exception e) {
+                                                }
+                                        }
+
+                                        // Desarrolladores/Publicadores (no siempre en search results)
+                                        String autor = "";
+                                        if (item.get("genres") != null) {
+                                                List<Map<String, Object>> genres = (List<Map<String, Object>>) item
+                                                                .get("genres");
+                                                List<String> genreNames = new ArrayList<>();
+                                                for (Map<String, Object> genre : genres) {
+                                                        if (genre.get("name") != null)
+                                                                genreNames.add(genre.get("name").toString());
+                                                }
+                                                autor = String.join(", ", genreNames);
+                                        }
+
+                                        resultados.add(ResultadoBusquedaDTO.builder()
+                                                        .idExterno(idStr)
+                                                        .titulo(titulo)
+                                                        .descripcion("") // RAWG no devuelve descripción en el listado
+                                                        .imagenUrl(imagenUrl)
+                                                        .tipoObra(TipoObra.VIDEOJUEGO)
+                                                        .autorCreador(autor)
+                                                        .fechaLanzamiento(fecha)
+                                                        .origenApi("RAWG")
+                                                        .build());
+                                }
+                        }
+                } catch (Exception e) {
+                        System.err.println("Error al buscar videojuegos en RAWG: " + e.getMessage());
+                }
+
+                return resultados;
+        }
 }
-
-
