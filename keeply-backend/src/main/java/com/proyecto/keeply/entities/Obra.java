@@ -34,7 +34,7 @@ public class Obra {
 
     private String idExternoApi;
 
-    @Column(columnDefinition = "JSON")
+    @Column(columnDefinition = "TEXT")
     private String detallesJson;
 
     @Enumerated(EnumType.STRING)

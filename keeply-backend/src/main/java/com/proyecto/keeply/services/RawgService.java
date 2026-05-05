@@ -2,7 +2,6 @@ package com.proyecto.keeply.services;
 
 import com.proyecto.keeply.dto.ResultadoBusquedaDTO;
 import com.proyecto.keeply.entities.TipoObra;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,13 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class RawgService {
 
-        @Value("${api.rawg.key:}")
-        private String apiKey;
-
+        private final String apiKey;
         private final RestTemplate restTemplate;
+
+        public RawgService(RestTemplate restTemplate, @Value("${api.rawg.key:}") String apiKey) {
+                this.restTemplate = restTemplate;
+                this.apiKey = apiKey;
+        }
 
         /**
          * Busca videojuegos en RAWG API
