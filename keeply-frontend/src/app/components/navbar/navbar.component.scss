@@ -1,0 +1,339 @@
+/* Variables de color basadas en tu diseño */
+$navbar-bg: rgba(94, 85, 80, 0.95);
+$text-color: #e0e0e0;
+$text-hover: #ffffff;
+$btn-purple: #9b51e0;
+$btn-purple-hover: #823abf;
+$dropdown-bg: #615751;
+$dropdown-dark: #443c37;
+$input-bg: #4a423d;
+
+.keeply-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /* Posicionamiento flotante */
+    width: 95%;
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 12px 24px;
+
+    /* Estética visual */
+    background-color: $navbar-bg;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    /* Tipografía general */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: $text-color;
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .logo-icon {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+    }
+
+    .navbar-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            a {
+                color: $text-color;
+                text-decoration: none;
+                font-size: 0.95rem;
+                font-weight: 500;
+                transition: color 0.2s ease-in-out;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+
+                &:hover {
+                    color: $text-hover;
+                }
+
+                .arrow {
+                    font-size: 0.8rem;
+                    margin-top: 2px;
+                }
+            }
+
+            .nav-link-direct {
+                color: $text-color;
+                text-decoration: none;
+                font-size: 0.95rem;
+                font-weight: 600;
+                transition: color 0.2s ease-in-out;
+
+                &:hover {
+                    color: $text-hover;
+                }
+            }
+        }
+
+        .user-item {
+            gap: 10px;
+
+            .user-avatar {
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                    width: 100%;
+                    height: 100%;
+                    color: $text-color;
+                }
+            }
+        }
+    }
+
+    .navbar-action {
+        .btn-biblioteca {
+            background-color: $btn-purple;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+
+            &:hover {
+                background-color: $btn-purple-hover;
+            }
+
+            &:active {
+                transform: scale(0.97);
+            }
+        }
+    }
+}
+
+/* =========================================
+   MENÚS DESPLEGABLES (POPOVERS)
+   ========================================= */
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    background-color: $dropdown-bg;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    cursor: default;
+
+    /* Flechita superior del bocadillo */
+    &::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 0 12px 12px 12px;
+        border-style: solid;
+        border-color: transparent transparent $dropdown-bg transparent;
+    }
+
+    .dropdown-header {
+        padding: 20px 20px 10px 20px;
+
+        h4 {
+            margin: 0;
+            color: white;
+            font-size: 1.4rem;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-weight: 700;
+        }
+
+        .user-email {
+            display: block;
+            color: #cccccc;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    }
+
+    .dropdown-body {
+        padding: 10px 20px 20px 20px;
+
+        p {
+            color: white;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+    }
+
+    /* Enlaces dentro del menú */
+    .dropdown-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: white;
+        text-decoration: none;
+        padding: 10px 0;
+        font-size: 1.05rem;
+        font-weight: 600;
+        transition: color 0.2s;
+
+        &:hover {
+            color: #b05cff;
+        }
+
+        .icon {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+/* Tamaños específicos por menú */
+.menu-info {
+    width: 300px;
+}
+
+.menu-redes {
+    width: 200px;
+}
+
+.menu-comunidad {
+    width: 280px;
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        background-color: $input-bg;
+        border-radius: 8px;
+        padding: 8px 12px;
+        margin-bottom: 15px;
+
+        .icon {
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+            width: 100%;
+            font-size: 0.95rem;
+
+            &::placeholder {
+                color: #bbbbbb;
+            }
+        }
+    }
+}
+
+.menu-cuenta {
+    width: 280px;
+    overflow: hidden;
+
+    /* Footer oscuro para Asistencia */
+    .dropdown-footer {
+        background-color: $dropdown-dark;
+        padding: 15px 20px;
+    }
+
+    /* Formulario de login inline */
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .login-input {
+            width: 100%;
+            background-color: $input-bg;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+            box-sizing: border-box;
+
+            &::placeholder {
+                color: #bbbbbb;
+            }
+        }
+
+        .login-error {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .btn-login {
+            background-color: $btn-purple;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: $btn-purple-hover;
+            }
+        }
+
+        .login-registro {
+            color: #cccccc;
+            font-size: 0.85rem;
+            text-align: center;
+            margin: 5px 0 0 0;
+        }
+
+        .auth-toggle-text {
+            color: #cccccc;
+            font-size: 0.85rem;
+            text-align: center;
+            margin: 5px 0 0 0;
+
+            a {
+                color: #b05cff;
+                cursor: pointer;
+                text-decoration: none;
+                font-weight: 600;
+
+                &:hover {
+                    color: #c987ff;
+                }
+            }
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .keeply-navbar {
+        .navbar-links {
+            display: none;
+        }
+    }
+}

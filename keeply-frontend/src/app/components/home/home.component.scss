@@ -1,0 +1,85 @@
+/* Variables de color */
+$brand-purple: #8c38d6;
+/* El morado de tu logo */
+$brand-purple-light: #c287f7;
+
+.home-container {
+    /* AQUÍ VA TU WALLPAPER PERSONALIZADO */
+    /* Descomentar cuando tengas la imagen en src/assets/images/ */
+    // background-image: url('../../../assets/images/fondo-keeply.jpg');
+    background-color: #1a1a2e;
+    /* Color de respaldo mientras no haya imagen */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* Hace que el fondo se quede quieto si haces scroll */
+    background-repeat: no-repeat;
+
+    /* Ocupa siempre el 100% del alto de la pantalla */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-section {
+    flex: 1;
+    /* Esto empuja el contenido para que ocupe todo el espacio bajo el navbar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    /* Sombra radial difuminada para que el texto resalte sobre las carátulas de fondo */
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 60%);
+    padding: 40px;
+}
+
+.keeply-title {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 6rem;
+    font-weight: 900;
+    color: $brand-purple;
+    margin: 0 0 15px 0;
+    letter-spacing: 3px;
+
+    /* Este text-shadow imita el borde negro grueso que tiene tu diseño de Figma */
+    text-shadow:
+        4px 4px 0 #000,
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000;
+}
+
+.slogan-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.keeply-slogan {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+
+    /* Sombra para que la letra blanca no se pierda */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+
+    &.highlight {
+        color: $brand-purple-light;
+    }
+}
+
+/* Modo Responsive: Ajustar tamaños en móviles */
+@media (max-width: 768px) {
+    .keeply-title {
+        font-size: 4rem;
+    }
+
+    .keeply-slogan {
+        font-size: 1.4rem;
+    }
+}

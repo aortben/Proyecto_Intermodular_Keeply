@@ -1,0 +1,84 @@
+<div class="categoria-page">
+    <app-navbar></app-navbar>
+
+    <main class="categoria-content">
+
+        <div class="banner-container">
+            <img [src]="bannerUrl" alt="Banner de {{ categoria }}" class="banner-img">
+        </div>
+
+        <div class="title-section">
+            <h1 class="main-title">{{ categoria }} de {{ usuario }}</h1>
+            <hr class="separator-line">
+        </div>
+
+        <div class="control-panel">
+
+            <div class="search-bar">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text"
+                       placeholder="Buscar títulos..."
+                       class="search-input"
+                       [(ngModel)]="searchTerm"
+                       (ngModelChange)="filtrarItems()">
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-purple" (click)="volverAlMenu()">Volver al menú</button>
+                <button class="btn-purple" [ngClass]="{'btn-active': modoEdicion}" (click)="toggleModoEdicion()">
+                    {{ modoEdicion ? 'Cancelar edicion' : 'Editar biblioteca' }}
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Barra de acciones en modo edición -->
+        <div class="edit-toolbar" *ngIf="modoEdicion">
+            <div class="edit-toolbar-left">
+                <button class="btn-select-all" (click)="toggleSeleccionarTodos()">
+                    {{ seleccionados.size === items.length ? 'Deseleccionar todo' : 'Seleccionar todo' }}
+                </button>
+                <span class="selection-count">{{ seleccionados.size }} seleccionado{{ seleccionados.size !== 1 ? 's' : '' }}</span>
+            </div>
+            <button class="btn-delete-selected" (click)="eliminarSeleccionados()" [disabled]="seleccionados.size === 0">
+                Eliminar seleccionados
+            </button>
+        </div>
+
+        <section class="items-grid">
+            <article class="item-card"
+                     *ngFor="let item of items"
+                     [ngClass]="{'item-selected': modoEdicion && isSeleccionado(item.idItemUsuario)}"
+                     [routerLink]="modoEdicion ? null : ['/item', item.idItemUsuario]"
+                     (click)="modoEdicion ? toggleSeleccion(item.idItemUsuario, $event) : null"
+                     [style.cursor]="modoEdicion ? 'pointer' : 'pointer'">
+
+                <!-- Checkbox de selección en modo edición -->
+                <div class="selection-overlay" *ngIf="modoEdicion">
+                    <div class="check-circle" [ngClass]="{'checked': isSeleccionado(item.idItemUsuario)}">
+                        <svg *ngIf="isSeleccionado(item.idItemUsuario)" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="card-image-container">
+                    <img [src]="item.imagenUrl" [alt]="item.titulo" class="item-image">
+                </div>
+                <h3 class="item-name">{{ item.titulo }}</h3>
+                <span class="item-estado badge-estado" [ngClass]="item.estado">{{ item.estado }}</span>
+            </article>
+        </section>
+
+        <p class="empty-message" *ngIf="items.length === 0 && searchTerm">
+            No se encontraron resultados para "{{ searchTerm }}"
+        </p>
+        <p class="empty-message" *ngIf="todosLosItems.length === 0 && !searchTerm">
+            Aún no tienes obras en esta categoría. ¡Ve a <a routerLink="/busqueda">Explorar</a> para añadir!
+        </p>
+
+    </main>
+</div>

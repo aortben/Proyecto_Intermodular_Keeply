@@ -1,0 +1,373 @@
+@use 'sass:color';
+
+$keeply-brown: #7a6f69;
+$panel-brown: #6a5e57;
+$panel-brown-dark: #4a423d;
+$bg-white: #ffffff;
+$brand-purple: #9b51e0;
+$brand-purple-hover: #8a41c9;
+$title-purple: #a855f7;
+$text-gray: #666666;
+$danger-red: #e74c3c;
+
+.categoria-page {
+    min-height: 100vh;
+    background-color: $bg-white;
+    padding-bottom: 50px;
+}
+
+.categoria-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- 1. Banner Superior --- */
+.banner-container {
+    width: 100%;
+    height: 250px;
+    margin-top: 20px;
+    border-radius: 16px;
+    border: 4px solid $keeply-brown;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    .banner-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+/* --- 2. Título --- */
+.title-section {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0 30px 0;
+
+    .main-title {
+        font-family: 'Inter', system-ui, sans-serif;
+        color: $title-purple;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .separator-line {
+        border: none;
+        border-top: 4px solid $keeply-brown;
+        width: 100%;
+        margin: 0;
+    }
+}
+
+/* --- 3. Panel de Control --- */
+.control-panel {
+    background-color: $panel-brown;
+    padding: 20px 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    .search-bar {
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            width: 20px;
+            height: 20px;
+            color: #bbbbbb;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: $panel-brown-dark;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 15px 12px 45px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Inter', system-ui, sans-serif;
+            outline: none;
+
+            &::placeholder {
+                color: #bbbbbb;
+            }
+        }
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        justify-content: space-between;
+
+        .btn-purple {
+            flex: 1;
+            background-color: $brand-purple;
+            color: white;
+            border: 3px solid #7d40b8;
+            border-radius: 12px;
+            padding: 10px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: $brand-purple-hover;
+            }
+
+            &.btn-active {
+                background-color: $danger-red;
+                border-color: color.adjust($danger-red, $lightness: -10%);
+
+                &:hover {
+                    background-color: color.adjust($danger-red, $lightness: -8%);
+                }
+            }
+        }
+    }
+}
+
+/* --- Edit Toolbar --- */
+.edit-toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $panel-brown;
+    padding: 14px 24px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    animation: slideDown 0.25s ease-out;
+
+    .edit-toolbar-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .btn-select-all {
+        background-color: rgba(255, 255, 255, 0.12);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 10px;
+        padding: 8px 18px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+
+    .selection-count {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .btn-delete-selected {
+        background-color: $danger-red;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 22px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover:not(:disabled) {
+            background-color: color.adjust($danger-red, $lightness: -8%);
+            transform: scale(1.02);
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 4. Cuadrícula de Obras --- */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    width: 100%;
+}
+
+/* Tarjeta individual */
+.item-card {
+    position: relative;
+    border: 4px solid $keeply-brown;
+    border-radius: 20px;
+    padding: 15px;
+    background-color: $bg-white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+
+    &.item-selected {
+        border-color: $brand-purple;
+        box-shadow: 0 0 0 3px rgba($brand-purple, 0.3);
+        background-color: #faf5ff;
+    }
+
+    .card-image-container {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 12px;
+        aspect-ratio: 2 / 3;
+
+        .item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    .item-name {
+        font-family: 'Inter', system-ui, sans-serif;
+        color: $text-gray;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 6px 0;
+        text-align: center;
+    }
+
+    .item-estado {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 8px;
+        background-color: rgba($keeply-brown, 0.12);
+        color: $keeply-brown;
+
+        &.En_Progreso {
+            background-color: rgba(#3498db, 0.12);
+            color: #2980b9;
+        }
+        &.Completado {
+            background-color: rgba(#2ecc71, 0.12);
+            color: #27ae60;
+        }
+        &.Abandonado {
+            background-color: rgba($danger-red, 0.12);
+            color: $danger-red;
+        }
+    }
+}
+
+/* Selection overlay */
+.selection-overlay {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+
+    .check-circle {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 3px solid rgba($keeply-brown, 0.4);
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        &.checked {
+            background-color: $brand-purple;
+            border-color: $brand-purple;
+        }
+    }
+}
+
+/* Empty message */
+.empty-message {
+    text-align: center;
+    color: #999999;
+    font-size: 1.1rem;
+    padding: 40px 0;
+    width: 100%;
+
+    a {
+        color: $brand-purple;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .items-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .banner-container {
+        height: 180px;
+    }
+}
+
+@media (max-width: 600px) {
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .edit-toolbar {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+}

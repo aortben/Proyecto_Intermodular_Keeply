@@ -1,0 +1,174 @@
+<div class="detalle-page">
+    <app-navbar></app-navbar>
+
+    <main class="detalle-content" *ngIf="!cargando && item">
+
+        <!-- 1. Cabecera de la obra -->
+        <header class="obra-header">
+            <div class="obra-portada-container" *ngIf="item.obra.urlImagenPrincipal">
+                <img [src]="item.obra.urlImagenPrincipal" [alt]="item.obra.titulo" class="obra-portada">
+            </div>
+            <div class="obra-info">
+                <h1 class="obra-titulo">{{ item.obra.titulo }}</h1>
+                <div class="obra-meta">
+                    <span class="badge badge-tipo">{{ item.obra.tipoObra }}</span>
+                    <span class="badge badge-estado" [ngClass]="item.estado">{{ getEstadoLabel(item.estado) }}</span>
+                    <span class="valoracion" *ngIf="item.valoracionPersonal">
+                        {{ item.valoracionPersonal }} / 10
+                    </span>
+                </div>
+                <p class="obra-descripcion" *ngIf="item.obra.descripcion">{{ item.obra.descripcion }}</p>
+                <p class="obra-autor" *ngIf="item.obra.autorCreador">Autor: {{ item.obra.autorCreador }}</p>
+                <p class="obra-fecha" *ngIf="item.fechaAdicion">Añadido: {{ item.fechaAdicion | slice:0:10 }}</p>
+            </div>
+            <div class="obra-actions">
+                <button class="btn-edit-item" (click)="toggleEditarPropiedades()">
+                    {{ editandoPropiedades ? 'Cancelar' : 'Editar' }}
+                </button>
+                <button class="btn-delete-item" (click)="eliminarItem()">
+                    Eliminar
+                </button>
+            </div>
+        </header>
+
+        <!-- Mensaje de exito -->
+        <div class="success-message" *ngIf="mensajeExito">
+            {{ mensajeExito }}
+        </div>
+
+        <!-- Panel de edicion de propiedades -->
+        <div class="edit-panel" *ngIf="editandoPropiedades">
+            <h3 class="edit-panel-title">Editar propiedades</h3>
+
+            <div class="edit-fields">
+                <div class="edit-field">
+                    <label class="edit-label">Estado</label>
+                    <select [(ngModel)]="estadoEditado" class="edit-select">
+                        <option *ngFor="let e of estados" [ngValue]="e.valor">{{ e.label }}</option>
+                    </select>
+                </div>
+
+                <div class="edit-field">
+                    <label class="edit-label">Valoracion personal (1-10)</label>
+                    <div class="rating-container">
+                        <input type="range"
+                               min="1" max="10" step="1"
+                               [(ngModel)]="valoracionEditada"
+                               class="rating-slider">
+                        <span class="rating-value">{{ valoracionEditada ?? '—' }}</span>
+                        <button class="btn-clear-rating" *ngIf="valoracionEditada" (click)="valoracionEditada = null">X</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-save-props" (click)="guardarPropiedades()" [disabled]="guardandoPropiedades">
+                {{ guardandoPropiedades ? 'Guardando...' : 'Guardar cambios' }}
+            </button>
+        </div>
+
+        <hr class="separator-line">
+
+        <!-- 2. Boton para abrir el editor -->
+        <div class="editor-toggle">
+            <button class="btn-add-nota" (click)="toggleEditor()">
+                {{ editorAbierto ? 'Cancelar' : 'Añadir nota' }}
+            </button>
+        </div>
+
+        <!-- 3. Editor de nota (desplegable) -->
+        <div class="nota-editor" *ngIf="editorAbierto">
+            <textarea [(ngModel)]="nuevoTexto" placeholder="Escribe tu nota, comentario o resena (opcional)..." class="editor-textarea"
+                rows="4"></textarea>
+
+            <!-- Añadir adjuntos por URL -->
+            <div class="adjuntos-form">
+                <select [(ngModel)]="nuevoTipoAdjunto" class="adjunto-select">
+                    <option *ngFor="let tipo of tiposAdjunto" [value]="tipo">{{ tipo }}</option>
+                </select>
+                <input type="text" [(ngModel)]="nuevaUrlAdjunto" placeholder="Pegar URL de imagen, video o audio..."
+                    class="adjunto-input">
+                <button class="btn-adjuntar" (click)="agregarAdjuntoUrl()">Adjuntar URL</button>
+            </div>
+
+            <!-- Subir archivo desde el explorador -->
+            <div class="file-upload-section">
+                <label class="btn-upload-file" [class.uploading]="subiendoArchivo">
+                    {{ subiendoArchivo ? 'Subiendo...' : 'Subir archivo' }}
+                    <input type="file"
+                           accept="image/*,video/*,audio/*"
+                           (change)="onFileSelected($event)"
+                           [disabled]="subiendoArchivo"
+                           style="display: none;">
+                </label>
+                <span class="upload-hint">Imagenes, videos o audio desde tu equipo</span>
+            </div>
+
+            <!-- Preview de adjuntos pendientes -->
+            <div class="adjuntos-preview" *ngIf="adjuntosPendientes.length > 0">
+                <div class="adjunto-chip" *ngFor="let adj of adjuntosPendientes; let i = index">
+                    <span class="chip-tipo">{{ adj.tipoAdjunto }}</span>
+                    <span class="chip-url">{{ adj.urlArchivo | slice:0:40 }}...</span>
+                    <button class="chip-remove" (click)="eliminarAdjuntoPendiente(i)">X</button>
+                </div>
+            </div>
+
+            <button class="btn-guardar" (click)="guardarNota()">Guardar nota</button>
+        </div>
+
+        <!-- 4. Feed de notas -->
+        <section class="notas-feed">
+            <p class="empty-msg" *ngIf="notas.length === 0">
+                Todavia no hay notas. Añade tu primer comentario, foto o resena.
+            </p>
+
+            <article class="nota-card" *ngFor="let nota of notas">
+                <div class="nota-header">
+                    <span class="nota-fecha">{{ nota.fechaCreacion | slice:0:10 }}</span>
+                    <div class="nota-actions">
+                        <button class="btn-edit-nota" (click)="iniciarEdicionNota(nota)">Editar</button>
+                        <button class="btn-delete-nota" (click)="eliminarNota(nota.idNota!)">Eliminar</button>
+                    </div>
+                </div>
+
+                <!-- Modo visualizacion -->
+                <ng-container *ngIf="editandoNotaId !== nota.idNota">
+                    <p class="nota-texto" *ngIf="nota.textoNota">{{ nota.textoNota }}</p>
+                </ng-container>
+
+                <!-- Modo edicion -->
+                <div class="nota-edit-mode" *ngIf="editandoNotaId === nota.idNota">
+                    <textarea [(ngModel)]="textoEditandoNota" class="editor-textarea" rows="3"></textarea>
+                    <div class="nota-edit-buttons">
+                        <button class="btn-save-edit" (click)="guardarEdicionNota(nota)">Guardar</button>
+                        <button class="btn-cancel-edit" (click)="cancelarEdicionNota()">Cancelar</button>
+                    </div>
+                </div>
+
+                <!-- Galeria de adjuntos -->
+                <div class="nota-adjuntos" *ngIf="nota.adjuntos && nota.adjuntos.length > 0">
+                    <ng-container *ngFor="let adj of nota.adjuntos">
+                        <!-- Imagen -->
+                        <img *ngIf="adj.tipoAdjunto === 'IMAGEN'" [src]="adj.urlArchivo" [alt]="'Imagen adjunta'"
+                            class="adjunto-imagen">
+                        <!-- Video -->
+                        <video *ngIf="adj.tipoAdjunto === 'VIDEO'" [src]="adj.urlArchivo" controls preload="metadata"
+                            class="adjunto-video"></video>
+                        <!-- Audio -->
+                        <audio *ngIf="adj.tipoAdjunto === 'AUDIO'" [src]="adj.urlArchivo" controls
+                            class="adjunto-audio"></audio>
+                    </ng-container>
+                </div>
+            </article>
+        </section>
+
+        <!-- Boton volver -->
+        <div class="volver-container">
+            <button class="btn-volver" (click)="volver()">Volver a la biblioteca</button>
+        </div>
+
+    </main>
+
+    <div class="loading-container" *ngIf="cargando">
+        <p>Cargando...</p>
+    </div>
+</div>

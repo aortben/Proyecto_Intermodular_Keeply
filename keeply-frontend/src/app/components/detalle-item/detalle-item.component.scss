@@ -1,0 +1,760 @@
+@use 'sass:color';
+
+$keeply-brown: #7a6f69;
+$panel-brown: #6a5e57;
+$panel-brown-dark: #4a423d;
+$bg-white: #ffffff;
+$brand-purple: #9b51e0;
+$brand-purple-hover: #823abf;
+$title-purple: #a855f7;
+$text-gray: #666666;
+$danger-red: #e74c3c;
+$success-green: #2ecc71;
+
+.detalle-page {
+    min-height: 100vh;
+    background-color: $bg-white;
+    padding-bottom: 60px;
+}
+
+.detalle-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- 1. Cabecera de la Obra --- */
+.obra-header {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    padding: 25px;
+    background-color: $panel-brown;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    .obra-portada-container {
+        flex-shrink: 0;
+        width: 180px;
+        height: 250px;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+
+        .obra-portada {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .obra-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+
+        .obra-titulo {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+        }
+
+        .obra-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-tipo {
+            background-color: $brand-purple;
+            color: white;
+        }
+
+        .badge-estado {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            &.Completado {
+                background-color: rgba($success-green, 0.25);
+                border-color: rgba($success-green, 0.5);
+            }
+            &.En_Progreso {
+                background-color: rgba(#3498db, 0.25);
+                border-color: rgba(#3498db, 0.5);
+            }
+            &.Abandonado {
+                background-color: rgba($danger-red, 0.25);
+                border-color: rgba($danger-red, 0.5);
+            }
+        }
+
+        .valoracion {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .obra-descripcion {
+            color: #d4d4d4;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 5px 0;
+        }
+
+        .obra-autor,
+        .obra-fecha {
+            color: #bbbbbb;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+    }
+
+    .obra-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-shrink: 0;
+
+        .btn-edit-item,
+        .btn-delete-item {
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-edit-item {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: white;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        .btn-delete-item {
+            background: transparent;
+            border: 2px solid rgba($danger-red, 0.6);
+            color: #ff6b6b;
+
+            &:hover {
+                background-color: rgba($danger-red, 0.15);
+                border-color: $danger-red;
+            }
+        }
+    }
+}
+
+/* --- Success Message --- */
+.success-message {
+    margin-top: 16px;
+    padding: 12px 20px;
+    background-color: rgba($success-green, 0.1);
+    border: 2px solid rgba($success-green, 0.3);
+    border-radius: 12px;
+    color: #27ae60;
+    font-weight: 600;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Edit Panel --- */
+.edit-panel {
+    margin-top: 20px;
+    padding: 25px;
+    background-color: $panel-brown;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.25s ease-out;
+
+    .edit-panel-title {
+        color: white;
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 0 0 20px 0;
+    }
+
+    .edit-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .edit-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .edit-label {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .edit-select {
+        background-color: $panel-brown-dark;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: white;
+        font-size: 1rem;
+        outline: none;
+        cursor: pointer;
+        transition: border-color 0.2s;
+
+        &:focus {
+            border-color: $brand-purple;
+        }
+
+        option {
+            background-color: $panel-brown-dark;
+            color: white;
+        }
+    }
+
+    .rating-container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .rating-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, $brand-purple, #ffd700);
+            outline: none;
+            cursor: pointer;
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: white;
+                border: 3px solid $brand-purple;
+                cursor: pointer;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            }
+
+            &::-moz-range-thumb {
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: white;
+                border: 3px solid $brand-purple;
+                cursor: pointer;
+            }
+        }
+
+        .rating-value {
+            color: #ffd700;
+            font-size: 1.5rem;
+            font-weight: 800;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .btn-clear-rating {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+            }
+        }
+    }
+
+    .btn-save-props {
+        margin-top: 20px;
+        width: 100%;
+        background-color: $brand-purple;
+        color: white;
+        border: none;
+        border-radius: 14px;
+        padding: 14px 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover:not(:disabled) {
+            background-color: $brand-purple-hover;
+            transform: translateY(-1px);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Separador --- */
+.separator-line {
+    border: none;
+    border-top: 4px solid $keeply-brown;
+    margin: 30px 0;
+}
+
+/* --- 2. Botón Añadir Nota --- */
+.editor-toggle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+
+    .btn-add-nota {
+        background-color: $brand-purple;
+        color: white;
+        border: 3px solid #7d40b8;
+        border-radius: 14px;
+        padding: 12px 36px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
+
+        &:hover {
+            background-color: $brand-purple-hover;
+        }
+
+        &:active {
+            transform: scale(0.97);
+        }
+    }
+}
+
+/* --- 3. Editor de Nota --- */
+.nota-editor {
+    background-color: $panel-brown;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.25s ease-out;
+
+    .editor-textarea {
+        width: 100%;
+        background-color: $panel-brown-dark;
+        border: none;
+        border-radius: 12px;
+        padding: 15px;
+        color: white;
+        font-size: 1rem;
+        font-family: 'Inter', system-ui, sans-serif;
+        resize: vertical;
+        outline: none;
+        box-sizing: border-box;
+
+        &::placeholder {
+            color: #bbbbbb;
+        }
+    }
+
+    .adjuntos-form {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        .adjunto-select {
+            background-color: $panel-brown-dark;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .adjunto-input {
+            flex: 1;
+            background-color: $panel-brown-dark;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+
+            &::placeholder {
+                color: #bbbbbb;
+            }
+        }
+
+        .btn-adjuntar {
+            background-color: $keeply-brown;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: color.adjust($keeply-brown, $lightness: -10%);
+            }
+        }
+    }
+
+    .adjuntos-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .adjunto-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 6px 12px;
+
+            .chip-tipo {
+                color: $title-purple;
+                font-weight: 600;
+                font-size: 0.8rem;
+            }
+
+            .chip-url {
+                color: #cccccc;
+                font-size: 0.8rem;
+            }
+
+            .chip-remove {
+                background: none;
+                border: none;
+                color: #ff6b6b;
+                cursor: pointer;
+                font-size: 0.9rem;
+                padding: 0;
+            }
+        }
+    }
+
+    .btn-guardar {
+        align-self: flex-end;
+        background-color: $brand-purple;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 30px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: $brand-purple-hover;
+        }
+    }
+
+    .file-upload-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .btn-upload-file {
+            background-color: $keeply-brown;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: color.adjust($keeply-brown, $lightness: -10%);
+            }
+
+            &.uploading {
+                opacity: 0.7;
+                cursor: wait;
+            }
+        }
+
+        .upload-hint {
+            color: #999999;
+            font-size: 0.85rem;
+        }
+    }
+}
+
+/* --- 4. Feed de Notas --- */
+.notas-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .empty-msg {
+        text-align: center;
+        color: #999999;
+        font-size: 1.1rem;
+        padding: 40px 0;
+    }
+}
+
+.nota-card {
+    border: 3px solid $keeply-brown;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: $bg-white;
+    transition: box-shadow 0.2s;
+
+    &:hover {
+        box-shadow: 0 4px 16px rgba(122, 111, 105, 0.15);
+    }
+
+    .nota-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+
+        .nota-fecha {
+            color: #999999;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nota-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-edit-nota,
+        .btn-delete-nota {
+            background: none;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: #666666;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: #f5f5f5;
+                color: #333333;
+            }
+        }
+
+        .btn-delete-nota:hover {
+            border-color: $danger-red;
+            color: $danger-red;
+        }
+    }
+
+    .nota-edit-mode {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 12px;
+
+        .editor-textarea {
+            width: 100%;
+            background-color: #f5f5f5;
+            border: 2px solid #dddddd;
+            border-radius: 10px;
+            padding: 12px;
+            color: #333333;
+            font-size: 1rem;
+            font-family: 'Inter', system-ui, sans-serif;
+            resize: vertical;
+            outline: none;
+            box-sizing: border-box;
+
+            &:focus {
+                border-color: $brand-purple;
+            }
+        }
+
+        .nota-edit-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-save-edit {
+            background-color: $brand-purple;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: $brand-purple-hover;
+            }
+        }
+
+        .btn-cancel-edit {
+            background: none;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #666666;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: #f5f5f5;
+            }
+        }
+    }
+
+    .nota-texto {
+        font-family: 'Inter', system-ui, sans-serif;
+        color: #333333;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        margin: 0 0 15px 0;
+        white-space: pre-wrap;
+    }
+
+    .nota-adjuntos {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 12px;
+
+        .adjunto-imagen {
+            width: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+            max-height: 300px;
+        }
+
+        .adjunto-video {
+            width: 100%;
+            border-radius: 12px;
+            max-height: 350px;
+        }
+
+        .adjunto-audio {
+            width: 100%;
+            margin-top: 5px;
+        }
+    }
+}
+
+/* --- Botón volver --- */
+.volver-container {
+    margin-top: 40px;
+    text-align: center;
+
+    .btn-volver {
+        background: none;
+        border: 2px solid $keeply-brown;
+        color: $keeply-brown;
+        padding: 10px 24px;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: $keeply-brown;
+            color: white;
+        }
+    }
+}
+
+/* --- Loading --- */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    color: #999999;
+    font-size: 1.2rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .obra-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .obra-portada-container {
+            width: 150px;
+            height: 200px;
+        }
+
+        .obra-meta {
+            justify-content: center;
+        }
+
+        .obra-actions {
+            flex-direction: row;
+            justify-content: center;
+        }
+    }
+
+    .adjuntos-form {
+        flex-direction: column;
+    }
+
+    .nota-adjuntos {
+        grid-template-columns: 1fr !important;
+    }
+
+    .edit-panel {
+        .rating-container {
+            flex-wrap: wrap;
+        }
+    }
+}

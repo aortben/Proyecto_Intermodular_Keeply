@@ -1,0 +1,27 @@
+<div class="biblioteca-page">
+    <app-navbar></app-navbar>
+
+    <main class="biblioteca-content">
+
+        <header class="user-header">
+            <img [src]="usuario.avatarUrl" alt="Avatar de {{ usuario.nombre }}" class="user-avatar-large">
+            <h2 class="user-title">Coleccion de {{ usuario.nombre }}</h2>
+        </header>
+
+        <section class="categories-grid">
+
+            <article class="category-card" *ngFor="let cat of categorias" [routerLink]="cat.ruta">
+                <div class="card-image-container">
+                    <img [src]="cat.imagen" [alt]="cat.nombre" class="category-image">
+                </div>
+                <h3 class="category-name">{{ cat.nombre }}</h3>
+            </article>
+
+        </section>
+
+        <div class="explorar-container">
+            <button class="btn-explorar" routerLink="/busqueda">Explorar obras</button>
+        </div>
+
+    </main>
+</div>

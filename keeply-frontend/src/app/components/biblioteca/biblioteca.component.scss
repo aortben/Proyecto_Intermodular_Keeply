@@ -1,0 +1,147 @@
+/* Variables de color según el diseño */
+$keeply-brown: #7a6f69;
+$keeply-brown-dark: #6a5e57;
+$bg-white: #ffffff;
+$text-gray: #666666;
+
+.biblioteca-page {
+    min-height: 100vh;
+    background-color: $bg-white;
+    padding-bottom: 50px;
+}
+
+.biblioteca-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Cabecera del Usuario --- */
+.user-header {
+    background-color: $keeply-brown;
+    border-radius: 20px;
+    padding: 15px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 350px;
+
+    .user-avatar-large {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid $bg-white;
+        background-color: $bg-white;
+        margin-top: -45px;
+        /* Efecto de avatar sobresaliendo por arriba */
+    }
+
+    .user-title {
+        color: $bg-white;
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0;
+    }
+}
+
+/* --- Cuadrícula de Categorías --- */
+.categories-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px 30px;
+    width: 100%;
+}
+
+/* --- Tarjeta Individual --- */
+.category-card {
+    width: calc(33.33% - 20px);
+    border: 4px solid $keeply-brown;
+    border-radius: 24px;
+    padding: 15px;
+    background-color: $bg-white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(122, 111, 105, 0.2);
+        border-color: $keeply-brown-dark;
+    }
+
+    .card-image-container {
+        width: 100%;
+        border-radius: 14px;
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        .category-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    .category-name {
+        font-family: 'Inter', system-ui, sans-serif;
+        color: $text-gray;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0;
+        padding-bottom: 5px;
+    }
+}
+
+/* --- Boton Explorar --- */
+.explorar-container {
+    margin-top: 40px;
+    text-align: center;
+
+    .btn-explorar {
+        background-color: $keeply-brown;
+        color: white;
+        border: 3px solid $keeply-brown-dark;
+        border-radius: 16px;
+        padding: 14px 40px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: $keeply-brown-dark;
+            transform: translateY(-2px);
+        }
+    }
+}
+
+/* --- Responsive para moviles y tablets --- */
+@media (max-width: 900px) {
+    .category-card {
+        width: calc(50% - 15px);
+    }
+}
+
+@media (max-width: 600px) {
+    .category-card {
+        width: 100%;
+    }
+
+    .user-header {
+        min-width: 100%;
+    }
+}
