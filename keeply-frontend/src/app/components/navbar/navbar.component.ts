@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
     selector: 'app-navbar',
@@ -14,11 +15,15 @@ import { AuthService } from '../../services/auth.service';
 export class NavbarComponent {
     private authService = inject(AuthService);
     private router = inject(Router);
+    themeService = inject(ThemeService);
 
     currentUser$ = this.authService.currentUser$;
 
     // Control de qué menú está abierto
     menuAbierto: string | null = null;
+
+    // Menú móvil
+    menuMobilAbierto = false;
 
     // Toggle login ↔ registro dentro del popup
     modoAuth: 'login' | 'registro' = 'login';
@@ -58,6 +63,18 @@ export class NavbarComponent {
         this.modoAuth = this.modoAuth === 'login' ? 'registro' : 'login';
         this.authError = '';
         this.authExito = '';
+    }
+
+    toggleMenuMobil(): void {
+        this.menuMobilAbierto = !this.menuMobilAbierto;
+    }
+
+    cerrarMenuMobil(): void {
+        this.menuMobilAbierto = false;
+    }
+
+    toggleTheme(): void {
+        this.themeService.toggleTheme();
     }
 
     loginInline(): void {
@@ -100,14 +117,15 @@ export class NavbarComponent {
     logout(): void {
         this.authService.logout();
         this.menuAbierto = null;
+        this.menuMobilAbierto = false;
         this.router.navigate(['/']);
     }
 
     irABiblioteca(): void {
+        this.menuMobilAbierto = false;
         if (this.authService.isLoggedIn()) {
             this.router.navigate(['/biblioteca']);
         } else {
-            // Abrir el popup de cuenta para que inicie sesión
             this.menuAbierto = 'cuenta';
             this.modoAuth = 'login';
             this.authError = '';

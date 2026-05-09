@@ -1,7 +1,8 @@
 .busqueda-page {
     min-height: 100vh;
-    background-color: #ffffff;
+    background-color: var(--bg-primary);
     padding-bottom: 50px;
+    transition: background-color 0.3s ease;
 }
 
 .busqueda-container {
@@ -18,7 +19,7 @@
 }
 
 .busqueda-header h2 {
-    color: #a855f7;
+    color: var(--title-purple, #a855f7);
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 2rem;
     font-weight: 700;
@@ -27,8 +28,8 @@
 
 .btn-volver {
     background: none;
-    border: 2px solid #7a6f69;
-    color: #7a6f69;
+    border: 2px solid var(--keeply-brown, #7a6f69);
+    color: var(--text-primary);
     padding: 8px 20px;
     border-radius: 12px;
     font-size: 0.95rem;
@@ -38,7 +39,7 @@
 }
 
 .btn-volver:hover {
-    background-color: #7a6f69;
+    background-color: var(--keeply-brown, #7a6f69);
     color: white;
 }
 
@@ -49,7 +50,7 @@
     background-color: #6a5e57;
     padding: 16px 24px;
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
 }
 
 .busqueda-form input {
@@ -125,11 +126,11 @@
 }
 
 .resultado-card {
-    border: 3px solid #7a6f69;
+    border: 3px solid var(--card-border, #7a6f69);
     border-radius: 16px;
     overflow: hidden;
-    background-color: #ffffff;
-    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: var(--bg-card);
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
 }
 
 .resultado-card:hover {
@@ -170,7 +171,7 @@
     font-size: 1rem;
     font-weight: 700;
     margin: 0 0 0.4rem 0;
-    color: #333333;
+    color: var(--text-primary);
 }
 
 .tipo-badge {
@@ -185,14 +186,14 @@
 }
 
 .fecha {
-    color: #999999;
+    color: var(--text-muted, #999);
     font-size: 0.85rem;
     margin: 0 0 0.3rem 0;
 }
 
 .descripcion {
     font-size: 0.85rem;
-    color: #888888;
+    color: var(--text-secondary);
     margin: 0.4rem 0;
     line-height: 1.4;
 }
@@ -239,8 +240,16 @@
         align-items: flex-start;
     }
 
+    .busqueda-header h2 {
+        font-size: 1.5rem;
+    }
+
     .resultados-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .busqueda-container {
+        padding: 1rem;
     }
 }
 

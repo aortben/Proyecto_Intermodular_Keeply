@@ -4,33 +4,24 @@ $brand-purple: #8c38d6;
 $brand-purple-light: #c287f7;
 
 .home-container {
-    /* AQUÍ VA TU WALLPAPER PERSONALIZADO */
-    /* Descomentar cuando tengas la imagen en src/assets/images/ */
-    // background-image: url('../../../assets/images/fondo-keeply.jpg');
-    background-color: #1a1a2e;
-    /* Color de respaldo mientras no haya imagen */
+    background-color: var(--bg-primary, #1a1a2e);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    /* Hace que el fondo se quede quieto si haces scroll */
     background-repeat: no-repeat;
-
-    /* Ocupa siempre el 100% del alto de la pantalla */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background-color 0.3s ease;
 }
 
 .hero-section {
     flex: 1;
-    /* Esto empuja el contenido para que ocupe todo el espacio bajo el navbar */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-
-    /* Sombra radial difuminada para que el texto resalte sobre las carátulas de fondo */
     background: radial-gradient(circle, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 60%);
     padding: 40px;
 }
@@ -42,8 +33,6 @@ $brand-purple-light: #c287f7;
     color: $brand-purple;
     margin: 0 0 15px 0;
     letter-spacing: 3px;
-
-    /* Este text-shadow imita el borde negro grueso que tiene tu diseño de Figma */
     text-shadow:
         4px 4px 0 #000,
         -2px -2px 0 #000,
@@ -64,8 +53,6 @@ $brand-purple-light: #c287f7;
     font-weight: 700;
     color: #ffffff;
     margin: 0;
-
-    /* Sombra para que la letra blanca no se pierda */
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
 
     &.highlight {
@@ -73,13 +60,28 @@ $brand-purple-light: #c287f7;
     }
 }
 
-/* Modo Responsive: Ajustar tamaños en móviles */
+/* Responsive */
 @media (max-width: 768px) {
     .keeply-title {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
 
     .keeply-slogan {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+    }
+
+    .hero-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .keeply-title {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+
+    .keeply-slogan {
+        font-size: 1rem;
     }
 }

@@ -1,16 +1,28 @@
-<nav class="keeply-navbar">
-  <div class="navbar-brand" routerLink="/">
+<nav class="keeply-navbar" role="navigation" aria-label="Navegación principal">
+  <div class="navbar-brand" routerLink="/" aria-label="Ir al inicio">
     <img src="assets/images/keeply-logo.png" alt="Logo Keeply" class="logo-icon">
   </div>
 
-  <ul class="navbar-links">
+  <!-- Hamburguesa (solo móvil) -->
+  <button class="hamburger-btn" (click)="toggleMenuMobil()" aria-label="Abrir menú de navegación"
+          [attr.aria-expanded]="menuMobilAbierto">
+    <span class="hamburger-line" [class.open]="menuMobilAbierto"></span>
+    <span class="hamburger-line" [class.open]="menuMobilAbierto"></span>
+    <span class="hamburger-line" [class.open]="menuMobilAbierto"></span>
+  </button>
+
+  <!-- Overlay para cerrar el menú móvil -->
+  <div class="mobile-overlay" *ngIf="menuMobilAbierto" (click)="cerrarMenuMobil()"></div>
+
+  <ul class="navbar-links" [class.mobile-open]="menuMobilAbierto">
 
     <!-- 1. Información -->
     <li class="nav-item">
-      <a href="#" (click)="toggleMenu('info', $event)">
-        Información <span class="arrow">▾</span>
+      <a href="#" (click)="toggleMenu('info', $event)" aria-haspopup="true">
+        Información <span class="arrow" aria-hidden="true">▾</span>
       </a>
-      <div class="dropdown-menu menu-info" *ngIf="menuAbierto === 'info'" (click)="onPopoverClick($event)">
+      <div class="dropdown-menu menu-info" *ngIf="menuAbierto === 'info'" (click)="onPopoverClick($event)"
+           role="menu">
         <div class="dropdown-header">
           <h4>Sobre Keeply</h4>
         </div>
@@ -23,12 +35,13 @@
 
     <!-- 2. Redes -->
     <li class="nav-item">
-      <a href="#" (click)="toggleMenu('redes', $event)">
-        Redes <span class="arrow">▾</span>
+      <a href="#" (click)="toggleMenu('redes', $event)" aria-haspopup="true">
+        Redes <span class="arrow" aria-hidden="true">▾</span>
       </a>
-      <div class="dropdown-menu menu-redes" *ngIf="menuAbierto === 'redes'" (click)="onPopoverClick($event)">
+      <div class="dropdown-menu menu-redes" *ngIf="menuAbierto === 'redes'" (click)="onPopoverClick($event)"
+           role="menu">
         <div class="dropdown-body" style="padding: 15px 20px;">
-          <a href="https://github.com/aortben" target="_blank" class="dropdown-link">
+          <a href="https://github.com/aortben" target="_blank" class="dropdown-link" rel="noopener noreferrer">
             GitHub
           </a>
           <a href="#" class="dropdown-link">
@@ -41,21 +54,20 @@
       </div>
     </li>
 
-
-
-    <!-- 4. Cuenta -->
+    <!-- 3. Cuenta -->
     <li class="nav-item user-item">
-      <div class="user-avatar">
+      <div class="user-avatar" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
       </div>
-      <a href="#" (click)="toggleMenu('cuenta', $event)">
-        Cuenta <span class="arrow">▾</span>
+      <a href="#" (click)="toggleMenu('cuenta', $event)" aria-haspopup="true">
+        Cuenta <span class="arrow" aria-hidden="true">▾</span>
       </a>
 
-      <div class="dropdown-menu menu-cuenta" *ngIf="menuAbierto === 'cuenta'" (click)="onPopoverClick($event)">
+      <div class="dropdown-menu menu-cuenta" *ngIf="menuAbierto === 'cuenta'" (click)="onPopoverClick($event)"
+           role="menu">
 
         <!-- ===== USUARIO LOGEADO ===== -->
         <ng-container *ngIf="currentUser$ | async as user; else authTemplate">
@@ -66,8 +78,8 @@
             <a href="#" class="dropdown-link">
               Ajustes
             </a>
-            <a class="dropdown-link" (click)="logout()" style="cursor: pointer;">
-              Cerrar sesion
+            <a class="dropdown-link" (click)="logout()" style="cursor: pointer;" role="button">
+              Cerrar sesión
             </a>
           </div>
           <div class="dropdown-footer">
@@ -83,17 +95,18 @@
           <!-- MODO LOGIN -->
           <ng-container *ngIf="modoAuth === 'login'">
             <div class="dropdown-header">
-              <h4>Iniciar sesion</h4>
+              <h4>Iniciar sesión</h4>
             </div>
             <div class="dropdown-body login-form">
-              <input type="text" [(ngModel)]="loginNombreUsuario" placeholder="Nombre de usuario" class="login-input">
-              <input type="password" [(ngModel)]="loginPassword" placeholder="Contraseña" class="login-input"
-                (keyup.enter)="loginInline()">
-              <p class="login-error" *ngIf="authError">{{ authError }}</p>
+              <input type="text" [(ngModel)]="loginNombreUsuario" placeholder="Nombre de usuario"
+                     class="login-input" aria-label="Nombre de usuario">
+              <input type="password" [(ngModel)]="loginPassword" placeholder="Contraseña"
+                     class="login-input" (keyup.enter)="loginInline()" aria-label="Contraseña">
+              <p class="login-error" *ngIf="authError" role="alert">{{ authError }}</p>
               <button class="btn-login" (click)="loginInline()">Entrar</button>
               <p class="auth-toggle-text">
                 No tienes cuenta?
-                <a (click)="toggleModoAuth($event)">Registrate</a>
+                <a (click)="toggleModoAuth($event)" role="button">Regístrate</a>
               </p>
             </div>
           </ng-container>
@@ -104,15 +117,17 @@
               <h4>Crear cuenta</h4>
             </div>
             <div class="dropdown-body login-form">
-              <input type="text" [(ngModel)]="regNombreUsuario" placeholder="Nombre de usuario" class="login-input">
-              <input type="email" [(ngModel)]="regEmail" placeholder="tu@email.com" class="login-input">
-              <input type="password" [(ngModel)]="regPassword" placeholder="Contraseña" class="login-input"
-                (keyup.enter)="registroInline()">
-              <p class="login-error" *ngIf="authError">{{ authError }}</p>
+              <input type="text" [(ngModel)]="regNombreUsuario" placeholder="Nombre de usuario"
+                     class="login-input" aria-label="Nombre de usuario">
+              <input type="email" [(ngModel)]="regEmail" placeholder="tu@email.com"
+                     class="login-input" aria-label="Email">
+              <input type="password" [(ngModel)]="regPassword" placeholder="Contraseña"
+                     class="login-input" (keyup.enter)="registroInline()" aria-label="Contraseña">
+              <p class="login-error" *ngIf="authError" role="alert">{{ authError }}</p>
               <button class="btn-login" (click)="registroInline()">Crear cuenta</button>
               <p class="auth-toggle-text">
                 Ya tienes cuenta?
-                <a (click)="toggleModoAuth($event)">Inicia sesion</a>
+                <a (click)="toggleModoAuth($event)" role="button">Inicia sesión</a>
               </p>
             </div>
           </ng-container>
@@ -121,10 +136,41 @@
       </div>
     </li>
 
+    <!-- Enlace móvil: Explorar -->
+    <li class="nav-item mobile-only-link">
+      <a routerLink="/busqueda" class="nav-link-direct" (click)="cerrarMenuMobil()">Explorar</a>
+    </li>
+    <li class="nav-item mobile-only-link">
+      <a (click)="irABiblioteca()" class="nav-link-direct" style="cursor:pointer;">Tu biblioteca</a>
+    </li>
+
   </ul>
 
   <div class="navbar-action">
-    <button class="btn-explorar-nav" routerLink="/busqueda">Explorar</button>
-    <button class="btn-biblioteca" (click)="irABiblioteca()">Tu biblioteca</button>
+    <!-- Botón toggle tema -->
+    <button class="btn-theme-toggle" (click)="toggleTheme()"
+            [attr.aria-label]="themeService.isDarkMode() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+      <!-- Sol (visible en dark mode) -->
+      <svg *ngIf="themeService.isDarkMode()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           class="theme-icon" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <!-- Luna (visible en light mode) -->
+      <svg *ngIf="!themeService.isDarkMode()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           class="theme-icon" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+
+    <button class="btn-explorar-nav" routerLink="/busqueda" aria-label="Explorar obras">Explorar</button>
+    <button class="btn-biblioteca" (click)="irABiblioteca()" aria-label="Ir a tu biblioteca">Tu biblioteca</button>
   </div>
 </nav>

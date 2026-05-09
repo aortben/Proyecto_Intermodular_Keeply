@@ -1,6 +1,97 @@
 /* === KEEPLY — Global Styles === */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* ==========================================
+   SISTEMA DE TEMAS — CSS Custom Properties
+   ========================================== */
+
+/* Tema oscuro (por defecto) */
+:root,
+[data-theme="dark"] {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-surface: #1e1e3a;
+    --bg-navbar: rgba(94, 85, 80, 0.95);
+    --bg-panel: #6a5e57;
+    --bg-panel-dark: #4a423d;
+    --bg-input: #4a423d;
+    --bg-card: #1e1e3a;
+
+    --text-primary: #e0e0e0;
+    --text-secondary: #bbbbbb;
+    --text-heading: #ffffff;
+    --text-muted: #999999;
+
+    --brand-purple: #9b51e0;
+    --brand-purple-hover: #823abf;
+    --brand-purple-light: #c287f7;
+    --title-purple: #a855f7;
+
+    --keeply-brown: #7a6f69;
+    --keeply-brown-dark: #6a5e57;
+
+    --border-color: #333333;
+    --card-border: #7a6f69;
+
+    --danger-red: #e74c3c;
+    --success-green: #2ecc71;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+    --scrollbar-track: #1a1a2e;
+    --scrollbar-thumb: #333;
+    --scrollbar-thumb-hover: #555;
+
+    color-scheme: dark;
+}
+
+/* Tema claro */
+[data-theme="light"] {
+    --bg-primary: #f0eeeb;
+    --bg-secondary: #ffffff;
+    --bg-surface: #ffffff;
+    --bg-navbar: rgba(94, 85, 80, 0.95);
+    --bg-panel: #6a5e57;
+    --bg-panel-dark: #4a423d;
+    --bg-input: #4a423d;
+    --bg-card: #ffffff;
+
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-heading: #222222;
+    --text-muted: #888888;
+
+    --brand-purple: #9b51e0;
+    --brand-purple-hover: #823abf;
+    --brand-purple-light: #c287f7;
+    --title-purple: #a855f7;
+
+    --keeply-brown: #7a6f69;
+    --keeply-brown-dark: #6a5e57;
+
+    --border-color: #d4d0cc;
+    --card-border: #7a6f69;
+
+    --danger-red: #e74c3c;
+    --success-green: #2ecc71;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+    --scrollbar-track: #f0eeeb;
+    --scrollbar-thumb: #c4c0bb;
+    --scrollbar-thumb-hover: #a09a95;
+
+    color-scheme: light;
+}
+
+/* ==========================================
+   RESET Y BASE
+   ========================================== */
 
 *,
 *::before,
@@ -12,9 +103,10 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #0a0a23;
-    color: #eee;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -22,7 +114,10 @@ a {
     text-decoration: none;
 }
 
-/* Botones reutilizables */
+/* ==========================================
+   BOTONES REUTILIZABLES
+   ========================================== */
+
 .btn {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -45,29 +140,81 @@ a {
 }
 
 .btn-primary {
-    background-color: #e94560;
+    background-color: var(--brand-purple);
     color: #fff;
 }
 
 .btn-secondary {
-    background-color: #0f3460;
+    background-color: var(--bg-panel);
     color: #fff;
 }
 
-/* Scrollbar personalizada */
+/* ==========================================
+   ACCESIBILIDAD — Focus Visible
+   ========================================== */
+
+*:focus-visible {
+    outline: 2px solid var(--brand-purple);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Eliminar outline en click, solo mostrar con teclado */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Skip to content (accesibilidad teclado) */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: var(--brand-purple);
+    color: white;
+    padding: 8px 16px;
+    z-index: 10000;
+    font-weight: 600;
+    border-radius: 0 0 8px 0;
+    transition: top 0.2s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ==========================================
+   SCROLLBAR PERSONALIZADA
+   ========================================== */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #0a0a23;
+    background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333;
+    background: var(--scrollbar-thumb);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* ==========================================
+   UTILIDADES
+   ========================================== */
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
