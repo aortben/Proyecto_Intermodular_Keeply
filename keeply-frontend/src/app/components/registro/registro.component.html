@@ -9,13 +9,33 @@
         </div>
 
         <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" [(ngModel)]="email" name="email" required
+                placeholder="tu@email.com">
+        </div>
+
+        <div class="form-group">
             <label for="contrasena">Contraseña</label>
             <input id="contrasena" type="password" [(ngModel)]="contrasena" name="contrasena" required
                 placeholder="Tu contraseña">
         </div>
 
-        <button type="submit" class="btn btn-primary">Registrarse</button>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+            @if (loading) {
+                Registrando...
+            } @else {
+                Registrarse
+            }
+        </button>
     </form>
+
+    <div class="divider">
+        <span>o</span>
+    </div>
+
+    <div class="google-btn-wrapper">
+        <div #googleBtn id="google-signup-btn"></div>
+    </div>
 
     @if (mensaje) {
     <p class="success-msg">{{ mensaje }}</p>

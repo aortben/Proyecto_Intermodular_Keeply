@@ -13,4 +13,5 @@ public class AuthResponseDTO {
     private String token;
     private Integer idUsuario;
     private String nombreUsuario;
+    private String email;
 }

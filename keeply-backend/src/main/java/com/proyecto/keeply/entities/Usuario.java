@@ -1,6 +1,7 @@
 package com.proyecto.keeply.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -19,11 +20,17 @@ public class Usuario {
     @Column(nullable = false, unique = true, length = 50)
     private String nombreUsuario;
 
-    @Column(unique = true, length = 100)
+    @Email
+    @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String contrasenaHash;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private AuthProvider authProvider = AuthProvider.LOCAL;
 
     @Column(name = "fecha_registro", updatable = false)
     private LocalDateTime fechaRegistro;

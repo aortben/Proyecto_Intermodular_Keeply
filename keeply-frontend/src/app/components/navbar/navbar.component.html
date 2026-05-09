@@ -105,6 +105,7 @@
             </div>
             <div class="dropdown-body login-form">
               <input type="text" [(ngModel)]="regNombreUsuario" placeholder="Nombre de usuario" class="login-input">
+              <input type="email" [(ngModel)]="regEmail" placeholder="tu@email.com" class="login-input">
               <input type="password" [(ngModel)]="regPassword" placeholder="Contraseña" class="login-input"
                 (keyup.enter)="registroInline()">
               <p class="login-error" *ngIf="authError">{{ authError }}</p>

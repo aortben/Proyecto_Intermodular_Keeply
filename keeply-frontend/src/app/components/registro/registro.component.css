@@ -36,6 +36,35 @@
     font-size: 1rem;
 }
 
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: #666;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #333;
+}
+
+.divider span {
+    padding: 0 1rem;
+    font-size: 0.85rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.google-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
 .success-msg {
     color: #4caf50;
     margin-top: 1rem;
@@ -54,4 +83,9 @@
 
 .login-link a {
     color: #e94560;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

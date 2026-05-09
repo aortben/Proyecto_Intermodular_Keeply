@@ -1,5 +1,6 @@
 package com.proyecto.keeply.security;
 
+import com.proyecto.keeply.entities.AuthProvider;
 import com.proyecto.keeply.entities.Usuario;
 import com.proyecto.keeply.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByNombreUsuario(nombreUsuario)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + nombreUsuario));
 
+        // Los usuarios de Google tienen un placeholder como contraseña
+        String password = usuario.getContrasenaHash();
+        if (usuario.getAuthProvider() == AuthProvider.GOOGLE) {
+            password = "GOOGLE_AUTH_NO_PASSWORD";
+        }
+
         return new User(
                 usuario.getNombreUsuario(),
-                usuario.getContrasenaHash(),
+                password,
                 Collections.emptyList());
     }
 }

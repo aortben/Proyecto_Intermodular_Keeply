@@ -29,6 +29,7 @@ export class NavbarComponent {
 
     // Campos de registro
     regNombreUsuario = '';
+    regEmail = '';
     regPassword = '';
 
     // Errores y mensajes
@@ -74,13 +75,19 @@ export class NavbarComponent {
     }
 
     registroInline(): void {
-        if (!this.regNombreUsuario || !this.regPassword) {
+        if (!this.regNombreUsuario || !this.regPassword || !this.regEmail) {
             this.authError = 'Completa todos los campos';
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(this.regEmail)) {
+            this.authError = 'El formato del email no es válido';
             return;
         }
         this.authService.register({
             nombreUsuario: this.regNombreUsuario,
-            contrasena: this.regPassword
+            contrasena: this.regPassword,
+            email: this.regEmail
         }).subscribe({
             next: () => {
                 this.menuAbierto = null;
@@ -113,6 +120,7 @@ export class NavbarComponent {
         this.loginPassword = '';
         this.regNombreUsuario = '';
         this.regPassword = '';
+        this.regEmail = '';
         this.authError = '';
         this.authExito = '';
         this.modoAuth = 'login';

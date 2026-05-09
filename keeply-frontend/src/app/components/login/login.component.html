@@ -13,8 +13,22 @@
                 placeholder="Tu contraseña">
         </div>
 
-        <button type="submit" class="btn btn-primary">Entrar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+            @if (loading) {
+                Entrando...
+            } @else {
+                Entrar
+            }
+        </button>
     </form>
+
+    <div class="divider">
+        <span>o</span>
+    </div>
+
+    <div class="google-btn-wrapper">
+        <div #googleBtn id="google-signin-btn"></div>
+    </div>
 
     @if (error) {
     <p class="error-msg">{{ error }}</p>

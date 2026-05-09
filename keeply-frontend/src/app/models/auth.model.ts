@@ -2,6 +2,7 @@ export interface AuthResponse {
     token: string;
     idUsuario: number;
     nombreUsuario: string;
+    email: string;
 }
 
 export interface LoginRequest {
@@ -12,4 +13,9 @@ export interface LoginRequest {
 export interface RegisterRequest {
     nombreUsuario: string;
     contrasena: string;
+    email: string;
+}
+
+export interface GoogleAuthRequest {
+    credential: string;
 }

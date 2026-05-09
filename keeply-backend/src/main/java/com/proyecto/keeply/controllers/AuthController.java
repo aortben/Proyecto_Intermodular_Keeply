@@ -1,11 +1,14 @@
 package com.proyecto.keeply.controllers;
 
 import com.proyecto.keeply.dto.AuthResponseDTO;
+import com.proyecto.keeply.dto.GoogleAuthRequestDTO;
 import com.proyecto.keeply.dto.LoginRequestDTO;
 import com.proyecto.keeply.dto.RegisterRequestDTO;
 import com.proyecto.keeply.entities.Usuario;
 import com.proyecto.keeply.repositories.UsuarioRepository;
 import com.proyecto.keeply.security.JwtService;
+import com.proyecto.keeply.services.GoogleAuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final GoogleAuthService googleAuthService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO request) {
@@ -42,6 +46,7 @@ public class AuthController {
                     .token(token)
                     .idUsuario(usuario.getIdUsuario())
                     .nombreUsuario(usuario.getNombreUsuario())
+                    .email(usuario.getEmail())
                     .build();
 
             return ResponseEntity.ok(response);
@@ -52,16 +57,23 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequestDTO request) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO request) {
         // Verificar que nombre de usuario no exista
-        if (usuarioRepository.findByNombreUsuario(request.getNombreUsuario()).isPresent()) {
+        if (usuarioRepository.existsByNombreUsuario(request.getNombreUsuario())) {
             return ResponseEntity.badRequest()
                     .body(Map.of("error", "El nombre de usuario ya está en uso"));
+        }
+
+        // Verificar que email no exista
+        if (usuarioRepository.existsByEmail(request.getEmail())) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "El email ya está registrado"));
         }
 
         // Crear usuario con contraseña encriptada
         Usuario usuario = Usuario.builder()
                 .nombreUsuario(request.getNombreUsuario())
+                .email(request.getEmail())
                 .contrasenaHash(passwordEncoder.encode(request.getContrasena()))
                 .build();
 
@@ -74,8 +86,20 @@ public class AuthController {
                 .token(token)
                 .idUsuario(saved.getIdUsuario())
                 .nombreUsuario(saved.getNombreUsuario())
+                .email(saved.getEmail())
                 .build();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/google")
+    public ResponseEntity<?> googleAuth(@RequestBody GoogleAuthRequestDTO request) {
+        try {
+            AuthResponseDTO response = googleAuthService.authenticateWithGoogle(request.getCredential());
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", e.getMessage()));
+        }
     }
 }
