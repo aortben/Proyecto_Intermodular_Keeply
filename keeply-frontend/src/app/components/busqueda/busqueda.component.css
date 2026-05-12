@@ -131,6 +131,8 @@
     overflow: hidden;
     background-color: var(--bg-card);
     transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 
 .resultado-card:hover {
@@ -164,6 +166,13 @@
 
 .card-info {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-info .btn {
+    margin-top: auto;
 }
 
 .card-info h3 {

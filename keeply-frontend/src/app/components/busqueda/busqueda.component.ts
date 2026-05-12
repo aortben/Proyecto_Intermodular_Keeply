@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, SlicePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BusquedaService } from '../../services/busqueda.service';
 import { ObraService } from '../../services/obra.service';
@@ -13,7 +14,7 @@ import { TipoObra } from '../../models/obra.model';
 @Component({
     selector: 'app-busqueda',
     standalone: true,
-    imports: [FormsModule, NgFor, NgIf, SlicePipe, NavbarComponent],
+    imports: [FormsModule, NgFor, NgIf, SlicePipe, NavbarComponent, TranslateModule],
     templateUrl: './busqueda.component.html',
     styleUrl: './busqueda.component.css'
 })

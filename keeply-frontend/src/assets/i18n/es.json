@@ -1,0 +1,100 @@
+{
+  "NAVBAR": {
+    "INFO": "Información",
+    "NETWORKS": "Redes",
+    "ACCOUNT": "Cuenta",
+    "EXPLORE": "Explorar",
+    "YOUR_LIBRARY": "Tu biblioteca",
+    "ABOUT_KEEPLY": "Sobre Keeply",
+    "ABOUT_DESC": "Keeply es tu biblioteca personal para organizar todo lo que ves, lees o juegas.",
+    "VERSION": "Versión 1.0 — Proyecto TFG",
+    "SETTINGS": "Ajustes",
+    "LOGOUT": "Cerrar sesión",
+    "SUPPORT": "Asistencia",
+    "LOGIN_TITLE": "Iniciar sesión",
+    "REGISTER_TITLE": "Crear cuenta",
+    "USERNAME": "Nombre de usuario",
+    "PASSWORD": "Contraseña",
+    "EMAIL": "tu@email.com",
+    "ENTER": "Entrar",
+    "CREATE_ACCOUNT": "Crear cuenta",
+    "NO_ACCOUNT": "No tienes cuenta?",
+    "SIGN_UP": "Regístrate",
+    "HAS_ACCOUNT": "Ya tienes cuenta?",
+    "SIGN_IN": "Inicia sesión",
+    "OR": "o",
+    "THEME_LIGHT": "Cambiar a modo claro",
+    "THEME_DARK": "Cambiar a modo oscuro"
+  },
+  "HOME": {
+    "SLOGAN_1": "Todo lo que ves, lees o juegas.",
+    "SLOGAN_2": "En un solo lugar"
+  },
+  "LIBRARY": {
+    "COLLECTION_OF": "Colección de",
+    "EXPLORE_WORKS": "Explorar obras"
+  },
+  "SEARCH": {
+    "TITLE": "Buscar Obras",
+    "BACK_LIBRARY": "← Volver a la biblioteca",
+    "PLACEHOLDER": "Buscar título...",
+    "SEARCH_BTN": "Buscar",
+    "SEARCHING": "Buscando...",
+    "ADD_TO_LIBRARY": "Añadir a biblioteca",
+    "ADDING": "Añadiendo...",
+    "ALREADY_IN_LIBRARY": "Ya en tu biblioteca",
+    "NO_IMAGE": "Sin imagen"
+  },
+  "CATEGORY": {
+    "BACK_MENU": "Volver al menú",
+    "EDIT_LIBRARY": "Editar biblioteca",
+    "CANCEL_EDIT": "Cancelar edición",
+    "SEARCH_TITLES": "Buscar títulos...",
+    "SELECT_ALL": "Seleccionar todo",
+    "DESELECT_ALL": "Deseleccionar todo",
+    "SELECTED": "seleccionado",
+    "SELECTED_PLURAL": "seleccionados",
+    "DELETE_SELECTED": "Eliminar seleccionados",
+    "NO_RESULTS": "No se encontraron resultados para",
+    "EMPTY_CATEGORY": "Aún no tienes obras en esta categoría.",
+    "GO_EXPLORE": "¡Ve a Explorar para añadir!"
+  },
+  "DETAIL": {
+    "AUTHOR": "Autor",
+    "ADDED": "Añadido",
+    "EDIT": "Editar",
+    "CANCEL": "Cancelar",
+    "DELETE": "Eliminar",
+    "EDIT_PROPERTIES": "Editar propiedades",
+    "STATUS": "Estado",
+    "PERSONAL_RATING": "Valoración personal (1-10)",
+    "SAVING": "Guardando...",
+    "SAVE_CHANGES": "Guardar cambios",
+    "ADD_NOTE": "Añadir nota",
+    "NOTE_PLACEHOLDER": "Escribe tu nota, comentario o reseña (opcional)...",
+    "ATTACH_URL": "Adjuntar URL",
+    "URL_PLACEHOLDER": "Pegar URL de imagen, video o audio...",
+    "UPLOAD_FILE": "Subir archivo",
+    "UPLOADING": "Subiendo...",
+    "UPLOAD_HINT": "Imágenes, videos o audio desde tu equipo",
+    "SAVE_NOTE": "Guardar nota",
+    "NO_NOTES": "Todavía no hay notas. Añade tu primer comentario, foto o reseña.",
+    "SAVE": "Guardar",
+    "BACK_LIBRARY": "Volver a la biblioteca",
+    "LOADING": "Cargando...",
+    "IMAGE_ALT": "Imagen adjunta"
+  },
+  "ERRORS": {
+    "FILL_ALL_FIELDS": "Completa todos los campos",
+    "INVALID_CREDENTIALS": "Usuario o contraseña incorrectos",
+    "INVALID_EMAIL": "El formato del email no es válido",
+    "REGISTER_FAILED": "No se pudo crear la cuenta. ¿Ya existe ese usuario?",
+    "GOOGLE_ERROR": "Error al iniciar sesión con Google."
+  },
+  "STATES": {
+    "Pendiente": "Pendiente",
+    "En_Progreso": "En Progreso",
+    "Completado": "Completado",
+    "Abandonado": "Abandonado"
+  }
+}

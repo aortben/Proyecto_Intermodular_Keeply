@@ -1,0 +1,100 @@
+{
+  "NAVBAR": {
+    "INFO": "Information",
+    "NETWORKS": "Networks",
+    "ACCOUNT": "Account",
+    "EXPLORE": "Explore",
+    "YOUR_LIBRARY": "Your library",
+    "ABOUT_KEEPLY": "About Keeply",
+    "ABOUT_DESC": "Keeply is your personal library to organize everything you watch, read or play.",
+    "VERSION": "Version 1.0 — TFG Project",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Log out",
+    "SUPPORT": "Support",
+    "LOGIN_TITLE": "Log in",
+    "REGISTER_TITLE": "Create account",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "EMAIL": "your@email.com",
+    "ENTER": "Enter",
+    "CREATE_ACCOUNT": "Create account",
+    "NO_ACCOUNT": "Don't have an account?",
+    "SIGN_UP": "Sign up",
+    "HAS_ACCOUNT": "Already have an account?",
+    "SIGN_IN": "Log in",
+    "OR": "or",
+    "THEME_LIGHT": "Switch to light mode",
+    "THEME_DARK": "Switch to dark mode"
+  },
+  "HOME": {
+    "SLOGAN_1": "Everything you watch, read or play.",
+    "SLOGAN_2": "In one place"
+  },
+  "LIBRARY": {
+    "COLLECTION_OF": "Collection of",
+    "EXPLORE_WORKS": "Explore works"
+  },
+  "SEARCH": {
+    "TITLE": "Search Works",
+    "BACK_LIBRARY": "← Back to library",
+    "PLACEHOLDER": "Search title...",
+    "SEARCH_BTN": "Search",
+    "SEARCHING": "Searching...",
+    "ADD_TO_LIBRARY": "Add to library",
+    "ADDING": "Adding...",
+    "ALREADY_IN_LIBRARY": "Already in your library",
+    "NO_IMAGE": "No image"
+  },
+  "CATEGORY": {
+    "BACK_MENU": "Back to menu",
+    "EDIT_LIBRARY": "Edit library",
+    "CANCEL_EDIT": "Cancel editing",
+    "SEARCH_TITLES": "Search titles...",
+    "SELECT_ALL": "Select all",
+    "DESELECT_ALL": "Deselect all",
+    "SELECTED": "selected",
+    "SELECTED_PLURAL": "selected",
+    "DELETE_SELECTED": "Delete selected",
+    "NO_RESULTS": "No results found for",
+    "EMPTY_CATEGORY": "You don't have any works in this category yet.",
+    "GO_EXPLORE": "Go to Explore to add some!"
+  },
+  "DETAIL": {
+    "AUTHOR": "Author",
+    "ADDED": "Added",
+    "EDIT": "Edit",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "EDIT_PROPERTIES": "Edit properties",
+    "STATUS": "Status",
+    "PERSONAL_RATING": "Personal rating (1-10)",
+    "SAVING": "Saving...",
+    "SAVE_CHANGES": "Save changes",
+    "ADD_NOTE": "Add note",
+    "NOTE_PLACEHOLDER": "Write your note, comment or review (optional)...",
+    "ATTACH_URL": "Attach URL",
+    "URL_PLACEHOLDER": "Paste image, video or audio URL...",
+    "UPLOAD_FILE": "Upload file",
+    "UPLOADING": "Uploading...",
+    "UPLOAD_HINT": "Images, videos or audio from your device",
+    "SAVE_NOTE": "Save note",
+    "NO_NOTES": "No notes yet. Add your first comment, photo or review.",
+    "SAVE": "Save",
+    "BACK_LIBRARY": "Back to library",
+    "LOADING": "Loading...",
+    "IMAGE_ALT": "Attached image"
+  },
+  "ERRORS": {
+    "FILL_ALL_FIELDS": "Please fill in all fields",
+    "INVALID_CREDENTIALS": "Invalid username or password",
+    "INVALID_EMAIL": "Invalid email format",
+    "REGISTER_FAILED": "Could not create account. Does that user already exist?",
+    "GOOGLE_ERROR": "Error signing in with Google."
+  },
+  "STATES": {
+    "Pendiente": "Pending",
+    "En_Progreso": "In Progress",
+    "Completado": "Completed",
+    "Abandonado": "Dropped"
+  }
+}

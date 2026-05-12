@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { ItemUsuarioService } from '../../services/item-usuario.service';
 import { AuthService } from '../../services/auth.service';
@@ -11,7 +12,7 @@ import { TipoObra } from '../../models/obra.model';
 @Component({
     selector: 'app-categoria-detalle',
     standalone: true,
-    imports: [NgFor, NgIf, NgClass, FormsModule, RouterLink, NavbarComponent],
+    imports: [NgFor, NgIf, NgClass, FormsModule, RouterLink, NavbarComponent, TranslateModule],
     templateUrl: './categoria-detalle.component.html',
     styleUrls: ['./categoria-detalle.component.scss']
 })

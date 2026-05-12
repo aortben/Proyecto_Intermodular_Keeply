@@ -3,17 +3,17 @@
 
     <main class="busqueda-container">
         <div class="busqueda-header">
-            <h2>Buscar Obras</h2>
-            <button class="btn-volver" (click)="volverABiblioteca()">← Volver a la biblioteca</button>
+            <h2>{{ 'SEARCH.TITLE' | translate }}</h2>
+            <button class="btn-volver" (click)="volverABiblioteca()">{{ 'SEARCH.BACK_LIBRARY' | translate }}</button>
         </div>
 
         <div class="busqueda-form">
-            <input type="text" [(ngModel)]="query" placeholder="Buscar título..." (keyup.enter)="buscar()">
+            <input type="text" [(ngModel)]="query" [placeholder]="'SEARCH.PLACEHOLDER' | translate" (keyup.enter)="buscar()">
             <select [(ngModel)]="tipoSeleccionado">
                 <option *ngFor="let tipo of tipos" [value]="tipo.valor">{{ tipo.label }}</option>
             </select>
             <button class="btn btn-primary" (click)="buscar()" [disabled]="cargando">
-                {{ cargando ? 'Buscando...' : 'Buscar' }}
+                {{ cargando ? ('SEARCH.SEARCHING' | translate) : ('SEARCH.SEARCH_BTN' | translate) }}
             </button>
         </div>
 
@@ -23,7 +23,7 @@
             <div class="resultado-card" *ngFor="let resultado of resultados">
                 <div class="card-img-wrapper">
                     <img *ngIf="resultado.imagenUrl" [src]="resultado.imagenUrl" [alt]="resultado.titulo">
-                    <div class="no-image" *ngIf="!resultado.imagenUrl">Sin imagen</div>
+                    <div class="no-image" *ngIf="!resultado.imagenUrl">{{ 'SEARCH.NO_IMAGE' | translate }}</div>
                 </div>
                 <div class="card-info">
                     <h3>{{ resultado.titulo }}</h3>
@@ -31,17 +31,16 @@
                     <p class="fecha" *ngIf="resultado.fechaLanzamiento">{{ resultado.fechaLanzamiento }}</p>
                     <p class="descripcion" *ngIf="resultado.descripcion">{{ resultado.descripcion | slice:0:120 }}...</p>
 
-                    <!-- Botón dinámico: cambia si ya está en biblioteca -->
                     <button *ngIf="!estaEnBiblioteca(resultado)"
                             class="btn btn-secondary"
                             (click)="agregarABiblioteca(resultado)"
                             [disabled]="estaAgregando(resultado)">
-                        {{ estaAgregando(resultado) ? 'Añadiendo...' : 'Añadir a biblioteca' }}
+                        {{ estaAgregando(resultado) ? ('SEARCH.ADDING' | translate) : ('SEARCH.ADD_TO_LIBRARY' | translate) }}
                     </button>
                     <button *ngIf="estaEnBiblioteca(resultado)"
                             class="btn btn-added"
                             disabled>
-                        Ya en tu biblioteca
+                        {{ 'SEARCH.ALREADY_IN_LIBRARY' | translate }}
                     </button>
                 </div>
             </div>

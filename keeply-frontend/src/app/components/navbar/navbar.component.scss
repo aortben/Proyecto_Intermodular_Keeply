@@ -115,6 +115,35 @@ $input-bg: #4a423d;
         align-items: center;
         gap: 10px;
 
+        /* Selector de idioma */
+        .lang-switcher {
+            display: flex;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+
+            .lang-btn {
+                background: transparent;
+                color: $text-color;
+                border: none;
+                padding: 6px 10px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                letter-spacing: 0.5px;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+
+                &.active {
+                    background-color: $btn-purple;
+                    color: white;
+                }
+            }
+        }
+
         .btn-explorar-nav {
             background: transparent;
             color: $text-color;
@@ -261,6 +290,7 @@ $input-bg: #4a423d;
             font-size: 1.4rem;
             font-family: 'Inter', system-ui, sans-serif;
             font-weight: 700;
+            text-align: center;
         }
 
         .user-email {
@@ -345,7 +375,7 @@ $input-bg: #4a423d;
 }
 
 .menu-cuenta {
-    width: 280px;
+    width: 300px;
     overflow: hidden;
 
     /* Footer oscuro para Asistencia */
@@ -396,6 +426,35 @@ $input-bg: #4a423d;
             &:hover {
                 background-color: $btn-purple-hover;
             }
+        }
+
+        /* Divisor de Google OAuth */
+        .google-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 4px 0;
+
+            &::before,
+            &::after {
+                content: '';
+                flex: 1;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            span {
+                padding: 0 10px;
+                color: #aaaaaa;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+        }
+
+        .google-btn-container {
+            display: flex;
+            justify-content: center;
+            min-height: 40px;
         }
 
         .login-registro {

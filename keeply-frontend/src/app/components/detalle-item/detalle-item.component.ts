@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, NgClass, SlicePipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { ItemUsuarioService } from '../../services/item-usuario.service';
 import { NotaService } from '../../services/nota.service';
@@ -12,7 +13,7 @@ import { Nota, NotaRequest, TipoAdjunto } from '../../models/nota.model';
 @Component({
     selector: 'app-detalle-item',
     standalone: true,
-    imports: [FormsModule, NgFor, NgIf, NgClass, SlicePipe, NavbarComponent],
+    imports: [FormsModule, NgFor, NgIf, NgClass, SlicePipe, NavbarComponent, TranslateModule],
     templateUrl: './detalle-item.component.html',
     styleUrls: ['./detalle-item.component.scss']
 })

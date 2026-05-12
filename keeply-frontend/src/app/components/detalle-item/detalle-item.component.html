@@ -18,15 +18,15 @@
                     </span>
                 </div>
                 <p class="obra-descripcion" *ngIf="item.obra.descripcion">{{ item.obra.descripcion }}</p>
-                <p class="obra-autor" *ngIf="item.obra.autorCreador">Autor: {{ item.obra.autorCreador }}</p>
-                <p class="obra-fecha" *ngIf="item.fechaAdicion">Añadido: {{ item.fechaAdicion | slice:0:10 }}</p>
+                <p class="obra-autor" *ngIf="item.obra.autorCreador">{{ 'DETAIL.AUTHOR' | translate }}: {{ item.obra.autorCreador }}</p>
+                <p class="obra-fecha" *ngIf="item.fechaAdicion">{{ 'DETAIL.ADDED' | translate }}: {{ item.fechaAdicion | slice:0:10 }}</p>
             </div>
             <div class="obra-actions">
                 <button class="btn-edit-item" (click)="toggleEditarPropiedades()">
-                    {{ editandoPropiedades ? 'Cancelar' : 'Editar' }}
+                    {{ editandoPropiedades ? ('DETAIL.CANCEL' | translate) : ('DETAIL.EDIT' | translate) }}
                 </button>
                 <button class="btn-delete-item" (click)="eliminarItem()">
-                    Eliminar
+                    {{ 'DETAIL.DELETE' | translate }}
                 </button>
             </div>
         </header>
@@ -38,18 +38,18 @@
 
         <!-- Panel de edicion de propiedades -->
         <div class="edit-panel" *ngIf="editandoPropiedades">
-            <h3 class="edit-panel-title">Editar propiedades</h3>
+            <h3 class="edit-panel-title">{{ 'DETAIL.EDIT_PROPERTIES' | translate }}</h3>
 
             <div class="edit-fields">
                 <div class="edit-field">
-                    <label class="edit-label">Estado</label>
+                    <label class="edit-label">{{ 'DETAIL.STATUS' | translate }}</label>
                     <select [(ngModel)]="estadoEditado" class="edit-select">
                         <option *ngFor="let e of estados" [ngValue]="e.valor">{{ e.label }}</option>
                     </select>
                 </div>
 
                 <div class="edit-field">
-                    <label class="edit-label">Valoracion personal (1-10)</label>
+                    <label class="edit-label">{{ 'DETAIL.PERSONAL_RATING' | translate }}</label>
                     <div class="rating-container">
                         <input type="range"
                                min="1" max="10" step="1"
@@ -62,7 +62,7 @@
             </div>
 
             <button class="btn-save-props" (click)="guardarPropiedades()" [disabled]="guardandoPropiedades">
-                {{ guardandoPropiedades ? 'Guardando...' : 'Guardar cambios' }}
+                {{ guardandoPropiedades ? ('DETAIL.SAVING' | translate) : ('DETAIL.SAVE_CHANGES' | translate) }}
             </button>
         </div>
 
@@ -71,13 +71,13 @@
         <!-- 2. Boton para abrir el editor -->
         <div class="editor-toggle">
             <button class="btn-add-nota" (click)="toggleEditor()">
-                {{ editorAbierto ? 'Cancelar' : 'Añadir nota' }}
+                {{ editorAbierto ? ('DETAIL.CANCEL' | translate) : ('DETAIL.ADD_NOTE' | translate) }}
             </button>
         </div>
 
         <!-- 3. Editor de nota (desplegable) -->
         <div class="nota-editor" *ngIf="editorAbierto">
-            <textarea [(ngModel)]="nuevoTexto" placeholder="Escribe tu nota, comentario o resena (opcional)..." class="editor-textarea"
+            <textarea [(ngModel)]="nuevoTexto" [placeholder]="'DETAIL.NOTE_PLACEHOLDER' | translate" class="editor-textarea"
                 rows="4"></textarea>
 
             <!-- Añadir adjuntos por URL -->
@@ -85,22 +85,22 @@
                 <select [(ngModel)]="nuevoTipoAdjunto" class="adjunto-select">
                     <option *ngFor="let tipo of tiposAdjunto" [value]="tipo">{{ tipo }}</option>
                 </select>
-                <input type="text" [(ngModel)]="nuevaUrlAdjunto" placeholder="Pegar URL de imagen, video o audio..."
+                <input type="text" [(ngModel)]="nuevaUrlAdjunto" [placeholder]="'DETAIL.URL_PLACEHOLDER' | translate"
                     class="adjunto-input">
-                <button class="btn-adjuntar" (click)="agregarAdjuntoUrl()">Adjuntar URL</button>
+                <button class="btn-adjuntar" (click)="agregarAdjuntoUrl()">{{ 'DETAIL.ATTACH_URL' | translate }}</button>
             </div>
 
             <!-- Subir archivo desde el explorador -->
             <div class="file-upload-section">
                 <label class="btn-upload-file" [class.uploading]="subiendoArchivo">
-                    {{ subiendoArchivo ? 'Subiendo...' : 'Subir archivo' }}
+                    {{ subiendoArchivo ? ('DETAIL.UPLOADING' | translate) : ('DETAIL.UPLOAD_FILE' | translate) }}
                     <input type="file"
                            accept="image/*,video/*,audio/*"
                            (change)="onFileSelected($event)"
                            [disabled]="subiendoArchivo"
                            style="display: none;">
                 </label>
-                <span class="upload-hint">Imagenes, videos o audio desde tu equipo</span>
+                <span class="upload-hint">{{ 'DETAIL.UPLOAD_HINT' | translate }}</span>
             </div>
 
             <!-- Preview de adjuntos pendientes -->
@@ -112,21 +112,21 @@
                 </div>
             </div>
 
-            <button class="btn-guardar" (click)="guardarNota()">Guardar nota</button>
+            <button class="btn-guardar" (click)="guardarNota()">{{ 'DETAIL.SAVE_NOTE' | translate }}</button>
         </div>
 
         <!-- 4. Feed de notas -->
         <section class="notas-feed">
             <p class="empty-msg" *ngIf="notas.length === 0">
-                Todavia no hay notas. Añade tu primer comentario, foto o resena.
+                {{ 'DETAIL.NO_NOTES' | translate }}
             </p>
 
             <article class="nota-card" *ngFor="let nota of notas">
                 <div class="nota-header">
                     <span class="nota-fecha">{{ nota.fechaCreacion | slice:0:10 }}</span>
                     <div class="nota-actions">
-                        <button class="btn-edit-nota" (click)="iniciarEdicionNota(nota)">Editar</button>
-                        <button class="btn-delete-nota" (click)="eliminarNota(nota.idNota!)">Eliminar</button>
+                        <button class="btn-edit-nota" (click)="iniciarEdicionNota(nota)">{{ 'DETAIL.EDIT' | translate }}</button>
+                        <button class="btn-delete-nota" (click)="eliminarNota(nota.idNota!)">{{ 'DETAIL.DELETE' | translate }}</button>
                     </div>
                 </div>
 
@@ -139,21 +139,18 @@
                 <div class="nota-edit-mode" *ngIf="editandoNotaId === nota.idNota">
                     <textarea [(ngModel)]="textoEditandoNota" class="editor-textarea" rows="3"></textarea>
                     <div class="nota-edit-buttons">
-                        <button class="btn-save-edit" (click)="guardarEdicionNota(nota)">Guardar</button>
-                        <button class="btn-cancel-edit" (click)="cancelarEdicionNota()">Cancelar</button>
+                        <button class="btn-save-edit" (click)="guardarEdicionNota(nota)">{{ 'DETAIL.SAVE' | translate }}</button>
+                        <button class="btn-cancel-edit" (click)="cancelarEdicionNota()">{{ 'DETAIL.CANCEL' | translate }}</button>
                     </div>
                 </div>
 
                 <!-- Galeria de adjuntos -->
                 <div class="nota-adjuntos" *ngIf="nota.adjuntos && nota.adjuntos.length > 0">
                     <ng-container *ngFor="let adj of nota.adjuntos">
-                        <!-- Imagen -->
-                        <img *ngIf="adj.tipoAdjunto === 'IMAGEN'" [src]="adj.urlArchivo" [alt]="'Imagen adjunta'"
+                        <img *ngIf="adj.tipoAdjunto === 'IMAGEN'" [src]="adj.urlArchivo" [alt]="'DETAIL.IMAGE_ALT' | translate"
                             class="adjunto-imagen">
-                        <!-- Video -->
                         <video *ngIf="adj.tipoAdjunto === 'VIDEO'" [src]="adj.urlArchivo" controls preload="metadata"
                             class="adjunto-video"></video>
-                        <!-- Audio -->
                         <audio *ngIf="adj.tipoAdjunto === 'AUDIO'" [src]="adj.urlArchivo" controls
                             class="adjunto-audio"></audio>
                     </ng-container>
@@ -163,12 +160,12 @@
 
         <!-- Boton volver -->
         <div class="volver-container">
-            <button class="btn-volver" (click)="volver()">Volver a la biblioteca</button>
+            <button class="btn-volver" (click)="volver()">{{ 'DETAIL.BACK_LIBRARY' | translate }}</button>
         </div>
 
     </main>
 
     <div class="loading-container" *ngIf="cargando">
-        <p>Cargando...</p>
+        <p>{{ 'DETAIL.LOADING' | translate }}</p>
     </div>
 </div>

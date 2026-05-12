@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-biblioteca',
     standalone: true,
-    imports: [NgFor, RouterLink, NavbarComponent],
+    imports: [NgFor, RouterLink, NavbarComponent, TranslateModule],
     templateUrl: './biblioteca.component.html',
     styleUrls: ['./biblioteca.component.scss']
 })

@@ -19,16 +19,16 @@
     <!-- 1. Información -->
     <li class="nav-item">
       <a href="#" (click)="toggleMenu('info', $event)" aria-haspopup="true">
-        Información <span class="arrow" aria-hidden="true">▾</span>
+        {{ 'NAVBAR.INFO' | translate }} <span class="arrow" aria-hidden="true">▾</span>
       </a>
       <div class="dropdown-menu menu-info" *ngIf="menuAbierto === 'info'" (click)="onPopoverClick($event)"
            role="menu">
         <div class="dropdown-header">
-          <h4>Sobre Keeply</h4>
+          <h4>{{ 'NAVBAR.ABOUT_KEEPLY' | translate }}</h4>
         </div>
         <div class="dropdown-body">
-          <p>Keeply es tu biblioteca personal para organizar todo lo que ves, lees o juegas.</p>
-          <p style="margin-top: 10px; color: #aaa; font-size: 0.85rem;">Versión 1.0 — Proyecto TFG</p>
+          <p>{{ 'NAVBAR.ABOUT_DESC' | translate }}</p>
+          <p style="margin-top: 10px; color: #aaa; font-size: 0.85rem;">{{ 'NAVBAR.VERSION' | translate }}</p>
         </div>
       </div>
     </li>
@@ -36,7 +36,7 @@
     <!-- 2. Redes -->
     <li class="nav-item">
       <a href="#" (click)="toggleMenu('redes', $event)" aria-haspopup="true">
-        Redes <span class="arrow" aria-hidden="true">▾</span>
+        {{ 'NAVBAR.NETWORKS' | translate }} <span class="arrow" aria-hidden="true">▾</span>
       </a>
       <div class="dropdown-menu menu-redes" *ngIf="menuAbierto === 'redes'" (click)="onPopoverClick($event)"
            role="menu">
@@ -63,50 +63,54 @@
         </svg>
       </div>
       <a href="#" (click)="toggleMenu('cuenta', $event)" aria-haspopup="true">
-        Cuenta <span class="arrow" aria-hidden="true">▾</span>
+        {{ 'NAVBAR.ACCOUNT' | translate }} <span class="arrow" aria-hidden="true">▾</span>
       </a>
 
       <div class="dropdown-menu menu-cuenta" *ngIf="menuAbierto === 'cuenta'" (click)="onPopoverClick($event)"
            role="menu">
 
-        <!-- ===== USUARIO LOGEADO ===== -->
+        <!-- USUARIO LOGEADO -->
         <ng-container *ngIf="currentUser$ | async as user; else authTemplate">
           <div class="dropdown-header">
             <h4>{{ user.nombreUsuario }}</h4>
           </div>
           <div class="dropdown-body">
-            <a href="#" class="dropdown-link">
-              Ajustes
-            </a>
+            <a href="#" class="dropdown-link">{{ 'NAVBAR.SETTINGS' | translate }}</a>
             <a class="dropdown-link" (click)="logout()" style="cursor: pointer;" role="button">
-              Cerrar sesión
+              {{ 'NAVBAR.LOGOUT' | translate }}
             </a>
           </div>
           <div class="dropdown-footer">
-            <a href="#" class="dropdown-link">
-              Asistencia
-            </a>
+            <a href="#" class="dropdown-link">{{ 'NAVBAR.SUPPORT' | translate }}</a>
           </div>
         </ng-container>
 
-        <!-- ===== NO LOGEADO — Login / Registro toggle ===== -->
+        <!-- NO LOGEADO -->
         <ng-template #authTemplate>
 
           <!-- MODO LOGIN -->
           <ng-container *ngIf="modoAuth === 'login'">
             <div class="dropdown-header">
-              <h4>Iniciar sesión</h4>
+              <h4>{{ 'NAVBAR.LOGIN_TITLE' | translate }}</h4>
             </div>
             <div class="dropdown-body login-form">
-              <input type="text" [(ngModel)]="loginNombreUsuario" placeholder="Nombre de usuario"
-                     class="login-input" aria-label="Nombre de usuario">
-              <input type="password" [(ngModel)]="loginPassword" placeholder="Contraseña"
-                     class="login-input" (keyup.enter)="loginInline()" aria-label="Contraseña">
+              <input type="text" [(ngModel)]="loginNombreUsuario" [placeholder]="'NAVBAR.USERNAME' | translate"
+                     class="login-input" aria-label="Username">
+              <input type="password" [(ngModel)]="loginPassword" [placeholder]="'NAVBAR.PASSWORD' | translate"
+                     class="login-input" (keyup.enter)="loginInline()" aria-label="Password">
               <p class="login-error" *ngIf="authError" role="alert">{{ authError }}</p>
-              <button class="btn-login" (click)="loginInline()">Entrar</button>
+              <button class="btn-login" (click)="loginInline()">{{ 'NAVBAR.ENTER' | translate }}</button>
+
+              <div class="google-divider">
+                <span>{{ 'NAVBAR.OR' | translate }}</span>
+              </div>
+              <div class="google-btn-container">
+                <div #googleBtnLogin id="google-btn-login"></div>
+              </div>
+
               <p class="auth-toggle-text">
-                No tienes cuenta?
-                <a (click)="toggleModoAuth($event)" role="button">Regístrate</a>
+                {{ 'NAVBAR.NO_ACCOUNT' | translate }}
+                <a (click)="toggleModoAuth($event)" role="button">{{ 'NAVBAR.SIGN_UP' | translate }}</a>
               </p>
             </div>
           </ng-container>
@@ -114,20 +118,28 @@
           <!-- MODO REGISTRO -->
           <ng-container *ngIf="modoAuth === 'registro'">
             <div class="dropdown-header">
-              <h4>Crear cuenta</h4>
+              <h4>{{ 'NAVBAR.REGISTER_TITLE' | translate }}</h4>
             </div>
             <div class="dropdown-body login-form">
-              <input type="text" [(ngModel)]="regNombreUsuario" placeholder="Nombre de usuario"
-                     class="login-input" aria-label="Nombre de usuario">
-              <input type="email" [(ngModel)]="regEmail" placeholder="tu@email.com"
+              <input type="text" [(ngModel)]="regNombreUsuario" [placeholder]="'NAVBAR.USERNAME' | translate"
+                     class="login-input" aria-label="Username">
+              <input type="email" [(ngModel)]="regEmail" [placeholder]="'NAVBAR.EMAIL' | translate"
                      class="login-input" aria-label="Email">
-              <input type="password" [(ngModel)]="regPassword" placeholder="Contraseña"
-                     class="login-input" (keyup.enter)="registroInline()" aria-label="Contraseña">
+              <input type="password" [(ngModel)]="regPassword" [placeholder]="'NAVBAR.PASSWORD' | translate"
+                     class="login-input" (keyup.enter)="registroInline()" aria-label="Password">
               <p class="login-error" *ngIf="authError" role="alert">{{ authError }}</p>
-              <button class="btn-login" (click)="registroInline()">Crear cuenta</button>
+              <button class="btn-login" (click)="registroInline()">{{ 'NAVBAR.CREATE_ACCOUNT' | translate }}</button>
+
+              <div class="google-divider">
+                <span>{{ 'NAVBAR.OR' | translate }}</span>
+              </div>
+              <div class="google-btn-container">
+                <div #googleBtnRegistro id="google-btn-registro"></div>
+              </div>
+
               <p class="auth-toggle-text">
-                Ya tienes cuenta?
-                <a (click)="toggleModoAuth($event)" role="button">Inicia sesión</a>
+                {{ 'NAVBAR.HAS_ACCOUNT' | translate }}
+                <a (click)="toggleModoAuth($event)" role="button">{{ 'NAVBAR.SIGN_IN' | translate }}</a>
               </p>
             </div>
           </ng-container>
@@ -138,39 +150,39 @@
 
     <!-- Enlace móvil: Explorar -->
     <li class="nav-item mobile-only-link">
-      <a routerLink="/busqueda" class="nav-link-direct" (click)="cerrarMenuMobil()">Explorar</a>
+      <a routerLink="/busqueda" class="nav-link-direct" (click)="cerrarMenuMobil()">{{ 'NAVBAR.EXPLORE' | translate }}</a>
     </li>
     <li class="nav-item mobile-only-link">
-      <a (click)="irABiblioteca()" class="nav-link-direct" style="cursor:pointer;">Tu biblioteca</a>
+      <a (click)="irABiblioteca()" class="nav-link-direct" style="cursor:pointer;">{{ 'NAVBAR.YOUR_LIBRARY' | translate }}</a>
     </li>
 
   </ul>
 
   <div class="navbar-action">
+    <!-- Selector de idioma -->
+    <div class="lang-switcher">
+      <button class="lang-btn" [class.active]="currentLang === 'es'" (click)="switchLang('es')">ES</button>
+      <button class="lang-btn" [class.active]="currentLang === 'en'" (click)="switchLang('en')">EN</button>
+    </div>
+
     <!-- Botón toggle tema -->
     <button class="btn-theme-toggle" (click)="toggleTheme()"
-            [attr.aria-label]="themeService.isDarkMode() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
-      <!-- Sol (visible en dark mode) -->
+            [attr.aria-label]="themeService.isDarkMode() ? ('NAVBAR.THEME_LIGHT' | translate) : ('NAVBAR.THEME_DARK' | translate)">
       <svg *ngIf="themeService.isDarkMode()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
            class="theme-icon" aria-hidden="true">
         <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
       </svg>
-      <!-- Luna (visible en light mode) -->
       <svg *ngIf="!themeService.isDarkMode()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
            class="theme-icon" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
       </svg>
     </button>
 
-    <button class="btn-explorar-nav" routerLink="/busqueda" aria-label="Explorar obras">Explorar</button>
-    <button class="btn-biblioteca" (click)="irABiblioteca()" aria-label="Ir a tu biblioteca">Tu biblioteca</button>
+    <button class="btn-explorar-nav" routerLink="/busqueda">{{ 'NAVBAR.EXPLORE' | translate }}</button>
+    <button class="btn-biblioteca" (click)="irABiblioteca()">{{ 'NAVBAR.YOUR_LIBRARY' | translate }}</button>
   </div>
 </nav>

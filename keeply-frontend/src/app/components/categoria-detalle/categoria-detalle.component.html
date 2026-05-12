@@ -20,16 +20,16 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
                 <input type="text"
-                       placeholder="Buscar títulos..."
+                       [placeholder]="'CATEGORY.SEARCH_TITLES' | translate"
                        class="search-input"
                        [(ngModel)]="searchTerm"
                        (ngModelChange)="filtrarItems()">
             </div>
 
             <div class="action-buttons">
-                <button class="btn-purple" (click)="volverAlMenu()">Volver al menú</button>
+                <button class="btn-purple" (click)="volverAlMenu()">{{ 'CATEGORY.BACK_MENU' | translate }}</button>
                 <button class="btn-purple" [ngClass]="{'btn-active': modoEdicion}" (click)="toggleModoEdicion()">
-                    {{ modoEdicion ? 'Cancelar edicion' : 'Editar biblioteca' }}
+                    {{ modoEdicion ? ('CATEGORY.CANCEL_EDIT' | translate) : ('CATEGORY.EDIT_LIBRARY' | translate) }}
                 </button>
             </div>
 
@@ -39,12 +39,12 @@
         <div class="edit-toolbar" *ngIf="modoEdicion">
             <div class="edit-toolbar-left">
                 <button class="btn-select-all" (click)="toggleSeleccionarTodos()">
-                    {{ seleccionados.size === items.length ? 'Deseleccionar todo' : 'Seleccionar todo' }}
+                    {{ seleccionados.size === items.length ? ('CATEGORY.DESELECT_ALL' | translate) : ('CATEGORY.SELECT_ALL' | translate) }}
                 </button>
-                <span class="selection-count">{{ seleccionados.size }} seleccionado{{ seleccionados.size !== 1 ? 's' : '' }}</span>
+                <span class="selection-count">{{ seleccionados.size }} {{ seleccionados.size !== 1 ? ('CATEGORY.SELECTED_PLURAL' | translate) : ('CATEGORY.SELECTED' | translate) }}</span>
             </div>
             <button class="btn-delete-selected" (click)="eliminarSeleccionados()" [disabled]="seleccionados.size === 0">
-                Eliminar seleccionados
+                {{ 'CATEGORY.DELETE_SELECTED' | translate }}
             </button>
         </div>
 
@@ -74,10 +74,10 @@
         </section>
 
         <p class="empty-message" *ngIf="items.length === 0 && searchTerm">
-            No se encontraron resultados para "{{ searchTerm }}"
+            {{ 'CATEGORY.NO_RESULTS' | translate }} "{{ searchTerm }}"
         </p>
         <p class="empty-message" *ngIf="todosLosItems.length === 0 && !searchTerm">
-            Aún no tienes obras en esta categoría. ¡Ve a <a routerLink="/busqueda">Explorar</a> para añadir!
+            {{ 'CATEGORY.EMPTY_CATEGORY' | translate }} <a routerLink="/busqueda">{{ 'CATEGORY.GO_EXPLORE' | translate }}</a>
         </p>
 
     </main>
