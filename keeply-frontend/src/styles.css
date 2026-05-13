@@ -18,6 +18,11 @@
     --bg-input: #4a423d;
     --bg-card: #1e1e3a;
 
+    /* Fondos dinámicos (Oscuro) */
+    --bg-img-home: url('assets/images/home-bg-dark.jpg');
+    --bg-img-login: url('assets/images/login-bg-dark.jpg');
+    --bg-img-register: url('assets/images/register-bg-dark.jpg');
+
     --text-primary: #e0e0e0;
     --text-secondary: #bbbbbb;
     --text-heading: #ffffff;
@@ -58,6 +63,11 @@
     --bg-panel-dark: #4a423d;
     --bg-input: #4a423d;
     --bg-card: #ffffff;
+
+    /* Fondos dinámicos (Claro) */
+    --bg-img-home: url('assets/images/home-bg-light.jpg');
+    --bg-img-login: url('assets/images/login-bg-light.jpg');
+    --bg-img-register: url('assets/images/register-bg-light.jpg');
 
     --text-primary: #333333;
     --text-secondary: #666666;

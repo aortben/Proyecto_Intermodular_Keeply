@@ -15,4 +15,6 @@ public class RegisterRequestDTO {
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "El formato del email no es válido")
     private String email;
+
+    private String avatarUrl;
 }

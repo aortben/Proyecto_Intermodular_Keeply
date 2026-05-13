@@ -3,6 +3,8 @@ export interface AuthResponse {
     idUsuario: number;
     nombreUsuario: string;
     email: string;
+    avatarUrl?: string;
+    customBanners?: string;
 }
 
 export interface LoginRequest {
@@ -14,6 +16,7 @@ export interface RegisterRequest {
     nombreUsuario: string;
     contrasena: string;
     email: string;
+    avatarUrl?: string;
 }
 
 export interface GoogleAuthRequest {

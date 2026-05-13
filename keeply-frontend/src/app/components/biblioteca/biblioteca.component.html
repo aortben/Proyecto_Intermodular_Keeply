@@ -4,13 +4,12 @@
     <main class="biblioteca-content">
 
         <header class="user-header">
-            <img [src]="usuario.avatarUrl" alt="Avatar de {{ usuario.nombre }}" class="user-avatar-large">
             <h2 class="user-title">{{ 'LIBRARY.COLLECTION_OF' | translate }} {{ usuario.nombre }}</h2>
         </header>
 
         <section class="categories-grid">
 
-            <article class="category-card" *ngFor="let cat of categorias" [routerLink]="cat.ruta">
+            <article class="category-card" *ngFor="let cat of categorias" [routerLink]="cat.ruta" style="cursor: pointer;">
                 <div class="card-image-container">
                     <img [src]="cat.imagen" [alt]="cat.nombre" class="category-image">
                 </div>

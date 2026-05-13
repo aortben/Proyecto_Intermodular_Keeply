@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST encargado de la gestión de Notas.
+ * Una nota es un comentario o apunte que un usuario realiza sobre un elemento
+ * específico de su biblioteca (ItemUsuario).
+ */
 @RestController
 @RequestMapping("/api/notas")
 @RequiredArgsConstructor
@@ -18,8 +23,10 @@ public class NotaController {
     private final NotaService notaService;
 
     /**
-     * Obtiene todas las notas de un ítem (con sus adjuntos), ordenadas por fecha
-     * desc.
+     * Obtiene todas las notas asociadas a un elemento de la biblioteca,
+     * incluyendo sus adjuntos (fotos, archivos), ordenadas por fecha de forma descendente.
+     * @param itemUsuarioId ID del ítem en la biblioteca.
+     * @return 200 OK con la lista de notas.
      */
     @GetMapping("/item/{itemUsuarioId}")
     public ResponseEntity<List<Nota>> getNotasByItem(@PathVariable Integer itemUsuarioId) {
@@ -27,7 +34,9 @@ public class NotaController {
     }
 
     /**
-     * Obtiene una nota por su id.
+     * Obtiene los detalles de una nota específica por su ID.
+     * @param id ID único de la nota.
+     * @return 200 OK si existe, 404 si no se encuentra.
      */
     @GetMapping("/{id}")
     public ResponseEntity<Nota> getNotaById(@PathVariable Integer id) {
@@ -37,9 +46,12 @@ public class NotaController {
     }
 
     /**
-     * Crea una nota con adjuntos opcionales.
-     * Body esperado: { idItemUsuario, textoNota, adjuntos: [{ tipoAdjunto,
-     * urlArchivo }] }
+     * Crea una nueva nota. Permite recibir también una lista de adjuntos opcionales
+     * (imágenes, audios) para ser guardados en la misma transacción.
+     * Body esperado: { idItemUsuario, textoNota, adjuntos: [{ tipoAdjunto, urlArchivo }] }
+     * 
+     * @param dto El objeto de transferencia de datos con la información de la nota.
+     * @return 201 Created con la nota persistida.
      */
     @PostMapping
     public ResponseEntity<Nota> createNota(@RequestBody NotaRequestDTO dto) {
@@ -48,7 +60,11 @@ public class NotaController {
     }
 
     /**
-     * Elimina una nota y todos sus adjuntos (cascade).
+     * Elimina permanentemente una nota. Gracias a la configuración en cascada de Hibernate,
+     * eliminar la nota también elimina automáticamente sus adjuntos asociados de la base de datos.
+     * 
+     * @param id ID de la nota a borrar.
+     * @return 204 No Content confirmando la acción, o 404 si no existía.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNota(@PathVariable Integer id) {

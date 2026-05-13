@@ -7,6 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { ItemUsuarioService } from '../../services/item-usuario.service';
 import { AuthService } from '../../services/auth.service';
+import { ArchivoService } from '../../services/archivo.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { TipoObra } from '../../models/obra.model';
 
 @Component({
@@ -51,7 +53,9 @@ export class CategoriaDetalleComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private itemUsuarioService: ItemUsuarioService,
-        private authService: AuthService
+        private authService: AuthService,
+        private archivoService: ArchivoService,
+        private usuarioService: UsuarioService
     ) { }
 
     ngOnInit(): void {
@@ -79,7 +83,21 @@ export class CategoriaDetalleComponent implements OnInit {
 
             if (config) {
                 this.categoria = config.nombre;
-                this.bannerUrl = config.banner;
+                
+                // Comprobar si el usuario tiene un banner personalizado para esta categoría
+                let customUrl = null;
+                if (currentUser && currentUser.customBanners) {
+                    try {
+                        const bannersObj = JSON.parse(currentUser.customBanners);
+                        if (bannersObj[slug]) {
+                            customUrl = this.archivoService.getFullUrl(bannersObj[slug]);
+                        }
+                    } catch (e) {
+                        console.error('Error parseando customBanners JSON:', e);
+                    }
+                }
+                
+                this.bannerUrl = customUrl ? customUrl : config.banner;
             } else {
                 // Si la categoría no existe, volver a biblioteca
                 this.router.navigate(['/biblioteca']);
@@ -203,5 +221,55 @@ export class CategoriaDetalleComponent implements OnInit {
 
     volverAlMenu(): void {
         this.router.navigate(['/biblioteca']);
+    }
+
+    /** Maneja la selección de un nuevo archivo de banner por el usuario */
+    onBannerSelected(event: any): void {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Validar que sea imagen
+        const validacion = this.archivoService.validateImageOnly(file);
+        if (!validacion.valid) {
+            alert('Por favor, selecciona un archivo de imagen válido.');
+            return;
+        }
+
+        const userId = this.authService.getUserId();
+        if (!userId) return;
+
+        // Subir archivo
+        this.archivoService.upload(file).subscribe({
+            next: (res) => {
+                const newRelativeUrl = res.url;
+                this.bannerUrl = this.archivoService.getFullUrl(newRelativeUrl);
+
+                // Obtener banners actuales
+                const currentUser = this.authService.getStoredUser();
+                let bannersObj: any = {};
+                if (currentUser && currentUser.customBanners) {
+                    try {
+                        bannersObj = JSON.parse(currentUser.customBanners);
+                    } catch (e) { }
+                }
+
+                // Actualizar la categoría actual
+                bannersObj[this.currentSlug] = newRelativeUrl;
+                const newBannersJson = JSON.stringify(bannersObj);
+
+                // Guardar en backend
+                this.usuarioService.updateBanners(userId, newBannersJson).subscribe({
+                    next: () => {
+                        // Actualizar en authService para reflejar el cambio en toda la sesión
+                        this.authService.updateStoredBanners(newBannersJson);
+                    },
+                    error: (err) => console.error('Error guardando banner en backend', err)
+                });
+            },
+            error: (err) => {
+                console.error('Error subiendo banner', err);
+                alert('Hubo un error al subir la imagen.');
+            }
+        });
     }
 }

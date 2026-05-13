@@ -1,48 +1,74 @@
-<div class="registro-container">
-    <h2>Registro de Usuario</h2>
+<div class="auth-page">
+    <app-navbar></app-navbar>
 
-    <form (ngSubmit)="registrar()" class="registro-form">
-        <div class="form-group">
-            <label for="nombreUsuario">Nombre de usuario</label>
-            <input id="nombreUsuario" type="text" [(ngModel)]="nombreUsuario" name="nombreUsuario" required
-                placeholder="Ej: alvaro123">
+    <main class="auth-container">
+        <div class="auth-card glass-card">
+            <div class="auth-header">
+                <h1 class="auth-title">{{ 'REGISTER.TITLE' | translate }}</h1>
+                <p class="auth-subtitle">{{ 'REGISTER.SUBTITLE' | translate }}</p>
+            </div>
+
+            <div class="auth-form">
+                <div class="input-group">
+                    <label for="reg-username">{{ 'NAVBAR.USERNAME' | translate }}</label>
+                    <input id="reg-username" type="text" [(ngModel)]="nombreUsuario"
+                           [placeholder]="'NAVBAR.USERNAME' | translate">
+                </div>
+                <div class="input-group">
+                    <label for="reg-email">{{ 'REGISTER.EMAIL_LABEL' | translate }}</label>
+                    <input id="reg-email" type="email" [(ngModel)]="email"
+                           [placeholder]="'NAVBAR.EMAIL' | translate">
+                </div>
+                <div class="input-group">
+                    <label for="reg-password">{{ 'NAVBAR.PASSWORD' | translate }}</label>
+                    <input id="reg-password" type="password" [(ngModel)]="contrasena"
+                           [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate" (keyup.enter)="registrar()">
+                </div>
+
+                <!-- Avatar selection -->
+                <div class="avatar-selection">
+                    <p class="avatar-section-title">{{ 'REGISTER.CHOOSE_AVATAR' | translate }}</p>
+                    <div class="avatar-grid">
+                        <div *ngFor="let av of avatarOptions"
+                             class="avatar-option"
+                             [class.selected]="selectedAvatarId === av.id && !customAvatarUrl"
+                             (click)="selectAvatar(av)">
+                            <img [src]="av.url" alt="Avatar option">
+                        </div>
+                        <label class="avatar-upload-btn" [class.selected]="selectedAvatarId === 'custom'">
+                            {{ subiendoAvatar ? '...' : '+' }}
+                            <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                                   (change)="onAvatarFileSelected($event)" [disabled]="subiendoAvatar">
+                        </label>
+                    </div>
+                    <!-- Preview -->
+                    <div class="avatar-preview" *ngIf="customAvatarUrl || getSelectedAvatar()">
+                        <div class="preview-circle">
+                            <img [src]="getSelectedAvatarUrl()" alt="Avatar">
+                        </div>
+                    </div>
+                </div>
+
+                <p class="auth-error" *ngIf="authError" role="alert">{{ authError }}</p>
+
+                <button class="btn-auth-primary" (click)="registrar()" [disabled]="cargando">
+                    {{ cargando ? ('REGISTER.CREATING' | translate) : ('NAVBAR.CREATE_ACCOUNT' | translate) }}
+                </button>
+
+                <div class="auth-divider">
+                    <span>{{ 'NAVBAR.OR' | translate }}</span>
+                </div>
+
+                <div class="google-btn-wrapper">
+                    <div #googleBtnRegistro id="google-btn-register-page"></div>
+                </div>
+            </div>
+
+            <div class="auth-footer">
+                <p>{{ 'NAVBAR.HAS_ACCOUNT' | translate }}
+                    <a routerLink="/login">{{ 'NAVBAR.SIGN_IN' | translate }}</a>
+                </p>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" type="email" [(ngModel)]="email" name="email" required
-                placeholder="tu@email.com">
-        </div>
-
-        <div class="form-group">
-            <label for="contrasena">Contraseña</label>
-            <input id="contrasena" type="password" [(ngModel)]="contrasena" name="contrasena" required
-                placeholder="Tu contraseña">
-        </div>
-
-        <button type="submit" class="btn btn-primary" [disabled]="loading">
-            @if (loading) {
-                Registrando...
-            } @else {
-                Registrarse
-            }
-        </button>
-    </form>
-
-    <div class="divider">
-        <span>o</span>
-    </div>
-
-    <div class="google-btn-wrapper">
-        <div #googleBtn id="google-signup-btn"></div>
-    </div>
-
-    @if (mensaje) {
-    <p class="success-msg">{{ mensaje }}</p>
-    }
-    @if (error) {
-    <p class="error-msg">{{ error }}</p>
-    }
-
-    <p class="login-link">¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+    </main>
 </div>

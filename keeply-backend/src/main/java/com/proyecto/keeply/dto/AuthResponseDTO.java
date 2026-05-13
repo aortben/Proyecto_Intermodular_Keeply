@@ -14,4 +14,6 @@ public class AuthResponseDTO {
     private Integer idUsuario;
     private String nombreUsuario;
     private String email;
+    private String avatarUrl;
+    private String customBanners;
 }

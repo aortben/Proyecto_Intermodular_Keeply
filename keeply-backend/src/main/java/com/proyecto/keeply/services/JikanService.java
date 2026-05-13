@@ -12,31 +12,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Servicio encargado de la integración con Jikan API.
+ * Jikan es un envoltorio (wrapper) de la base de datos MyAnimeList para obtener información de animes y mangas.
+ */
 @Service
 @RequiredArgsConstructor
 public class JikanService {
 
+    // Clave de API inyectada desde application.properties (Jikan no requiere una obligatoriamente, pero se puede configurar)
     @Value("${api.jikan.key:}")
     private String apiKey;
 
     private final RestTemplate restTemplate;
 
     /**
-     * Busca animes en Jikan API (no requiere API key)
+     * Busca animes en la API de Jikan.
+     * @param query Texto a buscar.
+     * @return Lista de animes formateados como ResultadoBusquedaDTO.
      */
     public List<ResultadoBusquedaDTO> buscarAnimes(String query) {
         List<ResultadoBusquedaDTO> resultados = new ArrayList<>();
 
         try {
+            // URL con el endpoint específico de anime, limitando a 15 resultados
             String url = "https://api.jikan.moe/v4/anime?q=" + query + "&limit=15";
             Map<String, Object> response = restTemplate.getForObject(url, Map.class);
 
+            // Mapea la lista "data" devuelta por la API
             if (response != null && response.containsKey("data")) {
                 List<Map<String, Object>> items = (List<Map<String, Object>>) response.get("data");
+                
                 for (Map<String, Object> item : items) {
                     String idStr = item.get("mal_id") != null ? item.get("mal_id").toString() : "";
 
-                    // Título: primero en español, luego en inglés, luego original
+                    // Lógica de títulos: Priorizamos el título en inglés si está disponible, sino el original (romaji)
                     String titulo = "";
                     if (item.get("title_english") != null && !item.get("title_english").toString().isEmpty()) {
                         titulo = item.get("title_english").toString();
@@ -46,7 +56,7 @@ public class JikanService {
 
                     String sinopsis = item.get("synopsis") != null ? item.get("synopsis").toString() : "";
 
-                    // Imagen
+                    // Extrae la URL de la imagen en formato JPG en su tamaño más grande
                     String imagenUrl = null;
                     if (item.get("images") != null) {
                         Map<String, Object> images = (Map<String, Object>) item.get("images");
@@ -57,20 +67,21 @@ public class JikanService {
                         }
                     }
 
-                    // Fecha
+                    // Extrae la fecha de estreno del objeto "aired" -> "from" (ISO 8601)
                     LocalDate fecha = null;
                     if (item.get("aired") != null) {
                         Map<String, Object> aired = (Map<String, Object>) item.get("aired");
                         String from = aired.get("from") != null ? aired.get("from").toString() : null;
                         if (from != null && from.length() >= 10) {
                             try {
-                                fecha = LocalDate.parse(from.substring(0, 10));
+                                fecha = LocalDate.parse(from.substring(0, 10)); // Solo el yyyy-mm-dd
                             } catch (Exception e) {
+                                // Fallo silencioso de fecha
                             }
                         }
                     }
 
-                    // Estudio/Autor
+                    // Mapea el primer estudio responsable como el "autorCreador" de la obra
                     String autor = "";
                     if (item.get("studios") != null) {
                         List<Map<String, Object>> studios = (List<Map<String, Object>>) item.get("studios");
@@ -99,20 +110,25 @@ public class JikanService {
     }
 
     /**
-     * Busca mangas en Jikan API (no requiere API key)
+     * Busca mangas en la API de Jikan.
+     * @param query Texto a buscar.
+     * @return Lista de mangas formateados como ResultadoBusquedaDTO.
      */
     public List<ResultadoBusquedaDTO> buscarMangas(String query) {
         List<ResultadoBusquedaDTO> resultados = new ArrayList<>();
 
         try {
+            // URL con el endpoint específico de manga
             String url = "https://api.jikan.moe/v4/manga?q=" + query + "&limit=15";
             Map<String, Object> response = restTemplate.getForObject(url, Map.class);
 
             if (response != null && response.containsKey("data")) {
                 List<Map<String, Object>> items = (List<Map<String, Object>>) response.get("data");
+                
                 for (Map<String, Object> item : items) {
                     String idStr = item.get("mal_id") != null ? item.get("mal_id").toString() : "";
 
+                    // Lógica de títulos similar al anime
                     String titulo = "";
                     if (item.get("title_english") != null && !item.get("title_english").toString().isEmpty()) {
                         titulo = item.get("title_english").toString();
@@ -122,6 +138,7 @@ public class JikanService {
 
                     String sinopsis = item.get("synopsis") != null ? item.get("synopsis").toString() : "";
 
+                    // Imagen de portada
                     String imagenUrl = null;
                     if (item.get("images") != null) {
                         Map<String, Object> images = (Map<String, Object>) item.get("images");
@@ -132,6 +149,7 @@ public class JikanService {
                         }
                     }
 
+                    // Extrae la fecha de publicación original (objeto "published")
                     LocalDate fecha = null;
                     if (item.get("published") != null) {
                         Map<String, Object> published = (Map<String, Object>) item.get("published");
@@ -144,6 +162,7 @@ public class JikanService {
                         }
                     }
 
+                    // Mapea el mangaka / autor
                     String autor = "";
                     if (item.get("authors") != null) {
                         List<Map<String, Object>> authors = (List<Map<String, Object>>) item.get("authors");

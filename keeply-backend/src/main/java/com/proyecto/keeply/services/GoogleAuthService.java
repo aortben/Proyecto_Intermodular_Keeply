@@ -16,6 +16,11 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Optional;
 
+/**
+ * Servicio encargado de gestionar el flujo de autenticación mediante Google OAuth2.
+ * Válida el token proporcionado por el frontend contra los servidores de Google y
+ * enlaza la cuenta de Google con el sistema de usuarios de Keeply.
+ */
 @Service
 @RequiredArgsConstructor
 public class GoogleAuthService {
@@ -23,79 +28,96 @@ public class GoogleAuthService {
     private final UsuarioRepository usuarioRepository;
     private final JwtService jwtService;
 
+    // ID del cliente de Google configurado en el panel de Google Cloud Console
     @Value("${google.client.id}")
     private String googleClientId;
 
     /**
-     * Verifica el ID token de Google, busca o crea al usuario en la BD,
-     * y genera un JWT propio de Keeply.
+     * Flujo principal de inicio de sesión o registro automático con Google.
+     * @param credential El token JWT (Credential) devuelto por Google Identity Services en el frontend.
+     * @return AuthResponseDTO con el token JWT de nuestra app y los datos del usuario.
      */
     public AuthResponseDTO authenticateWithGoogle(String credential) {
+        // 1. Verificamos la autenticidad del token comunicándonos con Google
         GoogleIdToken.Payload payload = verifyGoogleToken(credential);
 
+        // Extraemos la información básica pública del perfil de Google
         String email = payload.getEmail();
         String nombre = (String) payload.get("name");
         String avatarUrl = (String) payload.get("picture");
 
-        // Generar un nombre de usuario a partir del email si no hay nombre
+        // Si el usuario no tiene nombre en Google, generamos uno a partir de su correo (lo que va antes del @)
         String nombreUsuario = nombre != null ? nombre : email.split("@")[0];
 
-        // Buscar usuario existente por email
+        // 2. Buscamos si este correo ya existe en nuestra base de datos
         Optional<Usuario> existingUser = usuarioRepository.findByEmail(email);
 
         Usuario usuario;
         if (existingUser.isPresent()) {
             usuario = existingUser.get();
-            // Verificar que el usuario sea de tipo Google
+            
+            // Si el correo existe pero se registró de forma tradicional (con contraseña), bloqueamos para evitar secuestro de cuenta
             if (usuario.getAuthProvider() != AuthProvider.GOOGLE) {
                 throw new RuntimeException("Este email ya está registrado con usuario y contraseña. Usa el login normal.");
             }
-            // Actualizar avatar si cambió
+            
+            // Si el avatar en Google ha cambiado, lo actualizamos en nuestra base de datos
             if (avatarUrl != null && !avatarUrl.equals(usuario.getAvatarUrl())) {
                 usuario.setAvatarUrl(avatarUrl);
                 usuario = usuarioRepository.save(usuario);
             }
         } else {
-            // Verificar que el nombre de usuario no esté en uso
+            // 3. Si el usuario no existe, lo creamos automáticamente (Registro automático vía Google)
+            
+            // Validamos que el nombre de usuario generado no choque con uno existente
             String finalNombreUsuario = nombreUsuario;
             int counter = 1;
             while (usuarioRepository.existsByNombreUsuario(finalNombreUsuario)) {
+                // Si existe "juan", probamos con "juan1", "juan2", etc.
                 finalNombreUsuario = nombreUsuario + counter;
                 counter++;
             }
 
-            // Crear nuevo usuario Google
+            // Construimos el nuevo usuario indicando que proviene de GOOGLE
             usuario = Usuario.builder()
                     .nombreUsuario(finalNombreUsuario)
                     .email(email)
                     .authProvider(AuthProvider.GOOGLE)
-                    .contrasenaHash("GOOGLE_AUTH_NO_PASSWORD")
+                    .contrasenaHash("GOOGLE_AUTH_NO_PASSWORD") // Se asigna una clave ficticia, no será usada
                     .avatarUrl(avatarUrl)
                     .build();
             usuario = usuarioRepository.save(usuario);
         }
 
-        // Generar JWT propio de Keeply
+        // 4. Generamos nuestro propio token JWT para mantener la sesión abierta en el frontend
         String token = jwtService.generateToken(usuario.getNombreUsuario());
 
+        // Devolvemos el DTO con toda la información necesaria para la interfaz
         return AuthResponseDTO.builder()
                 .token(token)
                 .idUsuario(usuario.getIdUsuario())
                 .nombreUsuario(usuario.getNombreUsuario())
                 .email(usuario.getEmail())
+                .avatarUrl(usuario.getAvatarUrl())
+                .customBanners(usuario.getCustomBanners())
                 .build();
     }
 
     /**
-     * Verifica el ID token de Google usando la librería oficial.
+     * Verifica criptográficamente el token de Google contra su clave pública.
+     * @param idTokenString El token en formato String.
+     * @return El Payload verificado con los datos del usuario.
+     * @throws RuntimeException Si el token ha expirado, fue manipulado, o el Audience no coincide.
      */
     private GoogleIdToken.Payload verifyGoogleToken(String idTokenString) {
         try {
+            // Instancia el verificador configurado con nuestro googleClientId (Audience)
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
                     new NetHttpTransport(), GsonFactory.getDefaultInstance())
                     .setAudience(Collections.singletonList(googleClientId))
                     .build();
 
+            // Valida la firma del token
             GoogleIdToken idToken = verifier.verify(idTokenString);
             if (idToken == null) {
                 throw new RuntimeException("Token de Google inválido");

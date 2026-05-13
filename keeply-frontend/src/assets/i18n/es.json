@@ -96,5 +96,30 @@
     "En_Progreso": "En Progreso",
     "Completado": "Completado",
     "Abandonado": "Abandonado"
+  },
+  "LOGIN": {
+    "TITLE": "Bienvenido de nuevo",
+    "SUBTITLE": "Inicia sesión para acceder a tu biblioteca",
+    "LOADING": "Iniciando sesión..."
+  },
+  "REGISTER": {
+    "TITLE": "Crea tu cuenta",
+    "SUBTITLE": "Únete y organiza todo lo que te apasiona",
+    "EMAIL_LABEL": "Correo electrónico",
+    "PASSWORD_PLACEHOLDER": "Mínimo 6 caracteres",
+    "CHOOSE_AVATAR": "Elige tu avatar",
+    "CREATING": "Creando cuenta...",
+    "PASSWORD_TOO_SHORT": "La contraseña debe tener al menos 6 caracteres"
+  },
+  "PROFILE": {
+    "CHANGE_AVATAR": "Cambiar avatar"
+  },
+  "FILE_ERRORS": {
+    "INVALID_TYPE": "Tipo de archivo no soportado. Solo imágenes, videos cortos o audio.",
+    "IMAGE_ONLY": "Solo se permiten imágenes (JPEG, PNG, WebP, GIF).",
+    "IMAGE_TOO_LARGE": "La imagen es demasiado grande (máx 5MB).",
+    "VIDEO_TOO_LARGE": "El video es demasiado grande (máx 50MB).",
+    "AUDIO_TOO_LARGE": "El audio es demasiado grande (máx 10MB).",
+    "UPLOAD_FAILED": "Error al subir el archivo. Inténtalo de nuevo."
   }
 }

@@ -96,5 +96,30 @@
     "En_Progreso": "In Progress",
     "Completado": "Completed",
     "Abandonado": "Dropped"
+  },
+  "LOGIN": {
+    "TITLE": "Welcome back",
+    "SUBTITLE": "Log in to access your library",
+    "LOADING": "Logging in..."
+  },
+  "REGISTER": {
+    "TITLE": "Create your account",
+    "SUBTITLE": "Join and organize everything you love",
+    "EMAIL_LABEL": "Email address",
+    "PASSWORD_PLACEHOLDER": "Minimum 6 characters",
+    "CHOOSE_AVATAR": "Choose your avatar",
+    "CREATING": "Creating account...",
+    "PASSWORD_TOO_SHORT": "Password must be at least 6 characters"
+  },
+  "PROFILE": {
+    "CHANGE_AVATAR": "Change avatar"
+  },
+  "FILE_ERRORS": {
+    "INVALID_TYPE": "Unsupported file type. Only images, short videos or audio allowed.",
+    "IMAGE_ONLY": "Only images are allowed (JPEG, PNG, WebP, GIF).",
+    "IMAGE_TOO_LARGE": "Image is too large (max 5MB).",
+    "VIDEO_TOO_LARGE": "Video is too large (max 50MB).",
+    "AUDIO_TOO_LARGE": "Audio is too large (max 10MB).",
+    "UPLOAD_FAILED": "Failed to upload file. Please try again."
   }
 }

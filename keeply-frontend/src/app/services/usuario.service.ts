@@ -32,4 +32,12 @@ export class UsuarioService {
     delete(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
+
+    updateAvatar(id: number, avatarUrl: string): Observable<any> {
+        return this.http.put(`${this.apiUrl}/${id}/avatar`, { avatarUrl });
+    }
+
+    updateBanners(id: number, customBanners: string): Observable<any> {
+        return this.http.put(`${this.apiUrl}/${id}/banners`, { customBanners });
+    }
 }

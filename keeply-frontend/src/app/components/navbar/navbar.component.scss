@@ -579,3 +579,124 @@ $input-bg: #4a423d;
         border-radius: 12px;
     }
 }
+
+/* ===== Profile & Avatar Styles ===== */
+
+.user-avatar-mini {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+
+    &:hover { border-color: rgba(255, 255, 255, 0.5); }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.user-icon-svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.profile-header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .profile-avatar-large {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        margin: 0 auto 10px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1.6rem;
+        color: white;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .profile-name {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $text-color;
+    }
+
+    .profile-email {
+        margin: 4px 0 0 0;
+        font-size: 0.8rem;
+        color: #888;
+    }
+}
+
+.avatar-edit-panel {
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.avatar-grid-mini {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.avatar-option-mini {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: white;
+    transition: transform 0.2s;
+
+    &:hover { transform: scale(1.15); }
+}
+
+.avatar-upload-mini {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: #b05cff;
+        color: #b05cff;
+    }
+}

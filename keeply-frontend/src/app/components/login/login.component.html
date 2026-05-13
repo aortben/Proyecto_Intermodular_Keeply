@@ -1,38 +1,45 @@
-<div class="login-container">
-    <h2>Iniciar Sesión</h2>
+<div class="auth-page">
+    <app-navbar></app-navbar>
 
-    <form (ngSubmit)="login()" class="login-form">
-        <div class="form-group">
-            <label for="nombreUsuario">Nombre de usuario</label>
-            <input id="nombreUsuario" type="text" [(ngModel)]="nombreUsuario" name="nombreUsuario" required placeholder="Tu nombre de usuario">
+    <main class="auth-container">
+        <div class="auth-card glass-card">
+            <div class="auth-header">
+                <h1 class="auth-title">{{ 'LOGIN.TITLE' | translate }}</h1>
+                <p class="auth-subtitle">{{ 'LOGIN.SUBTITLE' | translate }}</p>
+            </div>
+
+            <div class="auth-form">
+                <div class="input-group">
+                    <label for="username">{{ 'NAVBAR.USERNAME' | translate }}</label>
+                    <input id="username" type="text" [(ngModel)]="nombreUsuario"
+                           [placeholder]="'NAVBAR.USERNAME' | translate" (keyup.enter)="login()">
+                </div>
+                <div class="input-group">
+                    <label for="password">{{ 'NAVBAR.PASSWORD' | translate }}</label>
+                    <input id="password" type="password" [(ngModel)]="contrasena"
+                           [placeholder]="'NAVBAR.PASSWORD' | translate" (keyup.enter)="login()">
+                </div>
+
+                <p class="auth-error" *ngIf="authError" role="alert">{{ authError }}</p>
+
+                <button class="btn-auth-primary" (click)="login()" [disabled]="cargando">
+                    {{ cargando ? ('LOGIN.LOADING' | translate) : ('NAVBAR.ENTER' | translate) }}
+                </button>
+
+                <div class="auth-divider">
+                    <span>{{ 'NAVBAR.OR' | translate }}</span>
+                </div>
+
+                <div class="google-btn-wrapper">
+                    <div #googleBtnLogin id="google-btn-login-page"></div>
+                </div>
+            </div>
+
+            <div class="auth-footer">
+                <p>{{ 'NAVBAR.NO_ACCOUNT' | translate }}
+                    <a routerLink="/registro">{{ 'NAVBAR.SIGN_UP' | translate }}</a>
+                </p>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="contrasena">Contraseña</label>
-            <input id="contrasena" type="password" [(ngModel)]="contrasena" name="contrasena" required
-                placeholder="Tu contraseña">
-        </div>
-
-        <button type="submit" class="btn btn-primary" [disabled]="loading">
-            @if (loading) {
-                Entrando...
-            } @else {
-                Entrar
-            }
-        </button>
-    </form>
-
-    <div class="divider">
-        <span>o</span>
-    </div>
-
-    <div class="google-btn-wrapper">
-        <div #googleBtn id="google-signin-btn"></div>
-    </div>
-
-    @if (error) {
-    <p class="error-msg">{{ error }}</p>
-    }
-
-    <p class="register-link">¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
+    </main>
 </div>

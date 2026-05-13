@@ -21,8 +21,7 @@
       <a href="#" (click)="toggleMenu('info', $event)" aria-haspopup="true">
         {{ 'NAVBAR.INFO' | translate }} <span class="arrow" aria-hidden="true">▾</span>
       </a>
-      <div class="dropdown-menu menu-info" *ngIf="menuAbierto === 'info'" (click)="onPopoverClick($event)"
-           role="menu">
+      <div class="dropdown-menu menu-info" *ngIf="menuAbierto === 'info'" (click)="onPopoverClick($event)" role="menu">
         <div class="dropdown-header">
           <h4>{{ 'NAVBAR.ABOUT_KEEPLY' | translate }}</h4>
         </div>
@@ -38,113 +37,86 @@
       <a href="#" (click)="toggleMenu('redes', $event)" aria-haspopup="true">
         {{ 'NAVBAR.NETWORKS' | translate }} <span class="arrow" aria-hidden="true">▾</span>
       </a>
-      <div class="dropdown-menu menu-redes" *ngIf="menuAbierto === 'redes'" (click)="onPopoverClick($event)"
-           role="menu">
+      <div class="dropdown-menu menu-redes" *ngIf="menuAbierto === 'redes'" (click)="onPopoverClick($event)" role="menu">
         <div class="dropdown-body" style="padding: 15px 20px;">
-          <a href="https://github.com/aortben" target="_blank" class="dropdown-link" rel="noopener noreferrer">
-            GitHub
-          </a>
-          <a href="#" class="dropdown-link">
-            Twitter / X
-          </a>
-          <a href="#" class="dropdown-link">
-            Discord
-          </a>
+          <a href="https://github.com/aortben" target="_blank" class="dropdown-link" rel="noopener noreferrer">GitHub</a>
+          <a href="#" class="dropdown-link">Twitter / X</a>
+          <a href="#" class="dropdown-link">Discord</a>
         </div>
       </div>
     </li>
 
     <!-- 3. Cuenta -->
     <li class="nav-item user-item">
-      <div class="user-avatar" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <ng-container *ngIf="currentUser$ | async as user">
+        <!-- Avatar mini en la navbar -->
+        <div class="user-avatar-mini" (click)="toggleMenu('cuenta', $event)"
+             [style.background]="getUserAvatarInfo(user).color || '#9b59b6'">
+          <img *ngIf="getUserAvatarInfo(user).type === 'url'" [src]="getUserAvatarInfo(user).url" alt="Avatar">
+          <span *ngIf="getUserAvatarInfo(user).type !== 'url'">{{ getUserAvatarInfo(user).initial }}</span>
+        </div>
+      </ng-container>
+      <a *ngIf="!(currentUser$ | async)" href="#" (click)="toggleMenu('cuenta', $event)" aria-haspopup="true">
+        <svg class="user-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
-      </div>
-      <a href="#" (click)="toggleMenu('cuenta', $event)" aria-haspopup="true">
         {{ 'NAVBAR.ACCOUNT' | translate }} <span class="arrow" aria-hidden="true">▾</span>
       </a>
 
-      <div class="dropdown-menu menu-cuenta" *ngIf="menuAbierto === 'cuenta'" (click)="onPopoverClick($event)"
-           role="menu">
+      <div class="dropdown-menu menu-cuenta" *ngIf="menuAbierto === 'cuenta'" (click)="onPopoverClick($event)" role="menu">
 
-        <!-- USUARIO LOGEADO -->
-        <ng-container *ngIf="currentUser$ | async as user; else authTemplate">
-          <div class="dropdown-header">
-            <h4>{{ user.nombreUsuario }}</h4>
+        <!-- USUARIO LOGUEADO — Panel de perfil -->
+        <ng-container *ngIf="currentUser$ | async as user">
+          <div class="profile-header">
+            <div class="profile-avatar-large"
+                 [style.background]="getUserAvatarInfo(user).color || '#9b59b6'">
+              <img *ngIf="getUserAvatarInfo(user).type === 'url'" [src]="getUserAvatarInfo(user).url" alt="Avatar">
+              <span *ngIf="getUserAvatarInfo(user).type !== 'url'">{{ getUserAvatarInfo(user).initial }}</span>
+            </div>
+            <h4 class="profile-name">{{ user.nombreUsuario }}</h4>
+            <p class="profile-email">{{ user.email }}</p>
           </div>
+
           <div class="dropdown-body">
-            <a href="#" class="dropdown-link">{{ 'NAVBAR.SETTINGS' | translate }}</a>
+            <!-- Cambiar avatar -->
+            <a class="dropdown-link" (click)="toggleEditarAvatar()" style="cursor: pointer;">
+              {{ 'PROFILE.CHANGE_AVATAR' | translate }}
+            </a>
+
+            <!-- Panel de edición de avatar -->
+            <div class="avatar-edit-panel" *ngIf="editandoAvatar">
+              <div class="avatar-grid-mini">
+                <div *ngFor="let av of avatarOptions"
+                     class="avatar-option-mini"
+                     [style.background]="av.color"
+                     (click)="selectPreloadedAvatar(av)">
+                  {{ av.initial }}
+                </div>
+                <label class="avatar-upload-mini">
+                  {{ subiendoAvatar ? '...' : '+' }}
+                  <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                         (change)="onAvatarUpload($event)" [disabled]="subiendoAvatar" style="display:none;">
+                </label>
+              </div>
+            </div>
+
             <a class="dropdown-link" (click)="logout()" style="cursor: pointer;" role="button">
               {{ 'NAVBAR.LOGOUT' | translate }}
             </a>
           </div>
-          <div class="dropdown-footer">
-            <a href="#" class="dropdown-link">{{ 'NAVBAR.SUPPORT' | translate }}</a>
-          </div>
         </ng-container>
 
-        <!-- NO LOGEADO -->
-        <ng-template #authTemplate>
-
-          <!-- MODO LOGIN -->
-          <ng-container *ngIf="modoAuth === 'login'">
-            <div class="dropdown-header">
-              <h4>{{ 'NAVBAR.LOGIN_TITLE' | translate }}</h4>
-            </div>
-            <div class="dropdown-body login-form">
-              <input type="text" [(ngModel)]="loginNombreUsuario" [placeholder]="'NAVBAR.USERNAME' | translate"
-                     class="login-input" aria-label="Username">
-              <input type="password" [(ngModel)]="loginPassword" [placeholder]="'NAVBAR.PASSWORD' | translate"
-                     class="login-input" (keyup.enter)="loginInline()" aria-label="Password">
-              <p class="login-error" *ngIf="authError" role="alert">{{ authError }}</p>
-              <button class="btn-login" (click)="loginInline()">{{ 'NAVBAR.ENTER' | translate }}</button>
-
-              <div class="google-divider">
-                <span>{{ 'NAVBAR.OR' | translate }}</span>
-              </div>
-              <div class="google-btn-container">
-                <div #googleBtnLogin id="google-btn-login"></div>
-              </div>
-
-              <p class="auth-toggle-text">
-                {{ 'NAVBAR.NO_ACCOUNT' | translate }}
-                <a (click)="toggleModoAuth($event)" role="button">{{ 'NAVBAR.SIGN_UP' | translate }}</a>
-              </p>
-            </div>
-          </ng-container>
-
-          <!-- MODO REGISTRO -->
-          <ng-container *ngIf="modoAuth === 'registro'">
-            <div class="dropdown-header">
-              <h4>{{ 'NAVBAR.REGISTER_TITLE' | translate }}</h4>
-            </div>
-            <div class="dropdown-body login-form">
-              <input type="text" [(ngModel)]="regNombreUsuario" [placeholder]="'NAVBAR.USERNAME' | translate"
-                     class="login-input" aria-label="Username">
-              <input type="email" [(ngModel)]="regEmail" [placeholder]="'NAVBAR.EMAIL' | translate"
-                     class="login-input" aria-label="Email">
-              <input type="password" [(ngModel)]="regPassword" [placeholder]="'NAVBAR.PASSWORD' | translate"
-                     class="login-input" (keyup.enter)="registroInline()" aria-label="Password">
-              <p class="login-error" *ngIf="authError" role="alert">{{ authError }}</p>
-              <button class="btn-login" (click)="registroInline()">{{ 'NAVBAR.CREATE_ACCOUNT' | translate }}</button>
-
-              <div class="google-divider">
-                <span>{{ 'NAVBAR.OR' | translate }}</span>
-              </div>
-              <div class="google-btn-container">
-                <div #googleBtnRegistro id="google-btn-registro"></div>
-              </div>
-
-              <p class="auth-toggle-text">
-                {{ 'NAVBAR.HAS_ACCOUNT' | translate }}
-                <a (click)="toggleModoAuth($event)" role="button">{{ 'NAVBAR.SIGN_IN' | translate }}</a>
-              </p>
-            </div>
-          </ng-container>
-
-        </ng-template>
+        <!-- NO LOGUEADO — Links a login/registro -->
+        <ng-container *ngIf="!(currentUser$ | async)">
+          <div class="dropdown-header">
+            <h4>{{ 'NAVBAR.ACCOUNT' | translate }}</h4>
+          </div>
+          <div class="dropdown-body">
+            <a routerLink="/login" class="dropdown-link">{{ 'NAVBAR.LOGIN_TITLE' | translate }}</a>
+            <a routerLink="/registro" class="dropdown-link">{{ 'NAVBAR.REGISTER_TITLE' | translate }}</a>
+          </div>
+        </ng-container>
       </div>
     </li>
 

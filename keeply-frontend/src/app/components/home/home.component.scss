@@ -5,6 +5,7 @@ $brand-purple-light: #c287f7;
 
 .home-container {
     background-color: var(--bg-primary, #1a1a2e);
+    background-image: var(--bg-img-home); /* Fondo dinámico */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -12,7 +13,7 @@ $brand-purple-light: #c287f7;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.3s ease;
+    transition: background-image 0.3s ease, background-color 0.3s ease;
 }
 
 .hero-section {
