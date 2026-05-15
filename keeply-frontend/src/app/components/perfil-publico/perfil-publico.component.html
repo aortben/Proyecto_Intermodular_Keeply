@@ -1,0 +1,79 @@
+<div class="perfil-page">
+    <app-navbar></app-navbar>
+
+    <div class="loading" *ngIf="cargando">
+        <p>Cargando perfil...</p>
+    </div>
+
+    <div class="error" *ngIf="error && !cargando">
+        <h2>Usuario no encontrado</h2>
+        <p>El perfil "{{ nombreUsuario }}" no existe o ha sido eliminado.</p>
+        <button class="btn btn-primary" routerLink="/comunidad">Volver a la Comunidad</button>
+    </div>
+
+    <main class="perfil-container" *ngIf="usuario && !cargando">
+        <!-- Cabecera del Perfil -->
+        <div class="profile-header-card">
+            <!-- Banner de fondo (placeholder estético por ahora) -->
+            <div class="banner-background"></div>
+            
+            <div class="profile-info-row">
+                <div class="avatar-large">
+                    <img *ngIf="usuario.avatarUrl && usuario.avatarUrl.startsWith('http')" [src]="usuario.avatarUrl" alt="Avatar">
+                    <div class="avatar-placeholder" *ngIf="!usuario.avatarUrl || !usuario.avatarUrl.startsWith('http')">
+                        {{ usuario.nombreUsuario.charAt(0).toUpperCase() }}
+                    </div>
+                </div>
+                
+                <div class="user-details">
+                    <h1>{{ usuario.nombreUsuario }}</h1>
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <span class="stat-num">{{ items.length }}</span>
+                            <span class="stat-label">Obras</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num">{{ numeroSeguidores }}</span>
+                            <span class="stat-label">Seguidores</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num">{{ numeroSiguiendo }}</span>
+                            <span class="stat-label">Siguiendo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons" *ngIf="!isMiPerfil">
+                    <button class="btn btn-follow" [class.following]="siguiendo" (click)="toggleSeguir()">
+                        {{ siguiendo ? 'Dejar de seguir' : 'Seguir' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Biblioteca del usuario -->
+        <div class="biblioteca-section">
+            <h2 class="section-title">Biblioteca de {{ usuario.nombreUsuario }}</h2>
+            
+            <div class="empty-state" *ngIf="items.length === 0">
+                <p>Este usuario aún no ha añadido ninguna obra a su biblioteca.</p>
+            </div>
+
+            <div class="resultados-grid" *ngIf="items.length > 0">
+                <div class="resultado-card" *ngFor="let item of items">
+                    <div class="card-img-wrapper">
+                        <img *ngIf="item.obra.urlImagenPrincipal" [src]="item.obra.urlImagenPrincipal" [alt]="item.obra.titulo">
+                        <div class="no-image" *ngIf="!item.obra.urlImagenPrincipal">Sin Imagen</div>
+                    </div>
+                    <div class="card-info">
+                        <h3>{{ item.obra.titulo }}</h3>
+                        <p class="tipo-badge">{{ item.obra.tipoObra }}</p>
+                        <p class="estado-badge" [ngClass]="item.estado.toLowerCase().replace(' ', '-')">
+                            {{ item.estado }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

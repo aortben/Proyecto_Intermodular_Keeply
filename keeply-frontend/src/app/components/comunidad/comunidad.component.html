@@ -1,0 +1,35 @@
+<div class="comunidad-page">
+    <app-navbar></app-navbar>
+
+    <main class="comunidad-container">
+        <div class="comunidad-header">
+            <h2>Comunidad Keeply</h2>
+            <p>Busca a tus amigos y descubre sus bibliotecas.</p>
+        </div>
+
+        <div class="busqueda-form">
+            <input type="text" [(ngModel)]="query" placeholder="Buscar por nombre de usuario..." (keyup.enter)="buscar()">
+            <button class="btn btn-primary" (click)="buscar()" [disabled]="cargando">
+                {{ cargando ? 'Buscando...' : 'Buscar Usuario' }}
+            </button>
+        </div>
+
+        <p class="mensaje" *ngIf="mensaje">{{ mensaje }}</p>
+
+        <div class="resultados-grid" *ngIf="resultado">
+            <div class="resultado-card user-card" (click)="verPerfil(resultado.nombreUsuario)">
+                <div class="card-img-wrapper avatar-wrapper">
+                    <img *ngIf="resultado.avatarUrl && resultado.avatarUrl.startsWith('http')" [src]="resultado.avatarUrl" alt="Avatar">
+                    <div class="no-image avatar-placeholder" *ngIf="!resultado.avatarUrl || !resultado.avatarUrl.startsWith('http')">
+                        {{ resultado.nombreUsuario.charAt(0).toUpperCase() }}
+                    </div>
+                </div>
+                <div class="card-info">
+                    <h3>{{ resultado.nombreUsuario }}</h3>
+                    <p class="tipo-badge">Miembro de Keeply</p>
+                    <button class="btn btn-secondary">Ver Perfil</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

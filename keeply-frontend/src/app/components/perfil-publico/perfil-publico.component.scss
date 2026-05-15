@@ -1,0 +1,230 @@
+.perfil-page {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    padding-bottom: 50px;
+}
+
+.perfil-container {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-primary);
+}
+
+.profile-header-card {
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.banner-background {
+    height: 150px;
+    background: linear-gradient(135deg, #9b51e0, #4a00e0);
+}
+
+.profile-info-row {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    gap: 2rem;
+    position: relative;
+    top: -40px;
+    margin-bottom: -40px;
+}
+
+.avatar-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid var(--bg-card);
+    overflow: hidden;
+    background-color: #333;
+    flex-shrink: 0;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .avatar-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: bold;
+        color: white;
+        background-color: #9b51e0;
+    }
+}
+
+.user-details {
+    flex: 1;
+    padding-top: 40px;
+
+    h1 {
+        margin: 0 0 1rem 0;
+        color: var(--text-primary);
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+.stats-row {
+    display: flex;
+    gap: 2rem;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .stat-num {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--title-purple, #a855f7);
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+}
+
+.action-buttons {
+    padding-top: 40px;
+}
+
+.btn-follow {
+    padding: 10px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    background-color: #9b51e0;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: #8a41c9;
+    }
+
+    &.following {
+        background-color: transparent;
+        border: 2px solid #9b51e0;
+        color: #9b51e0;
+
+        &:hover {
+            background-color: rgba(155, 81, 224, 0.1);
+        }
+    }
+}
+
+.section-title {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Reused grid styles from busqueda */
+.resultados-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.resultado-card {
+    border: 3px solid var(--card-border, #7a6f69);
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--bg-card);
+    transition: transform 0.2s;
+    
+    &:hover {
+        transform: translateY(-4px);
+    }
+}
+
+.card-img-wrapper {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .no-image {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #333;
+        color: #888;
+    }
+}
+
+.card-info {
+    padding: 1rem;
+
+    h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .tipo-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        background-color: #4a423d;
+        color: white;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .estado-badge {
+        font-size: 0.8rem;
+        font-weight: bold;
+
+        &.pendiente { color: #f39c12; }
+        &.en-progreso { color: #3498db; }
+        &.completado { color: #2ecc71; }
+        &.abandonado { color: #e74c3c; }
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-info-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .user-details {
+        padding-top: 0;
+    }
+
+    .action-buttons {
+        padding-top: 0;
+    }
+}

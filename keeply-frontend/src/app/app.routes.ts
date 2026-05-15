@@ -6,6 +6,8 @@ import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { BibliotecaComponent } from './components/biblioteca/biblioteca.component';
 import { CategoriaDetalleComponent } from './components/categoria-detalle/categoria-detalle.component';
 import { DetalleItemComponent } from './components/detalle-item/detalle-item.component';
+import { ComunidadComponent } from './components/comunidad/comunidad.component';
+import { PerfilPublicoComponent } from './components/perfil-publico/perfil-publico.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -15,5 +17,7 @@ export const routes: Routes = [
     { path: 'biblioteca', component: BibliotecaComponent },
     { path: 'biblioteca/:categoria', component: CategoriaDetalleComponent },
     { path: 'item/:id', component: DetalleItemComponent },
+    { path: 'comunidad', component: ComunidadComponent },
+    { path: 'usuario/:nombreUsuario', component: PerfilPublicoComponent },
     { path: '**', redirectTo: '' }
 ];

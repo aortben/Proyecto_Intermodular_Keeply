@@ -76,6 +76,10 @@
             </div>
             <h4 class="profile-name">{{ user.nombreUsuario }}</h4>
             <p class="profile-email">{{ user.email }}</p>
+            <div style="display: flex; gap: 10px; margin-top: 5px; font-size: 0.8rem; color: #aaa; justify-content: center;">
+                <span>Seguidores: {{ numSeguidores }}</span>
+                <span>Siguiendo: {{ numSiguiendo }}</span>
+            </div>
           </div>
 
           <div class="dropdown-body">
@@ -154,6 +158,7 @@
       </svg>
     </button>
 
+    <button class="btn-explorar-nav" routerLink="/comunidad">Comunidad</button>
     <button class="btn-explorar-nav" routerLink="/busqueda">{{ 'NAVBAR.EXPLORE' | translate }}</button>
     <button class="btn-biblioteca" (click)="irABiblioteca()">{{ 'NAVBAR.YOUR_LIBRARY' | translate }}</button>
   </div>

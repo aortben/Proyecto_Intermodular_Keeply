@@ -1,4 +1,4 @@
-import { Component, inject, HostListener, AfterViewInit, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, inject, HostListener, AfterViewInit, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { ArchivoService } from '../../services/archivo.service';
 import { UsuarioService } from '../../services/usuario.service';
+import { SeguimientoService } from '../../services/seguimiento.service';
 import { ThemeService } from '../../services/theme.service';
 import { environment } from '../../../environments/environment';
 
@@ -28,10 +29,11 @@ interface AvatarOption {
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements AfterViewInit {
+export class NavbarComponent implements AfterViewInit, OnInit {
     private authService = inject(AuthService);
     private archivoService = inject(ArchivoService);
     private usuarioService = inject(UsuarioService);
+    private seguimientoService = inject(SeguimientoService);
     private router = inject(Router);
     private ngZone = inject(NgZone);
     translate = inject(TranslateService);
@@ -45,6 +47,10 @@ export class NavbarComponent implements AfterViewInit {
     menuMobilAbierto = false;
     editandoAvatar = false;
     subiendoAvatar = false;
+
+    // Contadores sociales
+    numSeguidores = 0;
+    numSiguiendo = 0;
 
     currentLang = 'es';
 
@@ -64,6 +70,19 @@ export class NavbarComponent implements AfterViewInit {
         const saved = localStorage.getItem('keeply_lang') || 'es';
         this.currentLang = saved;
         this.translate.use(saved);
+    }
+
+    ngOnInit(): void {
+        this.currentUser$.subscribe(user => {
+            if (user && user.idUsuario) {
+                this.cargarEstadisticasSociales(user.idUsuario);
+            }
+        });
+    }
+
+    cargarEstadisticasSociales(id: number) {
+        this.seguimientoService.getSeguidores(id).subscribe(s => this.numSeguidores = s.length);
+        this.seguimientoService.getSeguidos(id).subscribe(s => this.numSiguiendo = s.length);
     }
 
     ngAfterViewInit(): void { }
