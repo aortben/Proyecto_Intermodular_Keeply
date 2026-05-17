@@ -80,15 +80,7 @@
             <textarea [(ngModel)]="nuevoTexto" [placeholder]="'DETAIL.NOTE_PLACEHOLDER' | translate" class="editor-textarea"
                 rows="4"></textarea>
 
-            <!-- Añadir adjuntos por URL -->
-            <div class="adjuntos-form">
-                <select [(ngModel)]="nuevoTipoAdjunto" class="adjunto-select">
-                    <option *ngFor="let tipo of tiposAdjunto" [value]="tipo">{{ tipo }}</option>
-                </select>
-                <input type="text" [(ngModel)]="nuevaUrlAdjunto" [placeholder]="'DETAIL.URL_PLACEHOLDER' | translate"
-                    class="adjunto-input">
-                <button class="btn-adjuntar" (click)="agregarAdjuntoUrl()">{{ 'DETAIL.ATTACH_URL' | translate }}</button>
-            </div>
+
 
             <!-- Subir archivo desde el explorador -->
             <div class="file-upload-section">
@@ -138,9 +130,28 @@
                 <!-- Modo edicion -->
                 <div class="nota-edit-mode" *ngIf="editandoNotaId === nota.idNota">
                     <textarea [(ngModel)]="textoEditandoNota" class="editor-textarea" rows="3"></textarea>
-                    <div class="nota-edit-buttons">
-                        <button class="btn-save-edit" (click)="guardarEdicionNota(nota)">{{ 'DETAIL.SAVE' | translate }}</button>
-                        <button class="btn-cancel-edit" (click)="cancelarEdicionNota()">{{ 'DETAIL.CANCEL' | translate }}</button>
+                    
+                    <div class="adjuntos-preview" *ngIf="adjuntosEditando.length > 0">
+                        <div class="adjunto-chip" *ngFor="let adj of adjuntosEditando; let i = index">
+                            <span class="chip-tipo">{{ adj.tipoAdjunto }}</span>
+                            <span class="chip-url">{{ adj.urlArchivo | slice:0:30 }}...</span>
+                            <button class="chip-remove" (click)="eliminarAdjuntoEditando(i)">X</button>
+                        </div>
+                    </div>
+
+                    <div class="edit-actions-row">
+                        <label class="btn-upload-file-small" [class.uploading]="subiendoArchivoEdicion">
+                            {{ subiendoArchivoEdicion ? ('DETAIL.UPLOADING' | translate) : ('DETAIL.UPLOAD_FILE' | translate) }}
+                            <input type="file"
+                                   accept="image/*,video/*,audio/*"
+                                   (change)="onFileSelectedEditando($event)"
+                                   [disabled]="subiendoArchivoEdicion"
+                                   style="display: none;">
+                        </label>
+                        <div class="nota-edit-buttons">
+                            <button class="btn-save-edit" (click)="guardarEdicionNota(nota)">{{ 'DETAIL.SAVE' | translate }}</button>
+                            <button class="btn-cancel-edit" (click)="cancelarEdicionNota()">{{ 'DETAIL.CANCEL' | translate }}</button>
+                        </div>
                     </div>
                 </div>
 

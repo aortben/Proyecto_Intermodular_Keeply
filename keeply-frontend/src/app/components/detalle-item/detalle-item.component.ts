@@ -46,15 +46,13 @@ export class DetalleItemComponent implements OnInit {
     editorAbierto = false;
     nuevoTexto = '';
     adjuntosPendientes: { tipoAdjunto: TipoAdjunto; urlArchivo: string }[] = [];
-    nuevaUrlAdjunto = '';
-    nuevoTipoAdjunto: TipoAdjunto = 'IMAGEN';
     subiendoArchivo = false;
 
     // Edicion de nota existente
     editandoNotaId: number | null = null;
     textoEditandoNota = '';
-
-    tiposAdjunto: TipoAdjunto[] = ['IMAGEN', 'VIDEO', 'AUDIO'];
+    adjuntosEditando: { tipoAdjunto: TipoAdjunto; urlArchivo: string }[] = [];
+    subiendoArchivoEdicion = false;
 
     ngOnInit(): void {
         const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -129,21 +127,20 @@ export class DetalleItemComponent implements OnInit {
         }
     }
 
-    agregarAdjuntoUrl(): void {
-        if (!this.nuevaUrlAdjunto.trim()) return;
-        this.adjuntosPendientes.push({
-            tipoAdjunto: this.nuevoTipoAdjunto,
-            urlArchivo: this.nuevaUrlAdjunto.trim()
-        });
-        this.nuevaUrlAdjunto = '';
-    }
-
     /** Maneja la seleccion de archivo desde el explorador */
     onFileSelected(event: Event): void {
         const input = event.target as HTMLInputElement;
         if (!input.files || input.files.length === 0) return;
 
         const file = input.files[0];
+        
+        const validation = this.archivoService.validateFile(file);
+        if (!validation.valid) {
+            alert('Error al subir archivo: ' + validation.error);
+            input.value = '';
+            return;
+        }
+
         this.subiendoArchivo = true;
 
         // Detectar tipo de adjunto segun el archivo
@@ -203,11 +200,57 @@ export class DetalleItemComponent implements OnInit {
     iniciarEdicionNota(nota: Nota): void {
         this.editandoNotaId = nota.idNota!;
         this.textoEditandoNota = nota.textoNota || '';
+        this.adjuntosEditando = nota.adjuntos ? nota.adjuntos.map(a => ({ ...a })) : [];
     }
 
     cancelarEdicionNota(): void {
         this.editandoNotaId = null;
         this.textoEditandoNota = '';
+        this.adjuntosEditando = [];
+    }
+
+    onFileSelectedEditando(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        if (!input.files || input.files.length === 0) return;
+
+        const file = input.files[0];
+        
+        const validation = this.archivoService.validateFile(file);
+        if (!validation.valid) {
+            alert('Error al subir archivo: ' + validation.error);
+            input.value = '';
+            return;
+        }
+
+        this.subiendoArchivoEdicion = true;
+
+        let tipo: TipoAdjunto = 'IMAGEN';
+        if (file.type.startsWith('video/')) {
+            tipo = 'VIDEO';
+        } else if (file.type.startsWith('audio/')) {
+            tipo = 'AUDIO';
+        }
+
+        this.archivoService.upload(file).subscribe({
+            next: (res) => {
+                const fullUrl = this.archivoService.getFullUrl(res.url);
+                this.adjuntosEditando.push({
+                    tipoAdjunto: tipo,
+                    urlArchivo: fullUrl
+                });
+                this.subiendoArchivoEdicion = false;
+                input.value = '';
+            },
+            error: (err) => {
+                console.error('Error al subir archivo editando:', err);
+                this.subiendoArchivoEdicion = false;
+                input.value = '';
+            }
+        });
+    }
+
+    eliminarAdjuntoEditando(index: number): void {
+        this.adjuntosEditando.splice(index, 1);
     }
 
     guardarEdicionNota(nota: Nota): void {
@@ -218,10 +261,7 @@ export class DetalleItemComponent implements OnInit {
         const request: NotaRequest = {
             idItemUsuario: this.item.idItemUsuario!,
             textoNota: this.textoEditandoNota.trim(),
-            adjuntos: nota.adjuntos ? nota.adjuntos.map(a => ({
-                tipoAdjunto: a.tipoAdjunto,
-                urlArchivo: a.urlArchivo
-            })) : []
+            adjuntos: this.adjuntosEditando
         };
 
         this.notaService.delete(nota.idNota!).subscribe({
@@ -272,6 +312,5 @@ export class DetalleItemComponent implements OnInit {
     private limpiarEditor(): void {
         this.nuevoTexto = '';
         this.adjuntosPendientes = [];
-        this.nuevaUrlAdjunto = '';
     }
 }

@@ -1,0 +1,1571 @@
+ 
+KEEPLY 
+Todo lo que lees, ves o juegas en un solo lugar 
+ 
+ 
+Alumno/a(s): Álvaro Ortega Benítez 
+Centro: I.E.S. Alixar 
+Ciclo Formativo de Grado Superior: Desarrollo de Aplicaciones Web 
+Grupo: DAW2 tarde 
+Módulo Profesional: Proyecto Intermodular 
+Curso académico: 2025 / 2026 
+Tutor/a: Antonio Navarro Cuesta 
+Subdominio de despliegue: https://proyecto-intermodular-keeply.vercel.app  
+Repositorio GitHub: https://github.com/aortben/Proyecto_Intermodular_Keeply.git 
+ 
+ 
+KEEPLY 
+ 
+Índice 
+1. El ENTORNO y la COMPETENCIA 4 
+a) El entorno general 4 
+a.1. Factores del Macroentorno 4 
+b) El entorno específico 5 
+b.1. La competencia 5 
+b.2. Proveedores 6 
+b.3. La localización de la empresa 6 
+2. CULTURA EMPRESARIAL e IMAGEN CORPORATIVA 6 
+a) Misión, visión y valores 6 
+b) Responsabilidad Social Corporativa (RSC) 7 
+3. El MERCADO y los CLIENTES 8 
+a) El segmento del mercado 8 
+b) Estudio de mercado: los clientes 9 
+b.1. Cuestionario para posibles clientes 9 
+4. PLAN de MARKETING 10 
+a) Estrategia de posicionamiento: Marketing Estratégico 10 
+b) Estrategia de producto 10 
+b.1. El producto 10 
+b.2. Producto básico, formal y ampliado 10 
+b.3. Estrategias sobre el producto 11 
+c) Estrategia de precio 11 
+d) Estrategia de promoción 11 
+e) Estrategia de distribución 12 
+f) Atención al cliente 12 
+5. PLAN DE PRODUCCIÓN 13 
+a) Recursos materiales necesarios para la producción 13 
+b) Proceso de producción (prestación del servicio) 13 
+c) Previsión de producción 14 
+6. ANÁLISIS ECONÓMICO-FINANCIERO 14 
+a) Inversiones y gastos 14 
+b) Fuentes de financiación 15 
+c) Plan Económico-Financiero 16 
+7. DEFINICIÓN Y DISEÑO DE PRODUCTO MÍNIMO VIABLE 17 
+a) Stack Tecnológico 17 
+b) Diseño de la Base de Datos 17 
+Diccionario de Datos 18 
+c) Diseño de Prototipo Figma 21 
+d) Definición de Servicios (API REST) 26 
+2  
+KEEPLY 
+Estructura de Comunicación y Formato de Datos (JSON) 27 
+7.e) Arquitectura y Estructura del Proyecto 29 
+1. Módulo Servidor (keeply-backend) 30 
+2. Módulo Cliente (keeply-frontend) 30 
+8. DESPLIEGUE DE PRODUCTO MÍNIMO VIABLE 31 
+8.1. Arquitectura de Backend y Base de Datos (Railway) 31 
+8.2. Despliegue Continuo del Frontend (Vercel) 33 
+8.3. Configuración de Seguridad y OAuth 2.0 (Google Cloud) 34 
+8.4. Flujo de Trabajo CI/CD 35 
+9. CONCLUSIONES Y PROPUESTAS DE MEJORA 36 
+9.1. Conclusiones y Viabilidad de Puesta en Marcha Real: 36 
+9.2. Propuestas de Mejora (Futuro): 36 
+ 
+3  
+KEEPLY 
+ 
+1. El ENTORNO y la COMPETENCIA   
+a) El entorno general 
+a.1. Factores del Macroentorno 
+Para comprender la viabilidad y el impacto de Keeply en el mercado actual, se realizará 
+un análisis del macroentorno utilizando el modelo PESTEL: 
+ 
+● Factores Políticos y Legales: El sector de las aplicaciones web y la gestión de datos 
+personales está fuertemente regulado en Europa por el Reglamento General de 
+Protección de Datos (RGPD). Keeply, al requerir el registro de usuarios, contraseñas y 
+correos electrónicos, cumple estrictamente con esta normativa, implementando 
+políticas de privacidad claras, solicitando consentimiento explícito y garantizando el 
+"derecho al olvido". Además, respetamos la legislación sobre derechos de autor 
+(copyright) utilizando APIs oficiales (TMDB, RAWG) para los metadatos, evitando el 
+alojamiento de contenido ilícito. 
+ 
+● Factores Económicos: Aunque la economía global presenta fluctuaciones, el sector del 
+entretenimiento digital ha demostrado ser enormemente resiliente y anticíclico. Keeply 
+se presenta inicialmente como un servicio gratuito, lo que minimiza la barrera de 
+entrada.  
+ 
+● Factores Sociales y Culturales: Nos encontramos ante la "generación del streaming", 
+que consume volúmenes inmensos de información cruzada (manga, series 
+norteamericanas, videojuegos japoneses, literatura). Existe una arraigada cultura de 
+"coleccionismo digital" y de intercambio de opiniones. Keeply satisface la necesidad 
+social de catalogar la identidad cultural propia, ofreciendo adicionalmente la posibilidad 
+de conectarla con la de otros individuos en una sola plataforma. 
+ 
+● Factores Tecnológicos: El uso de arquitecturas en la nube y la optimización mediante 
+plataformas como Angular o Spring Boot hacen posible la creación de un servicio que 
+unifica múltiples bases de datos externas en milisegundos. 
+ 
+● Factores Medioambientales: Como producto 100% digital, el impacto directo en 
+materias físicas es nulo. Para minimizar la huella de carbono digital, Keeply opera 
+mediante contenedores y escalado dinámico en la nube, lo que optimiza el uso de 
+recursos computacionales sin mantener servidores ociosos encendidos. 
+ 
+ 
+ 
+ 
+ 
+ 
+4  
+KEEPLY 
+b) El entorno específico 
+b.1. La competencia 
+● b.1.1. Listado de empresas competidoras: Letterboxd (Cine), Goodreads (Libros), 
+MyAnimeList (Anime/Manga), Backloggd o HowLongToBeat (Videojuegos), TV Time 
+(Series), Notion/Excel (Alternativas manuales). 
+ 
+● b.1.2. Grado de competencia: Muy alto pero fragmentado. Existen gigantes 
+tecnológicos, pero operan en nichos cerrados. El usuario se ve obligado a utilizar 
+múltiples aplicaciones simultáneamente. 
+ 
+● b.1.3. Posibilidad de entrada de nuevos competidores: Las barreras técnicas son 
+medias-bajas debido al acceso público a APIs, pero las barreras de adopción social son 
+altísimas. Keeply tiene la ventaja competitiva de ser el primer "integrador universal". 
+ 
+● b.1.4. Estudio pormenorizado y Tabla Comparativa: 
+ 
+Competidor Mercado 
+Principal 
+Puntos Fuertes Puntos Débiles 
+(Oportunidad para 
+Keeply) 
+Letterboxd Cine Excelente UX/UI, 
+inmensa comunidad 
+activa. 
+Exclusivo para películas. 
+No admite videojuegos, 
+series ni libros. 
+Goodreads Literatura Catálogo inigualable 
+(respaldado por Amazon). 
+Interfaz estancada, 
+diseño muy anticuado, 
+experiencia de usuario 
+lenta. 
+MyAnimeList Anime / Manga Base de datos exhaustiva 
+y detallada. 
+Interfaz caótica, 
+sobrecarga de 
+información. 
+Keeply Universal Unificación total, diseño 
+moderno y 
+personalización. 
+Comunidad incipiente 
+(por ser de nueva 
+creación). 
+ 
+ 
+ 
+ 
+5  
+KEEPLY 
+Conclusión: Keeply adoptará la modernidad visual y la fluidez de Letterboxd, pero 
+resolverá la fragmentación temática del usuario moderno y superará ampliamente la UX 
+de plataformas anticuadas como Goodreads. 
+ 
+ 
+b.2. Proveedores 
+ Al ser Keeply puramente un entorno digital, nuestros proveedores se dividen en dos 
+ramas: 
+● Proveedores de Datos (APIs): TMDB (Cine/Series), RAWG (Videojuegos), Jikan API 
+(Anime), Google Books (Literatura).  
+o Ventajas: acceso gratuito a inmensas bases de datos alimentadas a nivel mundial.  
+o Desventajas: dependencia de su uptime y posibles cambios en sus políticas de 
+uso. 
+● Proveedores de Infraestructura (Hosting): Vercel (Frontend) y Railway (Backend y Base 
+de Datos MySQL).  
+o Ventajas: Despliegues continuos automatizados (CI/CD), certificados SSL gratuitos 
+y escalabilidad instantánea. 
+o Desventajas: Aunque el despliegue inicial aprovecha las capas gratuitas, el coste 
+operativo dejará de ser gratuito y aumentará de forma progresiva bajo el modelo 
+de "pago por uso" a medida que escale el volumen de usuarios, el 
+almacenamiento y el consumo de ancho de banda.  
+ 
+b.3. La localización de la empresa 
+● Ubicación y Justificación: Keeply es una empresa puramente digital y remota. Al no 
+requerir producción física ni atención al público presencial, la ubicación física de la 
+empresa se circunscribe al entorno de teletrabajo de sus desarrolladores. Los servidores 
+están ubicados estratégicamente en Europa para cumplir con el RGPD y asegurar baja 
+latencia a los usuarios principales. Se suprimen los altísimos costes fijos de un alquiler 
+comercial tradicional (fianza, reformas, suministros), reduciendo el riesgo financiero 
+inicial a casi cero durante el despliegue del Producto Mínimo Viable (MVP). 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6  
+KEEPLY 
+C) Análisis DAFO 
+Como síntesis del estudio del entorno general (macroentorno) y específico 
+(microentorno), se presenta la matriz DAFO de Keeply. Esta herramienta nos permite 
+diagnosticar la situación estratégica de la plataforma, evaluando los factores internos 
+(sobre los que tenemos control) y los externos (impuestos por el mercado). 
+c.1. Análisis Interno (La empresa) 
+● Debilidades (D): 
+○ Base de usuarios nula en el lanzamiento: Al ser una plataforma basada en el 
+efecto red (red social), iniciar sin una comunidad activa supone el mayor reto. 
+○ Dependencia técnica externa: El núcleo de la información depende totalmente 
+del tiempo de actividad y de las políticas de uso de los proveedores de APIs 
+(TMDB, RAWG, etc.). 
+○ Presupuesto de marketing limitado: Al desarrollarse mediante Bootstrapping, la 
+capacidad para realizar campañas publicitarias masivas es inferior a la de los 
+competidores establecidos. 
+● Fortalezas (F): 
+○ Propuesta de Valor Única: Primera plataforma del mercado que unifica cine, 
+series, literatura, anime y videojuegos en una sola cuenta y con una interfaz 
+coherente. 
+○ Stack Tecnológico Moderno y Escalable: Arquitectura limpia (Spring Boot + 
+Angular) sin código heredado, lo que permite iterar, solucionar bugs y desplegar 
+nuevas versiones a gran velocidad. 
+○ Costes Operativos Mínimos: Infraestructura en la nube con escalado dinámico 
+que permite mantener el servicio gratuito en su fase inicial sin riesgo de quiebra 
+técnica. 
+ 
+c.2. Análisis Externo (El mercado) 
+● Amenazas (A): 
+○ Movimientos de la competencia: Que gigantes consolidados como Letterboxd 
+decidan abrir su plataforma a otros mercados (por ejemplo, permitiendo 
+registrar videojuegos o series). 
+○ Cambios en las políticas de las APIs: Riesgo de que proveedores como RAWG o 
+TMDB privaticen sus endpoints o impongan tarifas inasumibles por volumen de 
+peticiones. 
+○ Fatiga de suscripciones: Reticencia de los usuarios a registrarse en nuevas 
+plataformas debido a la saturación del mercado digital. 
+ 
+7  
+KEEPLY 
+ 
+● Oportunidades (O): 
+○ Facilitación: La incomodidad de tener que alternar entre 4 o 5 aplicaciones 
+distintas provoca que muchos usuarios abandonen el registro de sus hobbies o se 
+limiten a un solo nicho (por ejemplo, usar una app exclusivamente para 
+películas). Keeply elimina esta barrera de entrada unificando toda la experiencia.  
+○ Sobresaturación y necesidad de organización: Actualmente se consume un 
+volumen de contenido digital tan masivo y de forma tan simultánea que surge 
+una necesidad real de control. El usuario busca herramientas prácticas para llevar 
+un orden mental, recordar por qué capítulo iba o qué obras dejó a medias.  
+○ Cultura del coleccionismo digital: Aumento exponencial de usuarios jóvenes que 
+desean mostrar su "identidad cultural" mediante listas, tier lists y valoraciones 
+públicas. 
+○ Vías de monetización secundarias: Posibilidad futura de integrar enlaces de 
+afiliados (ej. botón "Comprar en Amazon" o "Ver en Netflix" dentro de la ficha de 
+la obra), generando ingresos pasivos adicionales al modelo Freemium. 
+ 
+ 
+ 
+2. CULTURA EMPRESARIAL e IMAGEN CORPORATIVA   
+a) Misión, visión y valores 
+a.1. La misión: La razón de existir de Keeply es proporcionar a los usuarios un espacio 
+personal, centralizado y estéticamente cuidado donde puedan registrar, organizar y 
+recordar todo el contenido multimedia que consumen a lo largo de su vida. 
+Representamos el orden frente a la fragmentación del entretenimiento moderno, 
+actuando como una "biblioteca definitiva" que permite conservar la identidad cultural 
+de cada individuo sin necesidad de alternar entre múltiples plataformas. 
+ 
+a.2. La visión: A largo plazo, Keeply aspira a convertirse en la plataforma social de referencia 
+absoluta para la gestión integral del ocio digital a nivel internacional. Nos proyectamos 
+como un "hub" central donde la comunidad global pueda conectar a través de sus 
+gustos, independientemente del formato de la obra, y donde los creadores de contenido 
+puedan ver el impacto real e interconectado de sus trabajos en la audiencia. 
+ 
+a.3. Los valores: 
+- Privacidad e Intimidad: El usuario es el único dueño de su información; rechazamos la 
+comercialización de datos personales a terceros. 
+ 
+- Libertad y Flexibilidad: No imponemos una forma única de catalogar; ofrecemos 
+herramientas de personalización extremas para que cada "museo personal" sea único. 
+ 
+8  
+KEEPLY 
+- Diseño Centrado en el Usuario (UX/UI): Creemos que la funcionalidad debe ir de la 
+mano de la belleza, priorizando interfaces limpias y modernas. 
+ 
+- Comunidad y Respeto: Fomentamos un entorno social positivo basado en compartir 
+pasiones y descubrir nuevas obras sin la toxicidad de las redes sociales tradicionales. 
+ 
+a.4. La imagen corporativa: La imagen que Keeply proyecta al exterior es la de una empresa 
+tecnológica ágil, innovadora y profundamente conectada con la cultura digital 
+contemporánea. Queremos que el mercado y nuestros usuarios nos perciban como una 
+marca aliada, transparente y cien por cien centrada en la comunidad. Frente a las 
+grandes corporaciones tradicionales que comercializan agresivamente con la 
+información, Keeply busca posicionarse en la mente del consumidor como una 
+plataforma ética, segura y de máxima confianza. El público debe ver en nosotros a una 
+empresa cercana, que comprende la saturación actual del ocio digital, que habla el 
+mismo idioma que sus usuarios y que prioriza el respeto por la privacidad y la 
+experiencia de usuario por encima de todo.  
+b) Responsabilidad Social Corporativa (RSC) 
+Al ser Keeply una empresa nativa digital, nuestra RSC adapta los compromisos éticos y legales 
+tradicionales a la realidad del sector tecnológico, operando bajo cuatro ejes principales: 
+● Medidas Medioambientales (Eficiencia Digital): Al no producir bienes físicos, 
+eliminamos el impacto del transporte y la generación de residuos industriales. Nuestra 
+responsabilidad se centra en reducir la huella de carbono tecnológica. Promovemos el 
+uso de proveedores de Green Hosting (servidores alimentados por energías renovables). 
+Además, al desarrollar una Single Page Application (SPA) optimizada, minimizamos la 
+transferencia innecesaria de datos, lo que disminuye el consumo energético de los 
+servidores y de los dispositivos finales de los usuarios. 
+ 
+● Medidas respecto a los Trabajadores: Aunque la empresa nace con una estructura 
+unipersonal, la política interna garantiza que las futuras contrataciones se regirán por la 
+igualdad de oportunidades y la no discriminación. Fomentamos el teletrabajo para 
+facilitar la conciliación familiar y establecemos el compromiso de destinar una partida 
+presupuestaria anual para la formación continua de los empleados (cursos, 
+certificaciones tecnológicas y prevención de riesgos ergonómicos frente a pantallas). 
+ 
+● Medidas Sociales (Bienestar y Patrocinio): Keeply se diseña bajo principios del bienestar 
+digital. Rechazamos los algoritmos de “scroll” infinito que fomentan la adicción, 
+apostando por una catalogación consciente. Cumplimos con las directrices de 
+accesibilidad web (WCAG) para garantizar que personas con dificultades visuales puedan 
+9  
+KEEPLY 
+navegar. Asimismo, como medida de "patrocinio social", Keeply se compromete a apoyar 
+activamente a la comunidad Open Source y a ofrecer ventajas en sus planes a 
+instituciones de carácter educativo. 
+ 
+● Transparencia y Ética Económica: Mantenemos una política de transparencia total, 
+respetando escrupulosamente la normativa fiscal y tributaria, y rechazando prácticas de 
+ingeniería financiera abusiva. Apostamos por un modelo de negocio honesto, donde la 
+rentabilidad se logre aportando valor real al usuario y nunca mediante la 
+comercialización fraudulenta de sus datos personales a terceros. 
+c) Estructura Organizativa 
+Dada la naturaleza tecnológica de Keeply y su fase inicial de lanzamiento al ser bootstrapping o 
+depender solo de los ingresos propios, la estructura organizativa nace con un formato Lean (ágil 
+y sin jerarquías complejas). No obstante, el plan de empresa contempla una escalabilidad de los 
+recursos humanos en paralelo al crecimiento de la base de usuarios. 
+ 
+ 
+Para comprender la evolución de la plantilla, la gestión de los recursos humanos se divide en 
+dos fases estratégicas: 
+Fase 1: Lanzamiento y MVP (Actual) 
+Durante los primeros meses de vida del proyecto, para mantener los costes operativos al 
+mínimo, la empresa adopta una estructura unipersonal. 
+● CEO & Lead Full-Stack Developer (Álvaro Ortega Benítez): Asume el control total del 
+proyecto. Sus responsabilidades abarcan el desarrollo del código (Angular y Spring Boot), 
+el despliegue de la infraestructura en la nube, el diseño UI/UX  y la dirección estratégica 
+del producto entre otros. 
+ 
+10  
+KEEPLY 
+ 
+Fase 2: Crecimiento y Escalabilidad (Previsión a 1-2 años) 
+Una vez validado el modelo de negocio y alcanzada la rentabilidad mediante suscripciones, la 
+estructura se horizontalizará contratando perfiles clave para delegar funciones y acelerar el 
+crecimiento: 
+● CMO (Chief Marketing Officer) / Community Manager: Perfil indispensable para una red 
+social. Se encargará de la captación de usuarios y la gestión de campañas en redes 
+sociales  
+● Técnico de QA (Quality Assurance) y Soporte: Encargado de testear las nuevas versiones 
+de la plataforma antes de su paso a producción, además de gestionar los tickets de 
+incidencias de los usuarios, garantizando los tiempos de respuesta del SLA (Acuerdo de 
+Nivel de Servicio). 
+● Desarrollador Junior (Frontend/Backend): Perfil técnico de apoyo que permitirá al CEO 
+centrarse en la arquitectura general y delegar la creación de componentes visuales 
+menores o la integración de nuevas APIs secundarias. 
+Esta política de recursos humanos garantiza que la empresa no sufra sobredimensionamiento 
+en sus etapas tempranas, contratando talento únicamente cuando el flujo de caja operativo 
+(ingresos por suscripciones) lo permita. 
+ 
+ 
+3. El MERCADO y los CLIENTES   
+El mercado de Keeply está constituido por usuarios digitales que consumen entretenimiento 
+de forma intensiva a través de múltiples plataformas y formatos, y que sienten la necesidad 
+de organizar, registrar y compartir sus hábitos culturales. 
+a) El segmento del mercado 
+Para definir nuestro cliente tipo, o target, nos centramos en el usuario que más sufre el 
+problema principal que buscamos resolver: la fragmentación extrema del ocio digital. 
+ 
+Criterios de Segmentación: 
+ 
+- Demográficos: Hombres y mujeres de 16 a 35 años. Estudiantes universitarios o jóvenes 
+profesionales con un nivel educativo medio-alto. 
+ 
+- Geográficos: Inicialmente enfocado al mercado hispanohablante (España y LATAM) por 
+el idioma nativo de la aplicación, pero con una proyección internacional inherente al ser 
+un producto web sin fronteras físicas. Residen mayoritariamente en entornos urbanos 
+con alta penetración de internet de banda ancha. 
+ 
+11  
+KEEPLY 
+- Psicográficos: Personas apasionadas de la cultura pop y el arte digital. Están suscritos a 
+múltiples servicios de streaming (Netflix, Crunchyroll, Xbox Game Pass, Kindle). Valoran 
+enormemente la estética, prefieren interfaces oscuras y tienen el hábito de opinar, 
+clasificar y crear listas de todo lo que consumen. 
+ 
+- Conductuales: Tienen un comportamiento activo en redes sociales, pero huyen de la 
+toxicidad de las plataformas tradicionales. Buscan comunidades de nicho donde registrar 
+sus logros personales ("He leído 50 libros este año", "He platinado este juego") y 
+compartir reseñas estructuradas. 
+ 
+Estrategia de Segmentación: Keeply utilizará una estrategia diferenciada. Aunque el núcleo 
+del servicio (la API unificada) es el mismo para todos los usuarios, la experiencia visual y 
+funcional se adapta según el tipo de contenido que consuma mayoritariamente cada 
+segmento. Si un usuario utiliza Keeply de forma exclusiva para Anime, su perfil y las 
+recomendaciones estarán altamente personalizados hacia ese sector, diferenciando su 
+experiencia de la de un usuario que lo utilice únicamente para Cine y Literatura. 
+ 
+Mapa de Empatía (Perfil del usuario objetivo): 
+ 
+- ¿Qué piensa y siente? Se siente abrumado por la ingente cantidad de contenido 
+disponible. Le frustra olvidar por qué capítulo iba leyendo o qué película le 
+recomendaron la semana pasada. Desea tener un "diario" o museo personal de su vida 
+cultural que refleje su identidad. 
+ 
+- ¿Qué ve? Ve a sus amigos utilizando aplicaciones como Letterboxd para películas, pero 
+le genera rechazo que no exista una alternativa con el mismo nivel de diseño y 
+comunidad para videojuegos, series o libros. 
+ 
+- ¿Qué dice y hace? Suele improvisar listas en el bloc de notas del móvil, crear hojas de 
+Excel compartidas o usar grupos de WhatsApp de "notas personales" para no olvidar 
+qué ver. Recomienda activamente obras a su círculo de amigos. 
+ 
+- ¿Qué escucha? Sus creadores de contenido favoritos (YouTubers, Streamers) y amigos 
+hablan constantemente de nuevas series, mangas o juegos de moda, generándole 
+"FOMO" (Fear Of Missing Out / miedo a perderse algo). 
+ 
+ 
+ 
+ 
+ 
+12  
+KEEPLY 
+b) Estudio de mercado: los clientes 
+b.1. Cuestionario para posibles clientes 
+Para validar la necesidad del producto, los problemas de la competencia y testear la 
+viabilidad del modelo de suscripción Premium, se ha diseñado el siguiente cuestionario tipo 
+test dirigido a nuestro target: 
+ 
+1. ¿Cuántas plataformas de contenido digital (Netflix, Amazon Prime Video, Steam, 
+Crunchyroll, etc.) utilizas a la semana? 
+a) 1-2 
+b) 3-4 
+c) 5 o más 
+d) Ninguna 
+ 
+2. Actualmente, ¿utilizas alguna aplicación específica para registrar las series, películas, 
+juegos o libros que consumes? 
+a) Sí, uso varias (una para cada cosa). 
+b) Sí, solo uso una (ej. solo para cine). 
+c) No, apunto las cosas en notas de texto o Excel. 
+d) No utilizo nada. 
+ 
+3. ¿Te resulta molesto y poco práctico tener que usar diferentes aplicaciones para registrar 
+un videojuego y una película? 
+a) Mucho. 
+b) Un poco. 
+c) Nada. 
+d) No consumo ambos tipos de contenido. 
+ 
+4. ¿Sueles olvidar por qué capítulo de una serie o libro te quedaste, o en qué punto dejaste 
+un videojuego? 
+a) Casi siempre. 
+b) A veces. 
+c) Nunca. 
+d) No consumo contenido por capítulos o niveles. 
+ 
+5. ¿Te gusta puntuar (del 1 al 10) o escribir pequeñas reseñas sobre el contenido que 
+consumes? 
+a) Sí, y me gusta compartirlo públicamente. 
+b) Sí, pero solo como registro privado para mí. 
+c) No, me parece innecesario. 
+d) Solo en ocasiones muy especiales. 
+ 
+ 
+13  
+KEEPLY 
+6. Si existiera una nueva aplicación de registro, ¿qué característica valorarías por encima de 
+las demás? 
+a) Que lo tenga todo integrado (Cine, Libros, Juegos, Anime). 
+b) El diseño moderno y la personalización del perfil. 
+c) La faceta de red social y poder descubrir obras nuevas. 
+d) La gratuidad total del servicio. 
+ 
+7. ¿Desde qué dispositivo preferirías gestionar tu catálogo de ocio? 
+a) Principalmente desde el móvil 
+b) Principalmente desde el ordenador (Escritorio). 
+c) Ambos, necesito que esté perfectamente sincronizado. 
+d) Desde el navegador. 
+ 
+8. ¿Sueles abandonar obras (libros/juegos/series) a la mitad? ¿Te gustaría llevar un registro 
+de lo "Abandonado"? 
+a) Sí, abandono a menudo y quiero registrarlo. 
+b) A veces, pero no necesito registrar el abandono. 
+c) Casi nunca abandono nada. 
+d) No, solo quiero registrar lo que termino. 
+ 
+9. Cuando buscas información sobre una obra antes de consumirla, ¿qué factor te influye 
+más? 
+a) La sinopsis y la puntuación general. 
+b) El arte (portada/póster) y el año de lanzamiento. 
+c) Las notas y reseñas escritas por la comunidad de usuarios. 
+d) Recomendaciones directas de amigos. 
+ 
+10. ¿Es importante para ti poder guardar notas sobre tus obras favoritas, por ejemplo: tus 
+personajes o escenas favoritas? 
+a) Si, me gusta apuntar detalles, curiosidades de mis apartados favoritos de la obra. 
+b) Me gusta guardar momentos para hablar de ellos con mis amigos. 
+c) A veces, solo si me ha marcado mucho. 
+d) No, me basta con registrar lo que he voy viendo sin mas detalles. 
+ 
+11. ¿Compartirías tu perfil ("Mi Biblioteca") con tus amigos mediante un enlace para 
+recomendarles obras? 
+a) Sí, me encantaría. 
+b) No, prefiero que mi consumo cultural sea totalmente privado. 
+c) Solo con un grupo muy selecto de personas. 
+d) Solo si la plataforma lo hace de forma automática. 
+ 
+12. ¿Qué red social utilizas con mayor frecuencia para hablar o leer sobre tus hobbies? 
+a) Twitter / X. 
+b) Instagram / TikTok. 
+14  
+KEEPLY 
+c) Reddit / Discord / Foros. 
+d) No utilizo redes sociales para este fin. 
+ 
+13. ¿Estarías dispuesto a pagar una suscripción (ej. 2,99€/mes) por funciones Premium y sin 
+publicidad? 
+a) Sí, sin duda. 
+b) Dependería de si la publicidad gratuita es muy intrusiva. 
+c) Nunca pago suscripciones por aplicaciones. 
+d) Solo si incluye funciones exclusivas. 
+ 
+14. ¿Te gustaría recibir notificaciones cuando un amigo añada una nueva obra o publique 
+una reseña? 
+a) Sí, para estar al día. 
+b) No, prefiero entrar a mirar por mi cuenta. 
+c) Solo de amigos marcados como "favoritos". 
+d) No me interesa la actividad social de otros usuarios. 
+ 
+b.2. Análisis de los Resultados del Estudio de Mercado 
+El cuestionario fue distribuido a una muestra de usuarios que encajan con el perfil psicográfico y 
+demográfico de nuestro cliente potencial. A continuación, se detallan y analizan los resultados 
+obtenidos en las preguntas clave para validar el modelo de negocio y las funcionalidades del 
+Producto Mínimo Viable (MVP). 
+1. Saturación y Fragmentación del Ocio (Preguntas 1 y 2) El estudio confirma 
+abrumadoramente nuestra hipótesis principal sobre la fragmentación del mercado. 
+● Por un lado, el consumo de entretenimiento es omnipresente: un abrumador 93% de los 
+encuestados afirma utilizar 3 o más plataformas de contenido digital a la semana 
+(sumando servicios de streaming, plataformas de videojuegos como Steam y consumo 
+de redes). 
+● Sin embargo, al analizar cómo organizan este inmenso volumen de ocio, descubrimos 
+una brecha gigante en el mercado debido a la fricción de uso. La mayoría de los usuarios 
+simplemente no gestiona su contenido: un 40% confiesa que "No utiliza nada" 
+(olvidando frecuentemente qué han visto o por dónde iban). A esto se suma un 30% que 
+recurre a métodos rudimentarios como notas de texto del móvil o Excel. 
+● Solo una minoría está dispuesta a sufrir la fragmentación actual, usando múltiples 
+aplicaciones específicas (25%) o una sola (5%). Esto demuestra que si eliminamos la 
+barrera de tener varias apps, existe un mercado inmenso de usuarios dispuestos a 
+empezar a registrar sus hobbies. 
+15  
+KEEPLY 
+ 
+2. Nivel de Fricción y Necesidad de Integración (Preguntas 3, 4 y 6) 
+● Un contundente 78% considera "Mucho" o "Un poco" molesto tener que usar 
+plataformas distintas según el tipo de obra (Pregunta 3). 
+● Esta incomodidad se traduce en pérdida de información: el 65% admite que "A veces" o 
+"Casi siempre" olvida en qué capítulo o punto exacto abandonó un libro, serie o 
+videojuego (Pregunta 4). 
+● Al preguntar por la característica más deseada en una nueva aplicación (Pregunta 6), la 
+respuesta fue clara: el 58% valora por encima de todo "Que lo tenga todo integrado", 
+superando a otras funcionalidades como la red social o el diseño personalizado. 
+16  
+KEEPLY 
+ 
+3. Aspectos Sociales y Personalización (Preguntas 5, 10 y 11) El componente de comunidad es 
+vital para Keeply. Los datos respaldan nuestra inversión en herramientas sociales y de 
+personalización: 
+● Un 62% disfruta puntuando y escribiendo reseñas para compartirlas públicamente. 
+● El nivel de detalle en el catálogo es una necesidad latente: el 68% afirma que le gusta 
+guardar notas sobre sus personajes o escenas favoritas habitualmente (40%) o cuando 
+una obra le marca profundamente (28%). Este resultado justifica a nivel técnico la 
+implementación de entidades independientes en nuestra base de datos para adjuntar 
+notas de texto personalizadas a cada obra. 
+● El 80% estaría dispuesto a compartir el enlace de su biblioteca con amigos, confirmando 
+un alto potencial de crecimiento orgánico. 
+17  
+KEEPLY 
+ 
+ 
+4. Validación del Modelo de Negocio (Pregunta 13) La pregunta clave para asegurar la 
+viabilidad económica de la empresa arrojó resultados muy positivos para la estrategia 
+Freemium: 
+● El 25% estaría dispuesto a pagar la suscripción de 2,99€/mes "Sin duda", mientras que 
+un 45% condiciona su decisión a si "la publicidad gratuita es muy intrusiva". 
+● Esto nos indica que existe un mercado potencial de pago muy sólido, siempre y cuando 
+se diseñe una capa gratuita funcional pero que ofrezca alicientes reales para el salto 
+Premium (estadísticas, avatares dinámicos, etc.). 
+18  
+KEEPLY 
+ 
+Conclusiones del Estudio de Mercado 
+Los datos recopilados validan inequívocamente la necesidad de Keeply. Existe una evidente 
+frustración por la fragmentación actual y una fuerte demanda por una solución unificada. 
+Además, el deseo de guardar detalles precisos de las obras justifica el diseño de nuestra base de 
+datos relacional. Económicamente, el modelo Freemium se demuestra viable mediante una 
+captación inicial libre de fricción y una conversión posterior a pago basada en valor añadido.  
+ 
+ 
+19  
+KEEPLY 
+4. PLAN de MARKETING 
+a) Estrategia de posicionamiento: Marketing Estratégico 
+ 
+Keeply basará su posicionamiento en la estrategia de los Océanos Azules. En lugar de competir 
+en un mercado saturado intentando ser "una mejor red social de cine" o "un mejor catalogador 
+de libros", Keeply crea un nuevo espacio de mercado: la gestión universal e integrada del ocio. 
+Nos posicionamos en la mente del consumidor no por precio, sino por conveniencia, diseño 
+unificado y la eliminación de la fricción y el estrés digital bajo la premisa: "Todo tu ocio, en un 
+solo lugar".  
+ 
+b) Estrategia de producto 
+b.1. El producto 
+● Tipo de producto: Keeply es un servicio 100% digital y nativo en la nube, estructurado 
+bajo el modelo Software as a Service o software como servicio (SaaS) y enfocado 
+estrictamente al mercado B2C. Esta naturaleza arquitectónica implica que el producto no 
+se concibe como un software estático sino como una plataforma viva. Al entregarse 
+directamente a través del navegador, garantizamos una accesibilidad multiplataforma 
+instantánea, eliminando cualquier barrera logística y permitiéndonos desplegar 
+actualizaciones y mejoras en tiempo real sin generar problemas en el consumidor final.  
+ 
+● Productos sustitutivos: Cuadernos físicos de registro, agendas, hojas de cálculo 
+manuales, las listas nativas cerrada de plataformas individuales como Netflix, Steam o 
+Goodreads y plataformas similares a Keeply orientadas a un solo tipo de producto. 
+ 
+● Productos complementarios: Cualquier plataforma donde el usuario consuma el 
+contenido para despues registrarlo, puntuarlo, compartilo u organizarlo en Keeply 
+ 
+b.2. Producto básico, formal y ampliado 
+● Producto básico: Organización mental e identidad cultural. Evita al usuario el caos de no 
+recordar qué ha visto, qué ha leído, o en qué capítulo abandonó una obra. 
+● Producto formal: Una aplicación web responsiva construida con tecnologías modernas 
+(Angular y Spring Boot), con acceso en tiempo real a bases de datos mundiales (APIs), 
+inicio de sesión seguro, biblioteca personal categorizada y un diseño estético altamente 
+personalizable. 
+● Producto ampliado: La conexión con una comunidad de usuarios afines, soporte técnico 
+continuo y una arquitectura en la nube que garantiza sincronización instantánea 
+multiplataforma, sin requerir descargas ni consumir almacenamiento en el dispositivo 
+del usuario.  
+20  
+KEEPLY 
+b.3. Estrategias sobre el producto 
+● De diferenciación: Nuestro mayor factor diferencial a nivel técnico es la "API Unificada" 
+(conectar y estandarizar TMDB, RAWG, Jikan y Google Books simultáneamente). Esto se 
+combina con una personalización visual extrema que permite a los usuarios añadir 
+imágenes o notas a sus obras favoritas y editar los banners o fondos de su propio perfil 
+para hacerlo único y personal. 
+ 
+● De marca: El nombre Keeply deriva del verbo inglés "Keep" (guardar, mantener, 
+conservar), transmitiendo la idea de un refugio seguro donde almacenar recuerdos 
+culturales. A nivel visual, la identidad corporativa abraza directamente la cultura pop.  
+ 
+El isotipo o logo de la aplicación es un diseño propio elaborado en pixel-art, apelando a 
+la nostalgia del sector de los videojuegos, la imagen representa un libro abierto con un 
+corazon, uniendo el mundo de los videojuegos con el de la lectura. 
+ 
+ 
+Por su parte, el logotipo adopta un estilo de fantasía medieval u oscura, que recuerda a 
+interfaces lúdicas clásicas como “Hearthstone”. Todo el conjunto utiliza una paleta de 
+colores oscuros (púrpuras y violetas profundos) que se integra de forma natural con el 
+modo oscuro que domina el ecosistema tecnológico actual. 
+21  
+KEEPLY 
+ 
+ 
+c) Estrategia de precio 
+ 
+Nuestra fijación de precios utilizará un modelo Freemium basado en la apreciación del 
+consumidor y la necesidad de adopción masiva. En el software social, el mayor activo inicial es 
+el Efecto Red o la captación de usuarios por medio de las redes, por lo que, imponer un muro de 
+pago de entrada condenaría el crecimiento. 
+ 
+● Plan Free (0€): Acceso total a la aplicación, registro ilimitado de obras y uso de todas las 
+APIs. Se financia mediante publicidad no intrusiva de terceros. 
+ 
+● Plan "Keeply Pro" (2,99€/mes o 25€/año): Precio fijado estratégicamente por debajo 
+del umbral psicológico de un "café mensual" y muy competitivo frente a rivales 
+indirectos. Este plan elimina la publicidad, permite avatares/banners animados (GIFs) y 
+otorga acceso a métricas avanzadas, como las horas dedicadas a un videojuego o libro. 
+d) Estrategia de promoción 
+ 
+● d.1. Publicidad: Anuncios insertados directamente en los ecosistemas donde reside 
+nuestro target: campañas en YouTube (en vídeos de reseñas de cine o videojuegos) y 
+publicidad nativa segmentada en Twitter/X o TikTok. 
+ 
+● d.2. Folleto publicitario: Al ser un producto SaaS, el concepto de "folleto" se transforma 
+en una Landing Page o página de aterrizaje promocional interactiva. En ella, se explican 
+los tres pilares de Keeply: Busca, Organiza y Comparte. 
+22  
+KEEPLY 
+● d.3. Tarjeta de visita: Evolucionamos la tarjeta de papel hacia tarjetas físicas con 
+tecnología NFC o códigos QR impresos, que, al ser escaneados, dirigen 
+instantáneamente al perfil público del fundador o a la Landing Page de la empresa. 
+ 
+● d.4. Merchandising: Creación de pegatinas físicas de alta calidad con el logotipo e 
+isotipo de Keeply, diseñadas para ser colocadas en portátiles, PCs y setups de escritorio. 
+ 
+● d.5. Promoción de ventas: Estrategia Early Adopter. Se ofrecerá a los primeros 1.000 
+usuarios registrados una insignia especial en su perfil y una suscripcion “Keeply Pro” 
+gratuita durante el primer mes. 
+ 
+● d.6. Fidelización: Se implementará gamificación dentro de la app (insignias 
+desbloqueables por registrar 10, 50 o 100 obras). A final de año, se generará el "Keeply 
+Wrapped" (un resumen visual y estadístico del año de ocio del usuario), diseñado 
+específicamente para ser compartible en otras redes sociales. 
+ 
+● d.7. Relaciones Públicas: Colaboraciones con Micro-Influencers (BookTubers, Streamers 
+de Twitch). Se les proporcionarán cuentas Pro verificadas para que utilicen Keeply en sus 
+directos al crear sus populares Tier Lists (listas de clasificación) o resumir el contenido 
+consumido en el mes. 
+ 
+● d.8. Marketing Digital: 
+o Web/SEO: Posicionamiento orgánico por palabras clave transaccionales (ej. 
+"alternativa a Letterboxd para juegos", "organizador de anime y series"). 
+o TikTok/Instagram Reels: Vídeos cortos y dinámicos mostrando el diseño de la 
+interfaz y trucos de organización digital. 
+o Twitter/X: Canal principal para Community Management, utilizando un tono 
+cercano, humorístico y empleando referencias actuales e interesantes para el 
+publico objetivo. 
+e) Estrategia de distribución 
+ 
+● Canales de distribución: Al ser un producto Software as a Service, se utiliza un Canal 
+Directo. Se elimina la figura del intermediario, mayorista o distribuidor físico. El producto 
+se entrega desde el fabricante (nuestros servidores en la nube) al cliente final (su 
+navegador web) de forma instantánea. 
+ 
+● Coste de distribución: El coste marginal por entregar el producto a un nuevo usuario es 
+cercano a cero. Los únicos costes de distribución son el consumo fraccional de ancho de 
+banda y bases de datos en nuestros proveedores (Vercel y Railway). 
+ 
+ 
+23  
+KEEPLY 
+f) Atención al cliente 
+ 
+● f.1. Organización de la atención al cliente: El soporte general se gestionará de manera 
+dual: mediante un correo formal (support@keeply.com) para incidencias de cuenta, y a 
+través de un servidor oficial de Discord, fomentando el soporte peer-to-peer (comunidad 
+ayudando a comunidad) y el reporte ágil de bugs.  
+ 
+● f.2. Servicio postventa y garantía: Al ser un software, la "garantía" se traduce en la 
+estabilidad del servicio. Para los usuarios de pago, se establecerá un SLA (Acuerdo de 
+Nivel de Servicio) con respuestas garantizadas en menos de 24 horas. Para medir la 
+satisfacción continua, se mantendrá un Roadmap u hoja de ruta público donde la 
+comunidad podrá votar y proponer las nuevas funcionalidades que desean ver 
+integradas. 
+ 
+5. PLAN DE PRODUCCIÓN 
+ 
+Al tratarse Keeply de una empresa tecnológica orientada al desarrollo de software, el 
+concepto tradicional de "producción en cadena" o manufactura de bienes físicos se sustituye 
+por la metodología de diseño, desarrollo y despliegue continuo de software. 
+a) Recursos materiales necesarios para la producción 
+ 
+Dado que el servicio prestado es íntegramente digital, la infraestructura productiva se basa 
+en los siguientes recursos técnicos y tecnológicos: 
+ 
+● Materias Primas: No aplican en el desarrollo de software puro de la misma forma que 
+en la industria física. Nuestra "materia prima" son los metadatos crudos consumidos en 
+tiempo real a través de los proveedores de datos (API de TMDB, Jikan, Google Books y 
+RAWG). 
+ 
+● Maquinaria y Herramientas físicas (Hardware): 
+○ Ordenador portátil de alto rendimiento para el desarrollo local (procesador 
+multinúcleo tipo i7/M2, 16GB de RAM mínimo para soportar máquinas virtuales 
+y contenedores). 
+○ Monitores externos de alta resolución para facilitar la visualización del código, el 
+diseño de interfaces y la consola de comandos de manera simultánea. 
+ 
+● Herramientas de producción (Software y Licencias): 
+○ Entornos de Desarrollo (IDE): IntelliJ IDEA (para el ecosistema Java/Spring) y 
+Visual Studio Code (para el ecosistema TypeScript/Angular). 
+○ Diseño y Prototipado: Figma. 
+○ Sistemas de Control de Versiones: Git local y repositorio remoto alojado en 
+GitHub. 
+24  
+KEEPLY 
+○ Infraestructura de Despliegue (Hosting): Plataforma Railway (para la Base de 
+Datos y el Backend) y Vercel (para la compilación y entrega del Frontend). 
+b) Proceso de producción (prestación del servicio) 
+ 
+La "fabricación" de las nuevas versiones de Keeply se ejecuta bajo principios de 
+metodologías ágiles (Scrum/Kanban), permitiendo iteraciones rápidas. Todo el proceso recae 
+bajo la responsabilidad de Álvaro Ortega Benítez, actuando como Full Stack Developer y 
+fundador del proyecto. El ciclo de producción se divide en las siguientes fases: 
+ 
+1. Fase de Diseño y Toma de Requisitos: Se analiza la viabilidad de una nueva 
+funcionalidad (por ejemplo, la implementación de avatares personalizados), se diseña el 
+prototipo de la interfaz en Figma y se define o actualiza el modelo de datos relacional. 
+ 
+2. Desarrollo del Backend: Creación de las entidades JPA, repositorios, controladores REST 
+y configuración de la seguridad (JWT/OAuth2) mediante Spring Boot. Se realizan pruebas 
+unitarias y de integración de los endpoints utilizando Postman. 
+ 
+3. Desarrollo del Frontend: Construcción de los componentes visuales en Angular 17, 
+inyección de servicios HTTP para consumir la API propia, e implementación del diseño 
+adaptativo mediante SCSS. 
+ 
+4. Integración y Pruebas: Conexión del cliente web con el servidor de desarrollo. 
+Comprobación de casos límite, manejo de errores, resolución de políticas CORS y 
+validación de la expiración de los tokens de sesión. 
+ 
+5. Despliegue Continuo (CI/CD): Fase final automatizada. Al realizar una subida de código a 
+la rama main del repositorio en GitHub, los servidores de Vercel y Railway detectan el 
+cambio, descargan las dependencias, compilan la aplicación y la publican en producción 
+en escasos minutos sin que el servicio sufra cortes de disponibilidad. 
+c) Previsión de producción 
+ 
+En una empresa SaaS, la "capacidad de producción" no se mide en unidades fabricadas, sino 
+en la capacidad de procesamiento simultáneo del servidor y en el volumen de tráfico 
+soportado. 
+ 
+En nuestra fase inicial de lanzamiento (MVP - Producto Mínimo Viable), operando bajo las 
+capas gratuitas de los proveedores de infraestructura Vercel y Railway, el sistema está 
+diseñado y optimizado para soportar de manera fluida y estable alrededor de 1.000 Usuarios 
+Activos Mensuales y picos de 50 a 100 usuarios concurrentes sin experimentar degradación 
+del servicio ni latencia elevada. 
+ 
+25  
+KEEPLY 
+A medida que la base de usuarios crezca y supere esta previsión, la capacidad de producción 
+se aumentará instantáneamente mediante el incremento del plan del servidor en la nube 
+(escalado vertical y horizontal), un proceso dinámico que se ejecuta en pocos clics sin 
+necesidad de adquirir nueva "maquinaria" física ni detener la plataforma. 
+ 
+6. ANÁLISIS ECONÓMICO-FINANCIERO 
+a) Inversiones y gastos 
+ 
+Para la puesta en marcha inicial del proyecto Keeply, se asume un escenario de desarrollo 
+basado en la financiación con recursos mínimos y propios, o Bootstrapping. Gracias a la 
+adopción de un modelo operativo completamente digital, se eliminan por completo los altos 
+costes derivados del alquiler, fianza y adecuación de un local comercial. 
+ 
+Tabla 1: INVERSIONES (Activos a largo plazo) 
+ 
+ 
+Tabla 2: GASTOS (Previsión de los dos primeros meses de actividad) 
+ 
+26  
+Concepto Cuantía (€) 
+Local / Instalaciones (Teletrabajo) 0,00 € 
+Mobiliario (Escritorio, Silla ergonómica) 350,00 € 
+Equipos informáticos (Portátil de desarrollo y 
+periféricos) 
+1.200,00 € 
+Patentes y Marcas (Registro de la marca Keeply) 150,00 € 
+Licencias de Software y dominios (Dominio web anual) 15,00 € 
+TOTAL INVERSIONES 1.715,00 € 
+Concepto Cuantía (€) 
+Gastos de constitución (Trámites de alta de 
+empresa/autónomo) 
+150,00 € 
+Promoción y Publicidad digital (Ads en Redes Sociales) 200,00 € 
+Personal / Cuota a la Seguridad Social (Tarifa Plana 80€ 
+x 2 meses) 
+160,00 € 
+KEEPLY 
+ 
+ 
+TOTAL INVERSIÓN INICIAL Y PUESTA EN MARCHA = 2.345,00 € 
+ 
+ 
+b) Fuentes de financiación 
+ 
+b.1. Aportación de los emprendedores/as 
+ 
+Dado que el capital necesario para la puesta en marcha de un servicio SaaS en sus primeras 
+fases es extremadamente bajo (2.345,00 €), la financiación será asumida en un 100% 
+mediante la aportación de capital propio por parte del fundador. Esta decisión estratégica 
+permite mantener el control absoluto sobre el producto, agilizar la toma de decisiones y 
+evitar el riesgo de endeudamiento temprano. 
+ 
+b.2. Ayudas y subvenciones 
+Se solicitarán dos ayudas fundamentales para mitigar los gastos iniciales: 
+ 
+● Kit Digital: Subvención gubernamental enfocada a la creación y mejora de soluciones 
+digitales. 
+ 
+● Tarifa Plana de la Seguridad Social: Para nuevos trabajadores por cuenta propia 
+(autónomos) en Andalucía, que reduce la cuota mensual a 80€ durante el primer año de 
+actividad. 
+ 
+b.3. Préstamos y créditos 
+No se solicitarán créditos bancarios ni préstamos ICO en la fase actual de lanzamiento. El 
+modelo de negocio se diseñará para ser sostenible. Únicamente se planteará la búsqueda de 
+financiación externa mediante Business Angels o crowdfunding, si la aplicación alcanza una 
+masa crítica de usuarios y se requiere una inyección de capital intensiva para escalar la 
+infraestructura y lanzar campañas de marketing internacional. 
+ 
+ 
+ 
+ 
+27  
+Suministros (Luz, Internet de la oficina remota - parte 
+proporcional) 
+100,00 € 
+Gastos de Hosting Web (Escalado inicial en Railway y 
+Vercel) 
+20,00 € 
+TOTAL GASTOS (2 primeros meses) 630,00 € 
+KEEPLY 
+c) Plan Económico-Financiero 
+ 
+c.1. El Balance (Previsión de Apertura) 
+ 
+El siguiente balance refleja la situación patrimonial de la empresa en el momento de iniciar 
+su actividad. 
+ 
+ACTIVO (En qué se ha 
+invertido el dinero) 
+(€) NETO PATRIMONIAL Y PASIVO 
+(De dónde sale el dinero) 
+(€) 
+ACTIVO NO CORRIENTE 1.550,00 NETO PATRIMONIAL 2.345,00 
+- Inmovilizado Intangible 
+(Patentes/Marcas) 
+150,00 - Capital social (aportado por el 
+socio) 
+2.345,00 
+- Inmovilizado Material 
+(Equipos informáticos) 
+1.200,00   
+- Mobiliario 350,00 PASIVO NO CORRIENTE 0,00 
+ACTIVO CORRIENTE 795,00 - Deudas a largo plazo 0,00 
+- Efectivo y otros activos 
+líquidos (Banco) 
+795,00 PASIVO CORRIENTE 0,00 
+  - Deudas a corto plazo 0,00 
+TOTAL ACTIVO 2.345,00 TOTAL NETO Y PASIVO 2.345,00 
+ 
+c.1.1. Análisis de los resultados arrojados por el Balance de Previsión 
+El balance de apertura de Keeply demuestra una salud financiera impecable y diseñada para 
+la resiliencia operativa. El nivel de endeudamiento es del 0% (ausencia total de pasivo 
+corriente y no corriente). La empresa se financia exclusivamente con fondos propios (Neto 
+Patrimonial). Además, el Activo Corriente (795,00 €) depositado en la cuenta bancaria de la 
+empresa garantiza un ratio de liquidez idóneo para hacer frente a los gastos fijos de los dos 
+primeros meses de lanzamiento (hosting, promoción y cuotas de seguridad social). Esto 
+permite ejecutar la estrategia Freemium sin la presión financiera de tener que monetizar 
+agresivamente desde el primer día, priorizando el crecimiento de la base de usuarios. 
+ 
+ 
+ 
+28  
+KEEPLY 
+7. DEFINICIÓN Y DISEÑO DE PRODUCTO MÍNIMO VIABLE 
+ 
+Para el desarrollo de Keeply se ha optado por una arquitectura desacoplada cliente-servidor. 
+Esto significa que el Frontend (desarrollado en Angular) y el Backend (desarrollado en Spring 
+Boot) funcionan de manera totalmente independiente, comunicándose exclusivamente a 
+través de un intercambio de datos en formato JSON mediante una API REST.  
+Al delegar la lógica visual y el enrutamiento al navegador del usuario, liberamos de carga de 
+procesamiento al servidor, lo que garantiza una excelente velocidad de respuesta, un menor 
+consumo de recursos y una total escalabilidad de cara a futuras ampliaciones de la 
+plataforma  
+a) Stack Tecnológico 
+El ecosistema tecnológico elegido combina la robustez de Java en el servidor con la 
+agilidad y reactividad de Angular en el cliente: 
+Frontend (Cliente): 
+● Angular 17: Uso de una versión moderna y robusta del framework, 
+aprovechando la arquitectura basada en Standalone Components para lograr un 
+código más limpio, modular y mantenible. 
+ 
+● TypeScript: Garantiza un tipado estricto en el cliente y reduce drásticamente los 
+errores de lógica en tiempo de desarrollo. 
+ 
+● SCSS: Uso de preprocesadores CSS avanzados para gestionar de forma limpia el 
+diseño y los temas dinámicos mediante el uso de variables globales. 
+ 
+● RxJS: Implementación de programación reactiva para la gestión eficiente de 
+flujos de datos asíncronos y la comunicación fluida con el servidor. 
+Backend (Servidor): 
+● Spring Boot 3: Framework principal para la creación de la arquitectura del 
+servidor y el desarrollo ágil de la API REST corporativa. 
+ 
+● Spring Security & JWT: Implementación de seguridad stateless (sin estado) para 
+la protección perimetral de los endpoints mediante el uso y validación de tokens 
+securizados. 
+ 
+● Spring Data JPA / Hibernate: Gestión eficiente de la persistencia y mapeo 
+objeto-relacional (ORM) para la abstracción de las consultas a la base de datos. 
+ 
+29  
+KEEPLY 
+● Integración OAuth2: Implementación del flujo de autenticación social con 
+Google, permitiendo un inicio de sesión seguro y libre de fricción para el usuario. 
+Base de Datos: 
+● MySQL 9.4: Sistema de gestión de bases de datos relacional robusto y seguro, 
+seleccionado para el almacenamiento persistente de la información de usuarios. 
+APIs Externas Integradas: 
+● Google Books API: Proveedor oficial de metadatos para el catálogo de literatura. 
+● TMDB API: Proveedor de información centralizado para cine y series de 
+televisión. 
+● Jikan API: Pasarela de datos de código abierto orientada al sector del anime y el 
+manga. 
+● RAWG API: Base de datos mundial utilizada para la sincronización de la 
+información de videojuegos. 
+ 
+b) Diseño de la Base de Datos 
+El modelo relacional de Keeply se ha diseñado para ofrecer máxima flexibilidad ante 
+distintos tipos de contenido multimedia: 
+- Usuario: Entidad principal que almacena credenciales (contraseñas cifradas), email y 
+preferencias de personalización en formato JSON (para soportar banners dinámicos). 
+- Obra: Catálogo maestro que persiste la información base obtenida de las APIs externas 
+(título, descripción, imagen, tipo de obra) para mejorar el rendimiento de las búsquedas 
+locales. 
+- Item_Usuario (N:M): Tabla pivote que gestiona la relación entre usuarios y obras, 
+almacenando atributos específicos de la experiencia del usuario: estado (Pendiente, En 
+Progreso, Completado, Abandonado) y valoración personal. 
+- Contenido_Usuario (1:N): Permite adjuntar múltiples capas de información personal 
+(notas de texto o referencias a imágenes) a cada obra de la biblioteca. 
+- Seguimiento (N:M): Gestiona la lógica de red social permitiendo la relación de 
+seguimiento entre distintos usuarios de la plataforma. 
+ 
+30  
+KEEPLY 
+ 
+Diccionario de Datos 
+A continuación, se detalla la estructura lógica de las tablas que componen la base de datos 
+relacional del sistema, incluyendo sus atributos, tipos de datos y restricciones: 
+Tabla 1: Usuario 
+Almacena la información de autenticación y el perfil de las personas registradas en la 
+plataforma. 
+Campo Tipo de Dato Clav
+e 
+Descripción 
+id_usuario INT PK Identificador único 
+autoincremental del usuario. 
+nombre_usuar
+io 
+VARCHAR(50) UNI
+Q
+U
+E 
+Nombre público en la plataforma 
+(alias). 
+email VARCHAR(100
+) 
+UNI
+Q
+U
+E 
+Correo electrónico utilizado para el 
+login. 
+contrasena_ha
+sh 
+VARCHAR(255
+) 
+- Contraseña encriptada por 
+seguridad (ej. BCrypt). 
+fecha_registro TIMESTAMP - Fecha y hora exacta en la que se 
+creó la cuenta. 
+31  
+KEEPLY 
+avatar_url VARCHAR(255
+) 
+- Ruta o enlace a la imagen de perfil 
+del usuario. 
+Tabla 2: Obra 
+Catálogo centralizado que almacena los metadatos de los libros, videojuegos, películas, etc. 
+Campo Tipo de Dato Clav
+e 
+Descripción 
+id_obra INT PK Identificador único de la obra en 
+nuestra BD. 
+titulo VARCHAR(255
+) 
+- Nombre o título de la obra. 
+descripcion TEXT - Sinopsis o resumen argumental. 
+tipo_obra ENUM - Categoría (VIDEOJUEGO, PELICULA, 
+SERIE, etc.). 
+autor_creador VARCHAR(150
+) 
+- Desarrollador, director o escritor 
+principal. 
+fecha_lanzami
+ento 
+DATE - Fecha de estreno o publicación 
+original. 
+url_imagen_pr
+incipal 
+VARCHAR(255
+) 
+- Enlace a la carátula o póster oficial. 
+id_externo_ap
+i 
+VARCHAR(100
+) 
+- ID que tiene la obra en la API 
+externa de origen. 
+detalles_json JSON - Campo flexible para guardar datos 
+extra de las APIs. 
+origen_datos ENUM - Indica si se importó de una API o se 
+creó manual. 
+Tabla 3: Item_Usuario 
+Tabla pivote (N:M) que relaciona el catálogo general con las bibliotecas personales de cada 
+usuario. 
+Campo Tipo de Dato Clav
+e 
+Descripción 
+id_item_usuar
+io 
+INT PK Identificador único del registro en 
+la biblioteca. 
+32  
+KEEPLY 
+id_usuario INT FK Referencia al usuario propietario 
+del ítem. 
+id_obra INT FK Referencia a la obra catalogada. 
+estado ENUM - Seguimiento: Pendiente, En 
+Progreso, Completado... 
+valoracion_pe
+rsonal 
+DECIMAL(3,1) - Puntuación numérica otorgada (ej. 
+8.5, 10.0). 
+fecha_adicion TIMESTAMP - Momento en el que se añadió la 
+obra a la lista. 
+Tabla 4: Contenido_Usuario 
+Permite la expansión social de la plataforma, posibilitando a los usuarios añadir reseñas o 
+archivos a sus obras guardadas. 
+Campo Tipo de Dato Clav
+e 
+Descripción 
+id_contenido INT PK Identificador de la nota o archivo 
+multimedia. 
+id_item_usuar
+io 
+INT FK Enlace al elemento de la biblioteca 
+personal. 
+tipo_contenid
+o 
+ENUM - Define si es una Nota, Imagen, 
+Video o Audio. 
+texto_nota TEXT - Cuerpo de texto si el contenido es 
+una reseña/nota. 
+url_archivo VARCHAR(255
+) 
+- Ruta al archivo subido al servidor 
+(si aplica). 
+fecha_creacio
+n 
+TIMESTAMP - Marca de tiempo de publicación. 
+Tabla 5: Seguimiento 
+Gestiona el grafo social de la aplicación (quién sigue a quién). 
+Campo Tipo de Dato Clav
+e 
+Descripción 
+id_seguimient
+o 
+INT PK Identificador único de la acción de 
+seguir. 
+33  
+KEEPLY 
+id_usuario_se
+guidor 
+INT FK Usuario que realiza la acción de 
+empezar a seguir. 
+id_usuario_se
+guido 
+INT FK Usuario que recibe el nuevo 
+seguidor. 
+fecha_seguimi
+ento 
+TIMESTAMP - Fecha en la que se inició la relación 
+social. 
+ 
+ 
+c) Diseño de Prototipo Figma 
+- Cabe destacar que el prototipo diseñado en Figma sirvió como arquitectura base (guía 
+visual y estructural) para el proyecto. Sin embargo, siguiendo las metodologías ágiles 
+aplicadas durante el ciclo de desarrollo, el diseño final en producción (desplegado en 
+Vercel con Angular) presenta ligeras variaciones y optimizaciones respecto al prototipo 
+inicial. 
+- Estas diferencias no son desviaciones, sino mejoras iterativas (Refactoring visual) 
+tomadas durante la fase de maquetación real para mejorar el rendimiento de la 
+aplicación, adaptar la respuesta responsiva (RWD) a distintos tamaños de pantalla reales 
+y mejorar la accesibilidad y usabilidad general del sistema una vez conectado a los datos 
+en vivo de las APIs. 
+ -Página de inicio 
+34  
+KEEPLY 
+ 
+ 
+-Página de biblioteca 
+35  
+KEEPLY 
+ 
+ 
+-Página de obra 
+36  
+KEEPLY 
+ 
+ 
+Pagina de imagenes: 
+ 
+37  
+KEEPLY 
+ 
+ 
+-Menús desplegables 
+ 
+38  
+KEEPLY 
+ 
+d) Definición de Servicios (API REST) 
+La comunicación entre el cliente y el servidor se realiza mediante una interfaz API RESTful. A 
+continuación se detallan los servicios principales: 
+Controlador URL del servicio Parámetros 
+principales 
+Descripción de la 
+operación 
+AuthControlle
+r 
+/api/auth/google tokenDto (ID 
+Token de 
+Google) 
+Verifica el token de 
+Google, crea o 
+recupera al usuario y 
+emite un JWT propio. 
+AuthControlle
+r 
+/api/auth/login user, password Autenticación tradicional 
+mediante usuario y 
+contraseña. 
+UsuarioContr
+oller 
+/api/usuarios/{id}/
+banners 
+idUsuario, 
+bannerData 
+Actualiza la configuración 
+visual y banners del 
+perfil del usuario. 
+39  
+KEEPLY 
+ObraControlle
+r 
+/api/busqueda/uni
+ficada 
+query, tipoObra Realiza una búsqueda 
+cruzada en APIs 
+externas y sincroniza 
+los resultados con la 
+BD local. 
+ItemUsuarioC
+ontroller 
+/api/biblioteca/{us
+uarioId} 
+usuarioId, idObra, 
+estado 
+Realiza el CRUD (Crear, 
+Leer, Actualizar, Borrar) 
+de la biblioteca 
+personal del usuario. 
+ArchivoContro
+ller 
+/api/archivos/uplo
+ad 
+MultipartFile Servicio de subida, validación 
+y almacenamiento de 
+imágenes de perfil y notas. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Estructura de Comunicación y Formato de Datos (JSON) 
+Para ilustrar el flujo de datos y la arquitectura de comunicación entre el cliente (Angular), 
+nuestro servidor (Spring Boot) y los proveedores externos, se exponen a continuación 
+dos ejemplos reales de las respuestas (Payloads) que maneja el sistema: 
+ 
+Ejemplo 1: Integración con Proveedor Externo (API de RAWG - Videojuegos) 
+Cuando un usuario realiza una búsqueda unificada en el catálogo de videojuegos (por 
+ejemplo, el título "Portal"), el Backend de Keeply actúa como intermediario. Realiza una 
+petición HTTP GET a la API de RAWG y recibe un objeto JSON extenso. 
+A continuación, se muestra un fragmento resumido de la respuesta de RAWG: 
+Nota de implementación: El servidor de Spring Boot intercepta este JSON, extrae 
+únicamente los campos vitales para nuestro modelo de negocio (name, released, 
+background_image) y los mapea para construir o actualizar un objeto de la entidad Obra 
+en nuestra propia base de datos MySQL local, optimizando así futuras consultas. 
+ 
+ 
+ 
+40  
+JSON
+KEEPLY 
+{ 
+  "count": 142, 
+  "next": 
+"https://api.rawg.io/api/games?search=Portal&amp;page=2", 
+  "previous": null, 
+  "results": [ 
+    { 
+      "id": 4286, 
+      "slug": "portal", 
+      "name": "Portal", 
+      "released": "2007-10-09", 
+      "tba": false, 
+      "background_image": 
+"https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee
+32490e953a4996.jpg", 
+      "rating": 4.51, 
+      "rating_top": 5, 
+      "ratings_count": 5580, 
+      "metacritic": 90, 
+      "playtime": 4, 
+      "platforms": [ 
+        { 
+          "platform": { 
+            "id": 4, 
+            "name": "PC" 
+          } 
+        } 
+      ] 
+    } 
+  ] 
+} 
+ 
+ 
+Ejemplo 2: Respuesta de Autenticación y Seguridad (Backend Propio) 
+El proceso de inicio de sesión (ya sea mediante credenciales tradicionales o Google OAuth2) 
+finaliza con la emisión de un token de seguridad. Cuando el controlador AuthController 
+de Spring Boot valida al usuario, empaqueta la información del perfil en un objeto DTO 
+(AuthResponseDTO) y lo devuelve al cliente con un código de estado HTTP 200 OK. 
+La respuesta final que recibe Angular tiene la siguiente estructura: 
+41  
+JSON
+KEEPLY 
+ 
+{ 
+  "token": 
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY
+3ODkwIiwiZW1haWwiOiJhbHZhcm9Ab3J0ZWdhLmNvbSIsImlhdCI6MTUx
+NjIzOTAyMn0.J8N-lY-Yn8Z4q2JjQ7X3tF1uJzX5q3Lz0Z5RjR4X6G0", 
+  "idUsuario": 1, 
+  "nombreUsuario": "aortben", 
+  "email": "alvaroortegabenitez03@gmail.com", 
+  "avatarUrl": "https://cdn.keeply.com/avatars/1.webp", 
+  "customBanners": 
+"[{\"tipo\":\"home\",\"url\":\"/images/portal.jpg\"},{\"t
+ipo\":\"profile\",\"url\":\"/images/wall.png\"}]" 
+} 
+Descripción del Payload: 
+- token: Representa el JSON Web Token (JWT) firmado bajo el algoritmo HS256. El cliente 
+Angular debe persistir este token (en el Local Storage o Session Storage) e inyectarlo 
+dinámicamente en la cabecera Authorization: Bearer <token> de todas las peticiones 
+subsecuentes mediante un HttpInterceptor. 
+- idUsuario, nombreUsuario, email: Datos básicos de sesión utilizados para hidratar el 
+estado de la aplicación en el Frontend (por ejemplo, mostrando el nombre en la barra de 
+navegación). 
+- avatarUrl y customBanners: Variables que cargan el estado visual de la interfaz. La 
+propiedad customBanners viaja como un objeto JSON convertido a String (escapado) 
+para facilitar su almacenamiento flexible en la base de datos, conteniendo las rutas a las 
+imágenes estáticas subidas por el usuario. 
+ 
+7.e) Arquitectura y Estructura del Proyecto 
+Para garantizar la escalabilidad, el mantenimiento y la limpieza del código, el repositorio de 
+Keeply se ha organizado siguiendo el patrón de arquitectura desacoplada cliente-servidor. El 
+proyecto principal (Proyecto_Intermodular_Keeply) actúa como un "monorepo" 
+lógico que contiene dos módulos completamente independientes: keeply-backend y 
+keeply-frontend. 
+A continuación, se detalla la responsabilidad de los directorios y archivos más relevantes 
+presentes en la arquitectura: 
+42  
+KEEPLY 
+1. Módulo Servidor (keeply-backend) 
+Desarrollado con Java y Spring Boot, sigue una estricta arquitectura en capas (Layered 
+Architecture) para separar las responsabilidades lógicas: 
+● controllers/: Contiene los controladores REST (AuthController, 
+ObraController, etc.). Su única responsabilidad es recibir las peticiones HTTP del 
+cliente, delegar el trabajo y devolver las respuestas en formato JSON. 
+● services/: Alberga la lógica de negocio central de la aplicación. Aquí se procesan los 
+datos, se realizan los cálculos y se efectúan las llamadas a las APIs externas (TMDB, 
+RAWG, etc.). 
+● repositories/: Interfaces de Spring Data JPA que abstraen y gestionan la 
+comunicación directa con la base de datos MySQL. 
+● entities/: Modelos de dominio mapeados directamente a las tablas de la base de 
+datos relacional (ORM). 
+● dto/ (Data Transfer Objects): Clases utilizadas para encapsular datos y enviarlos al 
+frontend sin exponer directamente las entidades de la base de datos (por ejemplo, 
+AuthResponseDTO). 
+● security/: Configuración crítica del servidor, incluyendo los filtros de autenticación y 
+la validación de los tokens JWT. 
+● config/: Archivos de configuración global, como las políticas de CORS. 
+● Archivos raíz destacados: 
+○ schema.sql: Script de inicialización que contiene la estructura DDL de la base 
+de datos. 
+○ docker-compose.yml: Archivo de orquestación de contenedores utilizado 
+para levantar la infraestructura de desarrollo de forma aislada. 
+○ pom.xml: Archivo de gestión de dependencias y construcción gestionado por 
+Maven. 
+2. Módulo Cliente (keeply-frontend) 
+Desarrollado con Angular 17, sigue el estándar de aplicaciones web modernas SPA (Single Page 
+Application): 
+● src/: Directorio principal que contiene todo el código fuente del cliente (Componentes 
+Standalone, Servicios HTTP, Guards de rutas e Interfaces de TypeScript). 
+● package.json: Administrador de paquetes de Node.js (NPM) que lista todas las 
+librerías de terceros utilizadas en la interfaz. 
+● angular.json: Archivo de configuración central del workspace de Angular. 
+● vercel.json: Archivo de configuración de despliegue específico para la plataforma 
+Vercel, crucial para sobreescribir las reglas de enrutamiento web y permitir que el 
+enrutador de Angular funcione correctamente en producción sin lanzar errores HTTP 
+404. 
+43  
+KEEPLY 
+Esta estricta separación de responsabilidades (Separation of Concerns) no solo facilita la 
+localización de errores durante la fase de desarrollo (Debugging), sino que permite que, en el 
+futuro, ambos módulos puedan ser escalados de manera independiente en la nube. 
+ 
+ 
+8. DESPLIEGUE DE PRODUCTO MÍNIMO VIABLE 
+El despliegue de Keeply se ha diseñado bajo una arquitectura de Integración y Despliegue 
+Continuo (CI/CD), lo que permite que cualquier mejora en el código se refleje en 
+producción de manera automática. Se ha optado por un modelo de computación en la 
+nube distribuido para maximizar la disponibilidad y reducir costes. 
+8.1. Arquitectura de Backend y Base de Datos (Railway) 
+Toda la lógica de negocio y la persistencia de datos se ha centralizado en la plataforma 
+Railway. Se ha diseñado un entorno con dos contenedores principales que se comunican 
+de forma interna.  
+ 
+ 
+ 
+● Contenedor de Base de Datos: Se ha provisionado una instancia de MySQL 9.4 mediante 
+la imagen de Docker correspondiente, asociada a un volumen persistente 
+(mysql-volume). Esta base de datos opera de manera interna, sin exponer puertos 
+públicos innecesarios, maximizando así la seguridad. 
+● Contenedor de Spring Boot: El backend se despliega automáticamente leyendo el 
+repositorio de GitHub. Railway utiliza un Dockerfile (o buildpacks nativos de Java) 
+para compilar y levantar la aplicación. 
+ 
+44  
+KEEPLY 
+ 
+ 
+ 
+Como se observa en la captura superior, el servidor cuenta con las claves de acceso a las 
+APIs de terceros (API_RAWG_KEY, API_TMDB_KEY, etc.), las credenciales de 
+conexión a la base de datos MySQL (SPRING_DATASOURCE_URL) y el secreto para la 
+firma de los tokens JWT, asegurando que ninguna de estas contraseñas quede expuesta 
+en el código fuente público.  
+ 
+Para garantizar la seguridad de las credenciales y el correcto funcionamiento de las APIs 
+externas, se han inyectado de forma segura las variables de entorno dinámicas en el 
+contenedor de Spring Boot.  
+ 
+45  
+KEEPLY 
+ 
+ 
+Como se observa en la captura superior, el servidor cuenta con las claves de acceso a las 
+APIs de terceros (API_RAWG_KEY, API_TMDB_KEY, etc.), las credenciales de 
+conexión a la base de datos MySQL (SPRING_DATASOURCE_URL) y el secreto para la 
+firma de los tokens JWT, asegurando que ninguna de estas contraseñas quede expuesta 
+en el código fuente público.  
+ 
+8.2. Despliegue Continuo del Frontend (Vercel) 
+ 
+La interfaz de usuario (Angular) se distribuye a través de la red perimetral (Edge 
+Network) de Vercel para asegurar tiempos de carga mínimos a nivel global y contar con 
+certificados SSL (HTTPS) automáticos. ados SSL/TLS automáticos, garantizando una 
+conexión cifrada (HTTPS) punto a punto. 
+ 
+46  
+KEEPLY 
+ 
+ 
+Vercel está conectado directamente a la rama main del repositorio. Como se aprecia en la 
+métrica "Status: Ready", ante cada nuevo commit (por ejemplo, el commit de 
+"Internacionalizacion"), Vercel ejecuta internamente el comando de compilación (ng build) y 
+publica la nueva versión (Zero Downtime Deployment). Además, se ha configurado la plataforma 
+para soportar el enrutamiento de una Single Page Application (SPA), evitando errores 404 al 
+navegar directamente a rutas internas.  
+8.3. Configuración de Seguridad y OAuth 2.0 (Google Cloud) 
+ 
+Para implementar el sistema de inicio de sesión social ("Login con Google"), ha sido necesario 
+registrar Keeply como una aplicación autorizada dentro del ecosistema de Google Cloud 
+Platform (GCP).  
+ 
+47  
+KEEPLY 
+ 
+ 
+En el panel de "APIs y servicios", se han generado las credenciales tipo ID de cliente de OAuth 
+2.0 para una "Aplicación web". Esto nos proporcionó el GOOGLE_CLIENT_ID necesario para 
+que el frontend de Angular pueda solicitar el consentimiento del usuario y recibir un Token ID 
+válido. 
+Además, durante la fase de desarrollo y despliegue del MVP, se configuró la "Pantalla de 
+consentimiento de OAuth", restringiendo temporalmente el acceso a usuarios de prueba 
+autorizados para cumplir con las políticas de validación de Google antes del lanzamiento 
+comercial abierto. 
+ 
+8.4. Flujo de Trabajo CI/CD 
+Para garantizar la estabilidad del producto y agilizar la entrega de nuevas características, el 
+proceso de actualización de Keeply no requiere intervención manual en los servidores, sino que 
+sigue un ciclo automatizado estricto: 
+1. Commit (Desarrollo): El desarrollador finaliza una nueva funcionalidad o corrección en 
+su entorno local y sube el código (push) a la rama main del repositorio oficial en GitHub. 
+2. Trigger (Detección): Los webhooks previamente configurados en las plataformas de 
+Railway y Vercel detectan instantáneamente la actualización en el repositorio de código. 
+3. Build (Compilación y Prueba): Ambas plataformas descargan el código fuente 
+actualizado, resuelven las dependencias (mediante npm para Angular y Maven para 
+Spring Boot), compilan el código y ejecutan las validaciones pertinentes en entornos 
+aislados. 
+4. Live (Despliegue Zero Downtime): Tras una compilación exitosa y sin errores, la nueva 
+versión sustituye a la antigua y se publica de manera transparente para el usuario final. 
+Esto significa que la plataforma nunca se cae ni muestra páginas de mantenimiento 
+durante las actualizaciones (Zero Downtime Deployment). 
+ 
+48  
+KEEPLY 
+9. CONCLUSIONES Y PROPUESTAS DE MEJORA 
+9.1. Conclusiones y Viabilidad de Puesta en Marcha Real: 
+La ejecución y desarrollo de Keeply ha sido un éxito técnico y conceptual. Se ha demostrado 
+empíricamente la viabilidad de unificar múltiples fuentes de datos externas y masivas (APIs de 
+TMDB, RAWG, Jikan y Google Books) en un único ecosistema coherente, rápido y centrado en el 
+usuario. A nivel arquitectónico, la separación entre el cliente (Angular) y el servidor (Spring 
+Boot) ha permitido alcanzar una alta escalabilidad y un rendimiento óptimo, garantizando 
+además la privacidad del usuario mediante la implementación de estándares de seguridad 
+modernos como JSON Web Tokens (JWT) y el protocolo de autorización OAuth2 de Google. 
+En cuanto a su viabilidad de puesta en marcha real, el proyecto es plenamente factible. Al 
+plantearse como un modelo Software as a Service (SaaS) con una infraestructura Cloud (Railway 
+y Vercel), los costes operativos iniciales son lo suficientemente bajos como para asumir un 
+lanzamiento mediante Bootstrapping (recursos propios). El modelo de negocio Freemium 
+diseñado asegura una captación temprana de usuarios sin fricciones, validando a Keeply no solo 
+como un ejercicio académico superado, sino como un producto digital real y preparado para 
+competir en el mercado. 
+ 
+9.2. Propuestas de Mejora (Futuro): 
+ 
+Al concebirse Keeply bajo metodologías ágiles, el software no es un producto estático, sino que 
+está preparado para iterar y crecer. Se plantean las siguientes propuestas de mejora para 
+futuras versiones (Roadmap):  
+ 
+1. Sistema de Recomendaciones Inteligente: Implementar un motor de recomendaciones 
+basado en Machine Learning y algoritmos de afinidad cruzada. El sistema analizará qué obras 
+tienen en común distintos usuarios para sugerirles de forma proactiva contenido (ej. "A los 
+usuarios que les gustó este videojuego también les encantó este libro"). 
+ 
+2. Desarrollo de Aplicación Móvil Nativa: Aprovechando que la lógica de negocio ya está 
+centralizada en una API REST independiente, el siguiente paso natural es desarrollar 
+aplicaciones móviles nativas utilizando frameworks multiplataforma como Flutter o React 
+Native, consumiendo los mismos endpoints y mejorando la retención en dispositivos móviles. 
+ 
+3. Interactividad en Tiempo Real: Añadir un sistema de notificaciones push y en tiempo real 
+(mediante el uso de WebSockets). Esto potenciará el factor de red social, avisando 
+instantáneamente al usuario cuando un amigo añada una nueva obra a su lista de favoritos, la 
+califique o publique una reseña. 
+49  
