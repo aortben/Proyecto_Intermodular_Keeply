@@ -46,6 +46,8 @@ export class DetalleItemComponent implements OnInit {
     editorAbierto = false;
     nuevoTexto = '';
     adjuntosPendientes: { tipoAdjunto: TipoAdjunto; urlArchivo: string }[] = [];
+    nuevaUrlAdjunto = '';
+    nuevoTipoAdjunto: TipoAdjunto = 'IMAGEN';
     subiendoArchivo = false;
 
     // Edicion de nota existente
@@ -53,6 +55,8 @@ export class DetalleItemComponent implements OnInit {
     textoEditandoNota = '';
     adjuntosEditando: { tipoAdjunto: TipoAdjunto; urlArchivo: string }[] = [];
     subiendoArchivoEdicion = false;
+    
+    tiposAdjunto: TipoAdjunto[] = ['IMAGEN', 'VIDEO', 'AUDIO'];
 
     ngOnInit(): void {
         const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -125,6 +129,15 @@ export class DetalleItemComponent implements OnInit {
         if (!this.editorAbierto) {
             this.limpiarEditor();
         }
+    }
+
+    agregarAdjuntoUrl(): void {
+        if (!this.nuevaUrlAdjunto.trim()) return;
+        this.adjuntosPendientes.push({
+            tipoAdjunto: this.nuevoTipoAdjunto,
+            urlArchivo: this.nuevaUrlAdjunto.trim()
+        });
+        this.nuevaUrlAdjunto = '';
     }
 
     /** Maneja la seleccion de archivo desde el explorador */
@@ -312,5 +325,6 @@ export class DetalleItemComponent implements OnInit {
     private limpiarEditor(): void {
         this.nuevoTexto = '';
         this.adjuntosPendientes = [];
+        this.nuevaUrlAdjunto = '';
     }
 }

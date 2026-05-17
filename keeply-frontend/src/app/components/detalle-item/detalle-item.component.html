@@ -80,7 +80,15 @@
             <textarea [(ngModel)]="nuevoTexto" [placeholder]="'DETAIL.NOTE_PLACEHOLDER' | translate" class="editor-textarea"
                 rows="4"></textarea>
 
-
+            <!-- Añadir adjuntos por URL -->
+            <div class="adjuntos-form">
+                <select [(ngModel)]="nuevoTipoAdjunto" class="adjunto-select">
+                    <option *ngFor="let tipo of tiposAdjunto" [value]="tipo">{{ tipo }}</option>
+                </select>
+                <input type="text" [(ngModel)]="nuevaUrlAdjunto" [placeholder]="'DETAIL.URL_PLACEHOLDER' | translate"
+                    class="adjunto-input">
+                <button class="btn-adjuntar" (click)="agregarAdjuntoUrl()">{{ 'DETAIL.ATTACH_URL' | translate }}</button>
+            </div>
 
             <!-- Subir archivo desde el explorador -->
             <div class="file-upload-section">
