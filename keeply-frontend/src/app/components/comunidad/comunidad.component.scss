@@ -6,13 +6,16 @@
     background-position: center;
     background-attachment: fixed;
     transition: background-image 0.3s ease, background-color 0.3s ease;
-    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
 }
 
 .comunidad-container {
+    flex: 1;
     padding: 2rem;
     max-width: 800px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .comunidad-header {

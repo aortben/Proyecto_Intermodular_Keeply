@@ -31,11 +31,11 @@ export class CategoriaDetalleComponent implements OnInit {
 
     // Mapeo de categorías a sus datos (banner, nombre visible, etc.)
     private categoriasMap: Record<string, { nombre: string; banner: string; tipos: TipoObra[] }> = {
-        'anime-manga': { nombre: 'Anime y Manga', banner: 'assets/images/banner-anime.jpg', tipos: ['ANIME', 'MANGA'] },
-        libros: { nombre: 'Libros', banner: 'assets/images/banner-libros.jpg', tipos: ['LIBRO', 'COMIC'] },
-        series: { nombre: 'Series', banner: 'assets/images/banner-series.jpg', tipos: ['SERIE'] },
-        peliculas: { nombre: 'Películas', banner: 'assets/images/banner-peliculas.jpg', tipos: ['PELICULA'] },
-        videojuegos: { nombre: 'Videojuegos', banner: 'assets/images/banner-videojuegos.jpg', tipos: ['VIDEOJUEGO'] }
+        'anime-manga': { nombre: 'Anime y Manga', banner: 'assets/images/cat-anime.jpg', tipos: ['ANIME', 'MANGA'] },
+        libros: { nombre: 'Libros', banner: 'assets/images/cat-libros.jpg', tipos: ['LIBRO', 'COMIC'] },
+        series: { nombre: 'Series', banner: 'assets/images/cat-series.jpg', tipos: ['SERIE'] },
+        peliculas: { nombre: 'Películas', banner: 'assets/images/cat-peliculas.jpg', tipos: ['PELICULA'] },
+        videojuegos: { nombre: 'Videojuegos', banner: 'assets/images/cat-juegos.jpg', tipos: ['VIDEOJUEGO'] }
     };
 
     // Items reales del usuario filtrados por categoría
