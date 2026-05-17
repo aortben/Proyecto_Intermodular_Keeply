@@ -78,7 +78,7 @@ export class RegistroComponent implements AfterViewInit {
                 if (this.googleBtnRegistro?.nativeElement) {
                     google.accounts.id.renderButton(this.googleBtnRegistro.nativeElement, {
                         type: 'standard', theme: 'filled_black', size: 'large',
-                        text: 'signup_with', shape: 'pill', width: 300
+                        text: 'signup_with', shape: 'rectangular', width: 300
                     });
                 }
             }

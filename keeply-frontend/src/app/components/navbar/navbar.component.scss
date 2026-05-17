@@ -683,9 +683,16 @@ $input-bg: #4a423d;
     font-size: 0.9rem;
     color: white;
     transition: transform 0.2s;
+    overflow: hidden;
 
     &:hover {
         transform: scale(1.15);
+    }
+    
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 

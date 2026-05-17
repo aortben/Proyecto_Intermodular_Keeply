@@ -62,7 +62,7 @@ export class LoginComponent implements AfterViewInit {
                 if (this.googleBtnLogin?.nativeElement) {
                     google.accounts.id.renderButton(this.googleBtnLogin.nativeElement, {
                         type: 'standard', theme: 'filled_black', size: 'large',
-                        text: 'signin_with', shape: 'pill', width: 300
+                        text: 'signin_with', shape: 'rectangular', width: 300
                     });
                 }
             }

@@ -4,7 +4,7 @@
     <main class="categoria-content">
 
         <div class="banner-container">
-            <img [src]="bannerUrl" alt="Banner de {{ categoria }}" class="banner-img">
+            <img [src]="bannerUrl" alt="Banner de {{ categoria }}" class="banner-img" (error)="onBannerError()">
             
             <div class="edit-banner-overlay" *ngIf="modoEdicion" (click)="fileInput.click()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="upload-icon">

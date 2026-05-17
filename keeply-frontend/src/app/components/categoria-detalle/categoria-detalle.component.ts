@@ -272,4 +272,12 @@ export class CategoriaDetalleComponent implements OnInit {
             }
         });
     }
+
+    /** Fallback en caso de que la imagen custom esté rota o borrada */
+    onBannerError(): void {
+        const config = this.categoriasMap[this.currentSlug];
+        if (config) {
+            this.bannerUrl = config.banner;
+        }
+    }
 }
