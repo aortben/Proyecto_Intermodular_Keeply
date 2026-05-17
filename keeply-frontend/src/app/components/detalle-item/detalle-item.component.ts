@@ -9,6 +9,7 @@ import { NotaService } from '../../services/nota.service';
 import { ArchivoService } from '../../services/archivo.service';
 import { ItemUsuario, EstadoItem } from '../../models/item-usuario.model';
 import { Nota, NotaRequest, TipoAdjunto } from '../../models/nota.model';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-detalle-item',
@@ -23,6 +24,7 @@ export class DetalleItemComponent implements OnInit {
     private itemService = inject(ItemUsuarioService);
     private notaService = inject(NotaService);
     private archivoService = inject(ArchivoService);
+    private sanitizer = inject(DomSanitizer);
 
     item: ItemUsuario | null = null;
     notas: Nota[] = [];
@@ -56,7 +58,7 @@ export class DetalleItemComponent implements OnInit {
     adjuntosEditando: { tipoAdjunto: TipoAdjunto; urlArchivo: string }[] = [];
     subiendoArchivoEdicion = false;
     
-    tiposAdjunto: TipoAdjunto[] = ['IMAGEN', 'VIDEO', 'AUDIO'];
+    tiposAdjunto: TipoAdjunto[] = ['IMAGEN', 'VIDEO', 'AUDIO', 'ENLACE'];
 
     ngOnInit(): void {
         const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -326,5 +328,19 @@ export class DetalleItemComponent implements OnInit {
         this.nuevoTexto = '';
         this.adjuntosPendientes = [];
         this.nuevaUrlAdjunto = '';
+    }
+
+    isYouTube(url: string): boolean {
+        return url.includes('youtube.com') || url.includes('youtu.be');
+    }
+
+    getYouTubeEmbedUrl(url: string): SafeResourceUrl {
+        let videoId = '';
+        if (url.includes('youtu.be/')) {
+            videoId = url.split('youtu.be/')[1].split('?')[0];
+        } else if (url.includes('youtube.com/watch?v=')) {
+            videoId = url.split('v=')[1].split('&')[0];
+        }
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
     }
 }

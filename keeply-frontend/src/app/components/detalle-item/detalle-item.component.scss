@@ -498,12 +498,24 @@ $success-green: #2ecc71;
             }
 
             .chip-remove {
-                background: none;
+                background: rgba(255, 107, 107, 0.2);
                 border: none;
+                border-radius: 50%;
                 color: #ff6b6b;
                 cursor: pointer;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
+                width: 22px;
+                height: 22px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.2s, color 0.2s;
                 padding: 0;
+                
+                &:hover {
+                    background: #ff6b6b;
+                    color: white;
+                }
             }
         }
     }

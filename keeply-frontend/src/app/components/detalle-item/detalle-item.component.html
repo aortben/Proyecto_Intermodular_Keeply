@@ -166,12 +166,18 @@
                 <!-- Galeria de adjuntos -->
                 <div class="nota-adjuntos" *ngIf="nota.adjuntos && nota.adjuntos.length > 0">
                     <ng-container *ngFor="let adj of nota.adjuntos">
-                        <img *ngIf="adj.tipoAdjunto === 'IMAGEN'" [src]="adj.urlArchivo" [alt]="'DETAIL.IMAGE_ALT' | translate"
-                            class="adjunto-imagen">
-                        <video *ngIf="adj.tipoAdjunto === 'VIDEO'" [src]="adj.urlArchivo" controls preload="metadata"
-                            class="adjunto-video"></video>
-                        <audio *ngIf="adj.tipoAdjunto === 'AUDIO'" [src]="adj.urlArchivo" controls
-                            class="adjunto-audio"></audio>
+                        <img *ngIf="adj.tipoAdjunto === 'IMAGEN'" [src]="adj.urlArchivo" [alt]="'DETAIL.IMAGE_ALT' | translate" class="adjunto-imagen">
+                        
+                        <!-- Vídeo nativo -->
+                        <video *ngIf="adj.tipoAdjunto === 'VIDEO' && !isYouTube(adj.urlArchivo)" [src]="adj.urlArchivo" controls preload="metadata" class="adjunto-video"></video>
+                        
+                        <!-- Vídeo YouTube -->
+                        <iframe *ngIf="(adj.tipoAdjunto === 'VIDEO' || adj.tipoAdjunto === 'ENLACE') && isYouTube(adj.urlArchivo)" [src]="getYouTubeEmbedUrl(adj.urlArchivo)" class="adjunto-video" frameborder="0" allowfullscreen></iframe>
+                        
+                        <audio *ngIf="adj.tipoAdjunto === 'AUDIO'" [src]="adj.urlArchivo" controls class="adjunto-audio"></audio>
+                        
+                        <!-- Enlace normal -->
+                        <a *ngIf="adj.tipoAdjunto === 'ENLACE' && !isYouTube(adj.urlArchivo)" [href]="adj.urlArchivo" target="_blank" class="adjunto-enlace" style="color: #b05cff;">{{ 'DETAIL.VIEW_LINK' | translate }}</a>
                     </ng-container>
                 </div>
             </article>
