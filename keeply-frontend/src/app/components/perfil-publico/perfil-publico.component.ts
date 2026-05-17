@@ -41,7 +41,7 @@ export class PerfilPublicoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.miId = this.authService.currentUserValue?.idUsuario;
+    this.miId = this.authService.getStoredUser()?.idUsuario;
 
     this.route.paramMap.subscribe(params => {
       const nombre = params.get('nombreUsuario');
@@ -127,5 +127,14 @@ export class PerfilPublicoComponent implements OnInit {
 
   get isMiPerfil(): boolean {
     return this.miId === this.usuario?.idUsuario;
+  }
+
+  getUserAvatarUrl(user: any): string {
+    if (!user || !user.avatarUrl) return 'assets/images/default-avatar.png';
+    if (user.avatarUrl.startsWith('preset:av')) {
+        const presetId = user.avatarUrl.split(':')[1];
+        return `assets/images/avatar${presetId.replace('av', '')}.jpg`;
+    }
+    return user.avatarUrl;
   }
 }

@@ -17,11 +17,15 @@
     --bg-panel-dark: #4a423d;
     --bg-input: #4a423d;
     --bg-card: #1e1e3a;
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --bg-auth-input: rgba(255, 255, 255, 0.08);
 
     /* Fondos dinámicos (Oscuro) */
-    --bg-img-home: url('assets/images/home-bg-dark.jpg');
-    --bg-img-login: url('assets/images/login-bg-dark.jpg');
-    --bg-img-register: url('assets/images/register-bg-dark.jpg');
+    --bg-img-home: url('/assets/images/home-bg-dark.jpg');
+    --bg-img-login: url('/assets/images/login-bg-dark.jpg');
+    --bg-img-register: url('/assets/images/register-bg-dark.jpg');
+    --bg-img-comunidad: url('/assets/images/comunidad-bg-dark.jpg');
 
     --text-primary: #e0e0e0;
     --text-secondary: #bbbbbb;
@@ -63,11 +67,15 @@
     --bg-panel-dark: #4a423d;
     --bg-input: #4a423d;
     --bg-card: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.85);
+    --border-glass: rgba(0, 0, 0, 0.15);
+    --bg-auth-input: rgba(0, 0, 0, 0.03);
 
     /* Fondos dinámicos (Claro) */
-    --bg-img-home: url('assets/images/home-bg-light.jpg');
-    --bg-img-login: url('assets/images/login-bg-light.jpg');
-    --bg-img-register: url('assets/images/register-bg-light.jpg');
+    --bg-img-home: url('/assets/images/home-bg-light.jpg');
+    --bg-img-login: url('/assets/images/login-bg-light.jpg');
+    --bg-img-register: url('/assets/images/register-bg-light.jpg');
+    --bg-img-comunidad: url('/assets/images/comunidad-bg-light.jpg');
 
     --text-primary: #333333;
     --text-secondary: #666666;

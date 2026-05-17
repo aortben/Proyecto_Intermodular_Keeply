@@ -1,11 +1,11 @@
 <nav class="keeply-navbar" role="navigation" aria-label="Navegación principal">
   <div class="navbar-brand" routerLink="/" aria-label="Ir al inicio">
-    <img src="assets/images/keeply-logo.png" alt="Logo Keeply" class="logo-icon">
+    <img src="assets/images/Logo.png" alt="Logo Keeply" class="logo-icon">
   </div>
 
   <!-- Hamburguesa (solo móvil) -->
   <button class="hamburger-btn" (click)="toggleMenuMobil()" aria-label="Abrir menú de navegación"
-          [attr.aria-expanded]="menuMobilAbierto">
+    [attr.aria-expanded]="menuMobilAbierto">
     <span class="hamburger-line" [class.open]="menuMobilAbierto"></span>
     <span class="hamburger-line" [class.open]="menuMobilAbierto"></span>
     <span class="hamburger-line" [class.open]="menuMobilAbierto"></span>
@@ -37,9 +37,11 @@
       <a href="#" (click)="toggleMenu('redes', $event)" aria-haspopup="true">
         {{ 'NAVBAR.NETWORKS' | translate }} <span class="arrow" aria-hidden="true">▾</span>
       </a>
-      <div class="dropdown-menu menu-redes" *ngIf="menuAbierto === 'redes'" (click)="onPopoverClick($event)" role="menu">
+      <div class="dropdown-menu menu-redes" *ngIf="menuAbierto === 'redes'" (click)="onPopoverClick($event)"
+        role="menu">
         <div class="dropdown-body" style="padding: 15px 20px;">
-          <a href="https://github.com/aortben" target="_blank" class="dropdown-link" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/aortben" target="_blank" class="dropdown-link"
+            rel="noopener noreferrer">GitHub</a>
           <a href="#" class="dropdown-link">Twitter / X</a>
           <a href="#" class="dropdown-link">Discord</a>
         </div>
@@ -50,10 +52,8 @@
     <li class="nav-item user-item">
       <ng-container *ngIf="currentUser$ | async as user">
         <!-- Avatar mini en la navbar -->
-        <div class="user-avatar-mini" (click)="toggleMenu('cuenta', $event)"
-             [style.background]="getUserAvatarInfo(user).color || '#9b59b6'">
-          <img *ngIf="getUserAvatarInfo(user).type === 'url'" [src]="getUserAvatarInfo(user).url" alt="Avatar">
-          <span *ngIf="getUserAvatarInfo(user).type !== 'url'">{{ getUserAvatarInfo(user).initial }}</span>
+        <div class="user-avatar-mini" (click)="toggleMenu('cuenta', $event)">
+          <img [src]="getUserAvatarUrl(user)" alt="Avatar">
         </div>
       </ng-container>
       <a *ngIf="!(currentUser$ | async)" href="#" (click)="toggleMenu('cuenta', $event)" aria-haspopup="true">
@@ -64,21 +64,21 @@
         {{ 'NAVBAR.ACCOUNT' | translate }} <span class="arrow" aria-hidden="true">▾</span>
       </a>
 
-      <div class="dropdown-menu menu-cuenta" *ngIf="menuAbierto === 'cuenta'" (click)="onPopoverClick($event)" role="menu">
+      <div class="dropdown-menu menu-cuenta" *ngIf="menuAbierto === 'cuenta'" (click)="onPopoverClick($event)"
+        role="menu">
 
         <!-- USUARIO LOGUEADO — Panel de perfil -->
         <ng-container *ngIf="currentUser$ | async as user">
           <div class="profile-header">
-            <div class="profile-avatar-large"
-                 [style.background]="getUserAvatarInfo(user).color || '#9b59b6'">
-              <img *ngIf="getUserAvatarInfo(user).type === 'url'" [src]="getUserAvatarInfo(user).url" alt="Avatar">
-              <span *ngIf="getUserAvatarInfo(user).type !== 'url'">{{ getUserAvatarInfo(user).initial }}</span>
+            <div class="profile-avatar-large">
+              <img [src]="getUserAvatarUrl(user)" alt="Avatar">
             </div>
             <h4 class="profile-name">{{ user.nombreUsuario }}</h4>
             <p class="profile-email">{{ user.email }}</p>
-            <div style="display: flex; gap: 10px; margin-top: 5px; font-size: 0.8rem; color: #aaa; justify-content: center;">
-                <span>Seguidores: {{ numSeguidores }}</span>
-                <span>Siguiendo: {{ numSiguiendo }}</span>
+            <div
+              style="display: flex; gap: 10px; margin-top: 5px; font-size: 0.8rem; color: #aaa; justify-content: center;">
+              <span>Seguidores: {{ numSeguidores }}</span>
+              <span>Siguiendo: {{ numSiguiendo }}</span>
             </div>
           </div>
 
@@ -91,16 +91,13 @@
             <!-- Panel de edición de avatar -->
             <div class="avatar-edit-panel" *ngIf="editandoAvatar">
               <div class="avatar-grid-mini">
-                <div *ngFor="let av of avatarOptions"
-                     class="avatar-option-mini"
-                     [style.background]="av.color"
-                     (click)="selectPreloadedAvatar(av)">
-                  {{ av.initial }}
+                <div *ngFor="let av of avatarOptions" class="avatar-option-mini" (click)="selectPreloadedAvatar(av)">
+                  <img [src]="av.url" alt="Avatar">
                 </div>
                 <label class="avatar-upload-mini">
                   {{ subiendoAvatar ? '...' : '+' }}
                   <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
-                         (change)="onAvatarUpload($event)" [disabled]="subiendoAvatar" style="display:none;">
+                    (change)="onAvatarUpload($event)" [disabled]="subiendoAvatar" style="display:none;">
                 </label>
               </div>
             </div>
@@ -126,10 +123,12 @@
 
     <!-- Enlace móvil: Explorar -->
     <li class="nav-item mobile-only-link">
-      <a routerLink="/busqueda" class="nav-link-direct" (click)="cerrarMenuMobil()">{{ 'NAVBAR.EXPLORE' | translate }}</a>
+      <a routerLink="/busqueda" class="nav-link-direct" (click)="cerrarMenuMobil()">{{ 'NAVBAR.EXPLORE' | translate
+        }}</a>
     </li>
     <li class="nav-item mobile-only-link">
-      <a (click)="irABiblioteca()" class="nav-link-direct" style="cursor:pointer;">{{ 'NAVBAR.YOUR_LIBRARY' | translate }}</a>
+      <a (click)="irABiblioteca()" class="nav-link-direct" style="cursor:pointer;">{{ 'NAVBAR.YOUR_LIBRARY' | translate
+        }}</a>
     </li>
 
   </ul>
@@ -143,17 +142,21 @@
 
     <!-- Botón toggle tema -->
     <button class="btn-theme-toggle" (click)="toggleTheme()"
-            [attr.aria-label]="themeService.isDarkMode() ? ('NAVBAR.THEME_LIGHT' | translate) : ('NAVBAR.THEME_DARK' | translate)">
+      [attr.aria-label]="themeService.isDarkMode() ? ('NAVBAR.THEME_LIGHT' | translate) : ('NAVBAR.THEME_DARK' | translate)">
       <svg *ngIf="themeService.isDarkMode()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-           class="theme-icon" aria-hidden="true">
+        class="theme-icon" aria-hidden="true">
         <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
       </svg>
       <svg *ngIf="!themeService.isDarkMode()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-           class="theme-icon" aria-hidden="true">
+        class="theme-icon" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
       </svg>
     </button>

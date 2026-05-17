@@ -19,10 +19,7 @@
             
             <div class="profile-info-row">
                 <div class="avatar-large">
-                    <img *ngIf="usuario.avatarUrl && usuario.avatarUrl.startsWith('http')" [src]="usuario.avatarUrl" alt="Avatar">
-                    <div class="avatar-placeholder" *ngIf="!usuario.avatarUrl || !usuario.avatarUrl.startsWith('http')">
-                        {{ usuario.nombreUsuario.charAt(0).toUpperCase() }}
-                    </div>
+                    <img [src]="getUserAvatarUrl(usuario)" alt="Avatar">
                 </div>
                 
                 <div class="user-details">

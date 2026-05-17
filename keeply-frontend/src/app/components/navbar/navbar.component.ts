@@ -14,8 +14,7 @@ declare const google: any;
 
 interface AvatarOption {
     id: string;
-    color: string;
-    initial: string;
+    url: string;
 }
 
 /**
@@ -56,11 +55,11 @@ export class NavbarComponent implements AfterViewInit, OnInit {
 
     // Lista de avatares por defecto para la edición del perfil
     avatarOptions: AvatarOption[] = [
-        { id: 'av1', color: '#9b59b6', initial: 'K' },
-        { id: 'av2', color: '#3498db', initial: 'A' },
-        { id: 'av3', color: '#e74c3c', initial: 'R' },
-        { id: 'av4', color: '#2ecc71', initial: 'M' },
-        { id: 'av5', color: '#f39c12', initial: 'J' }
+        { id: 'av1', url: 'assets/images/avatar1.jpg' },
+        { id: 'av2', url: 'assets/images/avatar2.jpg' },
+        { id: 'av3', url: 'assets/images/avatar3.jpg' },
+        { id: 'av4', url: 'assets/images/avatar4.jpg' },
+        { id: 'av5', url: 'assets/images/avatar5.jpg' }
     ];
 
     /**
@@ -150,7 +149,7 @@ export class NavbarComponent implements AfterViewInit, OnInit {
         const user = this.authService.getStoredUser();
         if (!user) return;
         
-        const avatarUrl = `preset:${av.id}:${av.color}:${av.initial}`;
+        const avatarUrl = av.url;
         this.usuarioService.updateAvatar(user.idUsuario, avatarUrl).subscribe({
             next: () => {
                 this.authService.updateStoredAvatar(avatarUrl);
@@ -198,16 +197,21 @@ export class NavbarComponent implements AfterViewInit, OnInit {
     }
 
     /**
-     * Analiza el avatar del usuario y decide cómo renderizarlo.
-     * Puede ser una URL remota, un preset (color + letra) o un diseño por defecto.
+     * Devuelve la url de avatar a mostrar o la de por defecto.
+     * Incluye compatibilidad con los antiguos avatares predefinidos.
      */
-    getUserAvatarInfo(user: any): { type: 'preset' | 'url' | 'default'; color?: string; initial?: string; url?: string } {
-        if (!user?.avatarUrl) return { type: 'default', color: '#9b59b6', initial: user?.nombreUsuario?.charAt(0)?.toUpperCase() || 'K' };
-        if (user.avatarUrl.startsWith('preset:')) {
-            const parts = user.avatarUrl.split(':');
-            return { type: 'preset', color: parts[2], initial: parts[3] };
+    getUserAvatarUrl(user: any): string {
+        if (!user || !user.avatarUrl) {
+            return 'assets/images/default-avatar.png';
         }
-        return { type: 'url', url: user.avatarUrl };
+        
+        // Compatibilidad hacia atrás: si la BD tiene guardado "preset:avX:..."
+        if (user.avatarUrl.startsWith('preset:av')) {
+            const presetId = user.avatarUrl.split(':')[1]; // 'av1', 'av2', etc.
+            return `assets/images/avatar${presetId.replace('av', '')}.jpg`;
+        }
+        
+        return user.avatarUrl;
     }
 
     /**

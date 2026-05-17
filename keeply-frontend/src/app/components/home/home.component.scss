@@ -27,19 +27,17 @@ $brand-purple-light: #c287f7;
     padding: 40px;
 }
 
-.keeply-title {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 6rem;
-    font-weight: 900;
-    color: $brand-purple;
-    margin: 0 0 15px 0;
-    letter-spacing: 3px;
-    text-shadow:
-        4px 4px 0 #000,
-        -2px -2px 0 #000,
-        2px -2px 0 #000,
-        -2px 2px 0 #000,
-        2px 2px 0 #000;
+.keeply-logo-img {
+    max-width: 550px;
+    width: 90%;
+    height: auto;
+    margin: 0 0 25px 0;
+    filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.5));
+    transition: transform 0.3s ease;
+}
+
+.keeply-logo-img:hover {
+    transform: scale(1.02);
 }
 
 .slogan-container {
@@ -63,9 +61,7 @@ $brand-purple-light: #c287f7;
 
 /* Responsive */
 @media (max-width: 768px) {
-    .keeply-title {
-        font-size: 3.5rem;
-    }
+
 
     .keeply-slogan {
         font-size: 1.2rem;
@@ -77,10 +73,7 @@ $brand-purple-light: #c287f7;
 }
 
 @media (max-width: 480px) {
-    .keeply-title {
-        font-size: 2.5rem;
-        letter-spacing: 2px;
-    }
+
 
     .keeply-slogan {
         font-size: 1rem;

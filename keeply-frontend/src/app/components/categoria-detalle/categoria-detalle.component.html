@@ -12,7 +12,7 @@
                     <polyline points="17 8 12 3 7 8"></polyline>
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
-                <span>{{ 'CATEGORY.CHANGE_BANNER' | translate | default: 'Cambiar Banner' }}</span>
+                <span>{{ 'CATEGORY.CHANGE_BANNER' | translate }}</span>
             </div>
             <input type="file" #fileInput hidden accept="image/*" (change)="onBannerSelected($event)">
         </div>

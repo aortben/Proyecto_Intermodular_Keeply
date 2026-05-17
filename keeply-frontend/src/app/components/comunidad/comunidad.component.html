@@ -19,10 +19,7 @@
         <div class="resultados-grid" *ngIf="resultado">
             <div class="resultado-card user-card" (click)="verPerfil(resultado.nombreUsuario)">
                 <div class="card-img-wrapper avatar-wrapper">
-                    <img *ngIf="resultado.avatarUrl && resultado.avatarUrl.startsWith('http')" [src]="resultado.avatarUrl" alt="Avatar">
-                    <div class="no-image avatar-placeholder" *ngIf="!resultado.avatarUrl || !resultado.avatarUrl.startsWith('http')">
-                        {{ resultado.nombreUsuario.charAt(0).toUpperCase() }}
-                    </div>
+                    <img [src]="getUserAvatarUrl(resultado)" alt="Avatar">
                 </div>
                 <div class="card-info">
                     <h3>{{ resultado.nombreUsuario }}</h3>

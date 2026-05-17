@@ -10,7 +10,7 @@ import { UsuarioService } from '../../services/usuario.service';
 @Component({
     selector: 'app-biblioteca',
     standalone: true,
-    imports: [NgFor, NgIf, RouterLink, NavbarComponent, TranslateModule],
+    imports: [NgFor, RouterLink, NavbarComponent, TranslateModule],
     templateUrl: './biblioteca.component.html',
     styleUrls: ['./biblioteca.component.scss']
 })
@@ -63,7 +63,5 @@ export class BibliotecaComponent implements OnInit {
                 }
             }
         });
-    }
-
     }
 }

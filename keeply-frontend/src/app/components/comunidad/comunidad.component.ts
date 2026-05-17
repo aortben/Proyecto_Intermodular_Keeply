@@ -29,7 +29,7 @@ export class ComunidadComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentUserId = this.authService.currentUserValue?.idUsuario;
+    this.currentUserId = this.authService.getStoredUser()?.idUsuario;
   }
 
   buscar() {
@@ -61,5 +61,14 @@ export class ComunidadComponent implements OnInit {
 
   verPerfil(nombreUsuario: string) {
     this.router.navigate(['/usuario', nombreUsuario]);
+  }
+
+  getUserAvatarUrl(user: any): string {
+    if (!user || !user.avatarUrl) return 'assets/images/default-avatar.png';
+    if (user.avatarUrl.startsWith('preset:av')) {
+        const presetId = user.avatarUrl.split(':')[1];
+        return `assets/images/avatar${presetId.replace('av', '')}.jpg`;
+    }
+    return user.avatarUrl;
   }
 }
