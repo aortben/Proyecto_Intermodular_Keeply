@@ -5,8 +5,8 @@ import { environment } from '../../environments/environment';
 
 export interface Seguimiento {
   idSeguimiento?: number;
-  idUsuarioSeguidor: number;
-  idUsuarioSeguido: number;
+  seguidor?: { idUsuario: number };
+  seguido?: { idUsuario: number };
   fechaSeguimiento?: string;
 }
 
@@ -20,8 +20,8 @@ export class SeguimientoService {
 
   seguir(seguidorId: number, seguidoId: number): Observable<Seguimiento> {
     const seguimiento: Seguimiento = {
-      idUsuarioSeguidor: seguidorId,
-      idUsuarioSeguido: seguidoId
+      seguidor: { idUsuario: seguidorId },
+      seguido: { idUsuario: seguidoId }
     };
     return this.http.post<Seguimiento>(this.apiUrl, seguimiento);
   }

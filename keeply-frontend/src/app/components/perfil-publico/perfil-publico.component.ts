@@ -75,7 +75,7 @@ export class PerfilPublicoComponent implements OnInit {
     // Ver si le sigo
     if (this.miId && this.miId !== perfilId) {
       this.seguimientoService.getSeguidos(this.miId).subscribe(seguidos => {
-        const seg = seguidos.find(s => s.idUsuarioSeguido === perfilId);
+        const seg = seguidos.find(s => s.seguido?.idUsuario === perfilId);
         if (seg) {
           this.siguiendo = true;
           this.idSeguimiento = seg.idSeguimiento!;
