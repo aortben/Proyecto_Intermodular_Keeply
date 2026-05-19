@@ -141,5 +141,17 @@
     "VIDEO_TOO_LARGE": "El video es demasiado grande (máx 50MB).",
     "AUDIO_TOO_LARGE": "El audio es demasiado grande (máx 10MB).",
     "UPLOAD_FAILED": "Error al subir el archivo. Inténtalo de nuevo."
+  },
+  "COMMUNITY": {
+    "TITLE": "Comunidad Keeply",
+    "SUBTITLE": "Busca a tus amigos y descubre sus bibliotecas.",
+    "SEARCH_PLACEHOLDER": "Buscar por nombre de usuario...",
+    "SEARCHING": "Buscando...",
+    "SEARCH_BTN": "Buscar Usuario",
+    "MEMBER": "Miembro de Keeply",
+    "VIEW_PROFILE": "Ver Perfil",
+    "OWN_PROFILE": "Este es tu propio perfil.",
+    "NOT_FOUND": "Usuario no encontrado.",
+    "SEARCH_ERROR": "Error al buscar usuario."
   }
 }

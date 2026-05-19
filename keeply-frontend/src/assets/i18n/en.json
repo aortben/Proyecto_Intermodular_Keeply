@@ -141,5 +141,17 @@
     "VIDEO_TOO_LARGE": "Video is too large (max 50MB).",
     "AUDIO_TOO_LARGE": "Audio is too large (max 10MB).",
     "UPLOAD_FAILED": "Failed to upload file. Please try again."
+  },
+  "COMMUNITY": {
+    "TITLE": "Keeply Community",
+    "SUBTITLE": "Find your friends and discover their libraries.",
+    "SEARCH_PLACEHOLDER": "Search by username...",
+    "SEARCHING": "Searching...",
+    "SEARCH_BTN": "Search User",
+    "MEMBER": "Keeply Member",
+    "VIEW_PROFILE": "View Profile",
+    "OWN_PROFILE": "This is your own profile.",
+    "NOT_FOUND": "User not found.",
+    "SEARCH_ERROR": "Error searching for user."
   }
 }

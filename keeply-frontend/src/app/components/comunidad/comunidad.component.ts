@@ -45,15 +45,15 @@ export class ComunidadComponent implements OnInit {
         this.resultado = user;
         this.cargando = false;
         if (user.idUsuario === this.currentUserId) {
-           this.mensaje = 'Este es tu propio perfil.';
+           this.mensaje = 'COMMUNITY.OWN_PROFILE';
         }
       },
       error: (err) => {
         this.cargando = false;
         if (err.status === 404) {
-          this.mensaje = 'Usuario no encontrado.';
+          this.mensaje = 'COMMUNITY.NOT_FOUND';
         } else {
-          this.mensaje = 'Error al buscar usuario.';
+          this.mensaje = 'COMMUNITY.SEARCH_ERROR';
         }
       }
     });
