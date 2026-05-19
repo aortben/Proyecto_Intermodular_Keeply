@@ -1,4 +1,4 @@
-export type TipoAdjunto = 'IMAGEN' | 'VIDEO' | 'AUDIO';
+export type TipoAdjunto = 'IMAGEN' | 'VIDEO' | 'AUDIO' | 'ENLACE';
 
 export interface Adjunto {
     idAdjunto?: number;

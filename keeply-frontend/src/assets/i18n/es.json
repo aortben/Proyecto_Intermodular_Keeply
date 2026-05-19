@@ -57,7 +57,15 @@
     "DELETE_SELECTED": "Eliminar seleccionados",
     "NO_RESULTS": "No se encontraron resultados para",
     "EMPTY_CATEGORY": "Aún no tienes obras en esta categoría.",
-    "GO_EXPLORE": "¡Ve a Explorar para añadir!"
+    "GO_EXPLORE": "¡Ve a Explorar para añadir!",
+    "TITLE": "{{categoria}} de {{usuario}}"
+  },
+  "CATEGORY_NAMES": {
+    "ANIME_MANGA": "Anime y Manga",
+    "BOOKS": "Libros",
+    "SERIES": "Series",
+    "MOVIES": "Películas",
+    "GAMES": "Videojuegos"
   },
   "DETAIL": {
     "AUTHOR": "Autor",
@@ -112,7 +120,19 @@
     "PASSWORD_TOO_SHORT": "La contraseña debe tener al menos 6 caracteres"
   },
   "PROFILE": {
-    "CHANGE_AVATAR": "Cambiar avatar"
+    "CHANGE_AVATAR": "Cambiar avatar",
+    "CHANGE_BANNER": "Cambiar Banner",
+    "LOADING": "Cargando perfil...",
+    "USER_NOT_FOUND": "Usuario no encontrado",
+    "USER_NOT_EXIST": "El perfil \"{{user}}\" no existe o ha sido eliminado.",
+    "BACK_COMMUNITY": "Volver a la Comunidad",
+    "WORKS": "Obras",
+    "FOLLOWERS": "Seguidores",
+    "FOLLOWING": "Siguiendo",
+    "FOLLOW": "Seguir",
+    "UNFOLLOW": "Dejar de seguir",
+    "LIBRARY_OF": "Biblioteca de {{user}}",
+    "EMPTY_LIBRARY": "Este usuario aún no ha añadido ninguna obra a su biblioteca."
   },
   "FILE_ERRORS": {
     "INVALID_TYPE": "Tipo de archivo no soportado. Solo imágenes, videos cortos o audio.",

@@ -26,12 +26,22 @@ export class BibliotecaComponent implements OnInit {
         avatarUrl: ''
     };
 
+    // Imágenes por defecto de cada categoría
+    private readonly defaultBanners: Record<string, string> = {
+        'anime-manga': 'assets/images/cat-anime.jpg',
+        'libros': 'assets/images/cat-libros.jpg',
+        'series': 'assets/images/cat-series.jpg',
+        'peliculas': 'assets/images/cat-peliculas.jpg',
+        'videojuegos': 'assets/images/cat-juegos.jpg'
+    };
+
+    // Inicializar sin imagen para evitar el flicker
     categorias = [
-        { nombre: 'Anime y Manga', slug: 'anime-manga', imagen: 'assets/images/cat-anime.jpg', ruta: '/biblioteca/anime-manga' },
-        { nombre: 'Libros', slug: 'libros', imagen: 'assets/images/cat-libros.jpg', ruta: '/biblioteca/libros' },
-        { nombre: 'Series', slug: 'series', imagen: 'assets/images/cat-series.jpg', ruta: '/biblioteca/series' },
-        { nombre: 'Películas', slug: 'peliculas', imagen: 'assets/images/cat-peliculas.jpg', ruta: '/biblioteca/peliculas' },
-        { nombre: 'Videojuegos', slug: 'videojuegos', imagen: 'assets/images/cat-juegos.jpg', ruta: '/biblioteca/videojuegos' }
+        { nombre: 'Anime y Manga', slug: 'anime-manga', imagen: '', ruta: '/biblioteca/anime-manga' },
+        { nombre: 'Libros', slug: 'libros', imagen: '', ruta: '/biblioteca/libros' },
+        { nombre: 'Series', slug: 'series', imagen: '', ruta: '/biblioteca/series' },
+        { nombre: 'Películas', slug: 'peliculas', imagen: '', ruta: '/biblioteca/peliculas' },
+        { nombre: 'Videojuegos', slug: 'videojuegos', imagen: '', ruta: '/biblioteca/videojuegos' }
     ];
 
     ngOnInit(): void {
@@ -44,12 +54,37 @@ export class BibliotecaComponent implements OnInit {
         if (currentUser) {
             this.usuario.nombre = currentUser.nombreUsuario;
             this.usuario.avatarUrl = currentUser.avatarUrl || '';
-            this.loadCustomBanners(currentUser.idUsuario);
+            this.loadCustomBanners(currentUser);
         }
     }
 
-    private loadCustomBanners(userId: number): void {
-        this.usuarioService.getById(userId).subscribe({
+    private loadCustomBanners(currentUser: any): void {
+        // Primero, intentar usar los banners guardados en el almacenamiento local
+        let bannersApplied = false;
+
+        if (currentUser.customBanners) {
+            try {
+                const banners = JSON.parse(currentUser.customBanners);
+                this.categorias.forEach(cat => {
+                    if (banners[cat.slug]) {
+                        cat.imagen = this.archivoService.getFullUrl(banners[cat.slug]);
+                    } else {
+                        cat.imagen = this.defaultBanners[cat.slug] || '';
+                    }
+                });
+                bannersApplied = true;
+            } catch (e) { /* ignore parse errors */ }
+        }
+
+        if (!bannersApplied) {
+            // Si no hay datos en el cache local, usar defaults inmediatamente
+            this.categorias.forEach(cat => {
+                cat.imagen = this.defaultBanners[cat.slug] || '';
+            });
+        }
+
+        // Luego, verificar con el backend por si hay actualizaciones
+        this.usuarioService.getById(currentUser.idUsuario).subscribe({
             next: (user: any) => {
                 if (user.customBanners) {
                     try {

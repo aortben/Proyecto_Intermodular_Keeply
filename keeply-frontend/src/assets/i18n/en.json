@@ -57,7 +57,15 @@
     "DELETE_SELECTED": "Delete selected",
     "NO_RESULTS": "No results found for",
     "EMPTY_CATEGORY": "You don't have any works in this category yet.",
-    "GO_EXPLORE": "Go to Explore to add some!"
+    "GO_EXPLORE": "Go to Explore to add some!",
+    "TITLE": "{{usuario}}'s {{categoria}}"
+  },
+  "CATEGORY_NAMES": {
+    "ANIME_MANGA": "Anime & Manga",
+    "BOOKS": "Books",
+    "SERIES": "Series",
+    "MOVIES": "Movies",
+    "GAMES": "Video Games"
   },
   "DETAIL": {
     "AUTHOR": "Author",
@@ -112,7 +120,19 @@
     "PASSWORD_TOO_SHORT": "Password must be at least 6 characters"
   },
   "PROFILE": {
-    "CHANGE_AVATAR": "Change avatar"
+    "CHANGE_AVATAR": "Change avatar",
+    "CHANGE_BANNER": "Change Banner",
+    "LOADING": "Loading profile...",
+    "USER_NOT_FOUND": "User not found",
+    "USER_NOT_EXIST": "Profile \"{{user}}\" does not exist or has been deleted.",
+    "BACK_COMMUNITY": "Back to Community",
+    "WORKS": "Works",
+    "FOLLOWERS": "Followers",
+    "FOLLOWING": "Following",
+    "FOLLOW": "Follow",
+    "UNFOLLOW": "Unfollow",
+    "LIBRARY_OF": "{{user}}'s Library",
+    "EMPTY_LIBRARY": "This user hasn't added any works to their library yet."
   },
   "FILE_ERRORS": {
     "INVALID_TYPE": "Unsupported file type. Only images, short videos or audio allowed.",

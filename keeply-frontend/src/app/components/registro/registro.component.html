@@ -12,33 +12,31 @@
                 <div class="input-group">
                     <label for="reg-username">{{ 'NAVBAR.USERNAME' | translate }}</label>
                     <input id="reg-username" type="text" [(ngModel)]="nombreUsuario"
-                           [placeholder]="'NAVBAR.USERNAME' | translate">
+                        [placeholder]="'NAVBAR.USERNAME' | translate">
                 </div>
                 <div class="input-group">
                     <label for="reg-email">{{ 'REGISTER.EMAIL_LABEL' | translate }}</label>
-                    <input id="reg-email" type="email" [(ngModel)]="email"
-                           [placeholder]="'NAVBAR.EMAIL' | translate">
+                    <input id="reg-email" type="email" [(ngModel)]="email" [placeholder]="'NAVBAR.EMAIL' | translate">
                 </div>
                 <div class="input-group">
                     <label for="reg-password">{{ 'NAVBAR.PASSWORD' | translate }}</label>
                     <input id="reg-password" type="password" [(ngModel)]="contrasena"
-                           [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate" (keyup.enter)="registrar()">
+                        [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate" (keyup.enter)="registrar()">
                 </div>
 
                 <!-- Avatar selection -->
                 <div class="avatar-selection">
                     <p class="avatar-section-title">{{ 'REGISTER.CHOOSE_AVATAR' | translate }}</p>
                     <div class="avatar-grid">
-                        <div *ngFor="let av of avatarOptions"
-                             class="avatar-option"
-                             [class.selected]="selectedAvatarId === av.id && !customAvatarUrl"
-                             (click)="selectAvatar(av)">
+                        <div *ngFor="let av of avatarOptions" class="avatar-option"
+                            [class.selected]="selectedAvatarId === av.id && !customAvatarUrl"
+                            (click)="selectAvatar(av)">
                             <img [src]="av.url" alt="Avatar option">
                         </div>
                         <label class="avatar-upload-btn" [class.selected]="selectedAvatarId === 'custom'">
                             {{ subiendoAvatar ? '...' : '+' }}
                             <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
-                                   (change)="onAvatarFileSelected($event)" [disabled]="subiendoAvatar">
+                                (change)="onAvatarFileSelected($event)" [disabled]="subiendoAvatar">
                         </label>
                     </div>
                     <!-- Preview -->

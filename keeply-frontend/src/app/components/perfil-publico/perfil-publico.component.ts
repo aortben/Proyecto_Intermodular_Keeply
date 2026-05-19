@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UsuarioService } from '../../services/usuario.service';
@@ -12,7 +12,7 @@ import { Usuario } from '../../models/usuario.model';
 @Component({
   selector: 'app-perfil-publico',
   standalone: true,
-  imports: [CommonModule, TranslateModule, NavbarComponent],
+  imports: [CommonModule, RouterModule, TranslateModule, NavbarComponent],
   templateUrl: './perfil-publico.component.html',
   styleUrls: ['./perfil-publico.component.scss']
 })

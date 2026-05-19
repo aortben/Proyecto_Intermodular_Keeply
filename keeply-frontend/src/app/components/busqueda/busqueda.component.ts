@@ -42,8 +42,7 @@ export class BusquedaComponent implements OnInit {
         { valor: 'ANIME', label: 'Anime' },
         { valor: 'MANGA', label: 'Manga' },
         { valor: 'VIDEOJUEGO', label: 'Videojuegos' },
-        { valor: 'LIBRO', label: 'Libros' },
-        { valor: 'COMIC', label: 'Cómics' }
+        { valor: 'LIBRO', label: 'Libros' }
     ];
 
     ngOnInit(): void {

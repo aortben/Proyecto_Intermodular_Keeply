@@ -12,13 +12,13 @@
                     <polyline points="17 8 12 3 7 8"></polyline>
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
-                <span>Cambiar Banner</span>
+                <span>{{ 'PROFILE.CHANGE_BANNER' | translate }}</span>
             </div>
             <input type="file" #fileInput hidden accept="image/*" (change)="onBannerSelected($event)">
         </div>
 
         <div class="title-section">
-            <h1 class="main-title">{{ categoria }} de {{ usuario }}</h1>
+            <h1 class="main-title">{{ 'CATEGORY.TITLE' | translate:{ categoria: (categoria | translate), usuario: usuario } }}</h1>
             <hr class="separator-line">
         </div>
 
