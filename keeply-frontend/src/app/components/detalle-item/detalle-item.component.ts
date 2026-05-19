@@ -60,6 +60,8 @@ export class DetalleItemComponent implements OnInit {
     textoEditandoNota = '';
     adjuntosEditando: { tipoAdjunto: TipoAdjunto; urlArchivo: string }[] = [];
     subiendoArchivoEdicion = false;
+    nuevaUrlAdjuntoEditando = '';
+    nuevoTipoAdjuntoEditando: TipoAdjunto = 'IMAGEN';
     
     tiposAdjunto: TipoAdjunto[] = ['IMAGEN', 'VIDEO', 'AUDIO', 'ENLACE'];
 
@@ -220,12 +222,24 @@ export class DetalleItemComponent implements OnInit {
         this.editandoNotaId = nota.idNota!;
         this.textoEditandoNota = nota.textoNota || '';
         this.adjuntosEditando = nota.adjuntos ? nota.adjuntos.map(a => ({ ...a })) : [];
+        this.nuevaUrlAdjuntoEditando = '';
+        this.nuevoTipoAdjuntoEditando = 'IMAGEN';
     }
 
     cancelarEdicionNota(): void {
         this.editandoNotaId = null;
         this.textoEditandoNota = '';
         this.adjuntosEditando = [];
+        this.nuevaUrlAdjuntoEditando = '';
+    }
+
+    agregarAdjuntoUrlEditando(): void {
+        if (!this.nuevaUrlAdjuntoEditando.trim()) return;
+        this.adjuntosEditando.push({
+            tipoAdjunto: this.nuevoTipoAdjuntoEditando,
+            urlArchivo: this.nuevaUrlAdjuntoEditando.trim()
+        });
+        this.nuevaUrlAdjuntoEditando = '';
     }
 
     onFileSelectedEditando(event: Event): void {
@@ -320,7 +334,13 @@ export class DetalleItemComponent implements OnInit {
     }
 
     volver(): void {
-        this.router.navigate(['/biblioteca']);
+        if (this.isPropietario) {
+            this.router.navigate(['/biblioteca']);
+        } else if (this.item && this.item.usuario) {
+            this.router.navigate(['/usuario', this.item.usuario.nombreUsuario]);
+        } else {
+            this.router.navigate(['/comunidad']);
+        }
     }
 
     getEstadoLabel(estado: string): string {
