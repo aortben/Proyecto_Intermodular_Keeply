@@ -7,6 +7,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { ItemUsuarioService } from '../../services/item-usuario.service';
 import { NotaService } from '../../services/nota.service';
 import { ArchivoService } from '../../services/archivo.service';
+import { AuthService } from '../../services/auth.service';
 import { ItemUsuario, EstadoItem } from '../../models/item-usuario.model';
 import { Nota, NotaRequest, TipoAdjunto } from '../../models/nota.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -25,10 +26,12 @@ export class DetalleItemComponent implements OnInit {
     private notaService = inject(NotaService);
     private archivoService = inject(ArchivoService);
     private sanitizer = inject(DomSanitizer);
+    private authService = inject(AuthService);
 
     item: ItemUsuario | null = null;
     notas: Nota[] = [];
     cargando = true;
+    isPropietario = false;
 
     // Edicion de propiedades del item
     editandoPropiedades = false;
@@ -74,6 +77,7 @@ export class DetalleItemComponent implements OnInit {
                 this.item = res;
                 this.estadoEditado = res.estado;
                 this.valoracionEditada = res.valoracionPersonal ?? null;
+                this.isPropietario = this.item.usuario?.idUsuario === this.authService.getUserId();
                 this.cargando = false;
             },
             error: () => this.cargando = false

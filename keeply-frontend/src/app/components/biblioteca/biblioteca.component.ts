@@ -10,7 +10,7 @@ import { UsuarioService } from '../../services/usuario.service';
 @Component({
     selector: 'app-biblioteca',
     standalone: true,
-    imports: [NgFor, RouterLink, NavbarComponent, TranslateModule],
+    imports: [NgFor, NgIf, RouterLink, NavbarComponent, TranslateModule],
     templateUrl: './biblioteca.component.html',
     styleUrls: ['./biblioteca.component.scss']
 })
@@ -98,5 +98,9 @@ export class BibliotecaComponent implements OnInit {
                 }
             }
         });
+    }
+
+    onImageError(cat: any): void {
+        cat.imagen = this.defaultBanners[cat.slug] || '';
     }
 }

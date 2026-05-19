@@ -21,7 +21,7 @@
                 <p class="obra-autor" *ngIf="item.obra.autorCreador">{{ 'DETAIL.AUTHOR' | translate }}: {{ item.obra.autorCreador }}</p>
                 <p class="obra-fecha" *ngIf="item.fechaAdicion">{{ 'DETAIL.ADDED' | translate }}: {{ item.fechaAdicion | slice:0:10 }}</p>
             </div>
-            <div class="obra-actions">
+            <div class="obra-actions" *ngIf="isPropietario">
                 <button class="btn-edit-item" (click)="toggleEditarPropiedades()">
                     {{ editandoPropiedades ? ('DETAIL.CANCEL' | translate) : ('DETAIL.EDIT' | translate) }}
                 </button>
@@ -69,7 +69,7 @@
         <hr class="separator-line">
 
         <!-- 2. Boton para abrir el editor -->
-        <div class="editor-toggle">
+        <div class="editor-toggle" *ngIf="isPropietario">
             <button class="btn-add-nota" (click)="toggleEditor()">
                 {{ editorAbierto ? ('DETAIL.CANCEL' | translate) : ('DETAIL.ADD_NOTE' | translate) }}
             </button>
@@ -124,7 +124,7 @@
             <article class="nota-card" *ngFor="let nota of notas">
                 <div class="nota-header">
                     <span class="nota-fecha">{{ nota.fechaCreacion | slice:0:10 }}</span>
-                    <div class="nota-actions">
+                    <div class="nota-actions" *ngIf="isPropietario">
                         <button class="btn-edit-nota" (click)="iniciarEdicionNota(nota)">{{ 'DETAIL.EDIT' | translate }}</button>
                         <button class="btn-delete-nota" (click)="eliminarNota(nota.idNota!)">{{ 'DETAIL.DELETE' | translate }}</button>
                     </div>

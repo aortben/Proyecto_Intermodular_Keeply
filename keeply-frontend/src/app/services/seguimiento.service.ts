@@ -14,7 +14,7 @@ export interface Seguimiento {
   providedIn: 'root'
 })
 export class SeguimientoService {
-  private apiUrl = `${environment.apiUrl}/seguimientos`;
+  private apiUrl = `${environment.apiUrl}/api/seguimientos`;
 
   constructor(private http: HttpClient) {}
 

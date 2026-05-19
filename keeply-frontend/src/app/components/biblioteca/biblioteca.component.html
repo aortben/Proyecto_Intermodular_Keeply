@@ -11,7 +11,7 @@
 
             <article class="category-card" *ngFor="let cat of categorias" [routerLink]="cat.ruta" style="cursor: pointer;">
                 <div class="card-image-container">
-                    <img [src]="cat.imagen" [alt]="cat.nombre" class="category-image">
+                    <img *ngIf="cat.imagen" [src]="cat.imagen" [alt]="cat.nombre" class="category-image" (error)="onImageError(cat)">
                 </div>
                 <h3 class="category-name">{{ cat.nombre }}</h3>
             </article>
